@@ -8,8 +8,12 @@ import {
   CampaignItem, GovernanceReportsResponse
 } from "../types";
 
-const rawBase = (import.meta as any).env?.VITE_API_BASE_URL;
-const API_BASE = rawBase ? (rawBase.endsWith("/api") ? rawBase : `${rawBase.replace(/\/+$/, '')}/api`) : "/api";
+const rawBase = ((import.meta as any).env?.VITE_API_BASE_URL || "").trim();
+// When running locally through the Vite dev server, empty or "/api" ensures all requests
+// use the same origin (http://localhost:5173/api/...) reverse-proxied to http://localhost:8000
+const API_BASE = (!rawBase || rawBase === "/" || rawBase === "/api")
+  ? "/api"
+  : (rawBase.endsWith("/api") ? rawBase : `${rawBase.replace(/\/+$/, '')}/api`);
 
 // Active demo role stored in local storage for instant demo switching
 let activeDemoRole: UserRole = (localStorage.getItem("inkloom_demo_role") as UserRole) || "BRAND_MANAGER";

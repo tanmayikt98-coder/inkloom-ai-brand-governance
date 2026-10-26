@@ -56,3 +56,20 @@ Thumbs.db
 # Binaries & Temporary tools
 tools/
 *.exe
+
+# Environment files
+.env
+.env.*
+!.env.example
+frontend/.env.development
+
+# Python cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Logs
+logs/
+
+# Local database
+backend/inkloom.db

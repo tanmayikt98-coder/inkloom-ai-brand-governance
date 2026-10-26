@@ -200,7 +200,7 @@ def build_pdf(filename="Inkloom_AI_Round2_Submission_Report.pdf"):
         [Paragraph("Team Name", meta_label), Paragraph("CodeSync", meta_val), Paragraph("Test Suite Pass Rate", meta_label), Paragraph("29 / 29 Passed (100% in 2.55s)", meta_val)],
         [Paragraph("Team Leader", meta_label), Paragraph("Tejas Gowda M", meta_val), Paragraph("GitHub Repository", meta_label), Paragraph("tanmayikt98-coder/inkloom-ai-brand-governance", meta_val)],
         [Paragraph("Team Member", meta_label), Paragraph("Tanmayi K T", meta_val), Paragraph("Commit Version", meta_label), Paragraph("5448785 (Complete Project Files)", meta_val)],
-        [Paragraph("Category", meta_label), Paragraph("AI Brand Compliance & Governance", meta_val), Paragraph("Live Web App", meta_label), Paragraph("lending-pearl-cam-accompanying.trycloudflare.com", meta_val)],
+        [Paragraph("Category", meta_label), Paragraph("AI Brand Compliance & Governance", meta_val), Paragraph("Local Dev URL", meta_label), Paragraph("http://localhost:5173", meta_val)],
     ]
     t_meta = Table(meta_data, colWidths=[1.1*inch, 2.5*inch, 1.2*inch, 2.2*inch])
     t_meta.setStyle(TableStyle([
@@ -246,8 +246,8 @@ def build_pdf(filename="Inkloom_AI_Round2_Submission_Report.pdf"):
         [Paragraph("Deliverable", table_header), Paragraph("Verified Destination / Access Point", table_header), Paragraph("Operational Verification", table_header)],
         [
             Paragraph("<b>Deliverable A:<br/>Working Project Link</b>", table_cell_bold),
-            Paragraph("<b>Live HTTPS Web App:</b><br/><u>https://lending-pearl-cam-accompanying.trycloudflare.com/</u><br/><b>Local Runtime:</b> http://localhost:5173", table_cell),
-            Paragraph("<b>LIVE & VERIFIED (HTTP 200 OK)</b><br/>React 18 + Vite + reverse proxy to FastAPI. Full UI navigation operational.", table_cell)
+            Paragraph("<b>Local Frontend Web App:</b><br/><u>http://localhost:5173</u><br/><b>Local API Endpoint:</b> http://localhost:8000/api", table_cell),
+            Paragraph("<b>VERIFIED (HTTP 200 OK)</b><br/>React 19 + TypeScript + Vite dev server connected to FastAPI backend.", table_cell)
         ],
         [
             Paragraph("<b>Deliverable B:<br/>Source Repository</b>", table_cell_bold),
@@ -256,8 +256,8 @@ def build_pdf(filename="Inkloom_AI_Round2_Submission_Report.pdf"):
         ],
         [
             Paragraph("<b>Deliverable C:<br/>Interactive API Docs</b>", table_cell_bold),
-            Paragraph("<b>Swagger UI:</b> <u>https://seeing-term-carries-invoice.trycloudflare.com/docs</u><br/><b>Health:</b> https://seeing-term-carries-invoice.trycloudflare.com/health", table_cell),
-            Paragraph("<b>LIVE & INTERACTIVE (HTTP 200 OK)</b><br/>All 36 REST routes typed, documented, and executable interactively.", table_cell)
+            Paragraph("<b>Swagger UI:</b> <u>http://localhost:8000/docs</u><br/><b>Health Probe:</b> http://localhost:8000/health", table_cell),
+            Paragraph("<b>LOCAL & INTERACTIVE (HTTP 200 OK)</b><br/>All 36 REST routes typed, documented, and executable interactively.", table_cell)
         ],
         [
             Paragraph("<b>Deliverable D-G:<br/>Artifacts & Specs</b>", table_cell_bold),
