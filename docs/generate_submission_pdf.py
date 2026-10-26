@@ -197,24 +197,24 @@ def build_pdf(filename="Inkloom_AI_Round2_Submission_Report.pdf"):
     meta_data = [
         [Paragraph("Project Name", meta_label), Paragraph("Inkloom AI", meta_val), Paragraph("Round", meta_label), Paragraph("Round 2 Final Submission", meta_val)],
         [Paragraph("Full Title", meta_label), Paragraph("Evidence-Driven Brand Governance with BrandTrace Intelligence", meta_val), Paragraph("Evaluation Window", meta_label), Paragraph("October 26 – 28, 2026", meta_val)],
-        [Paragraph("Team Name", meta_label), Paragraph("CodeSync", meta_val), Paragraph("Test Suite Pass Rate", meta_label), Paragraph("29 / 29 Passed (100%)", meta_val)],
-        [Paragraph("Team Leader", meta_label), Paragraph("Tejas Gowda M", meta_val), Paragraph("Backend Engine", meta_label), Paragraph("FastAPI, SQLAlchemy, Deterministic Rules", meta_val)],
-        [Paragraph("Team Member", meta_label), Paragraph("Tanmayi K T", meta_val), Paragraph("Frontend Stack", meta_label), Paragraph("React 19, TypeScript, Vite, Tailwind v4", meta_val)],
-        [Paragraph("Category", meta_label), Paragraph("AI Brand Compliance & Governance", meta_val), Paragraph("Audit Ledger", meta_label), Paragraph("Append-Only Immutable Event Stream", meta_val)],
+        [Paragraph("Team Name", meta_label), Paragraph("CodeSync", meta_val), Paragraph("Test Suite Pass Rate", meta_label), Paragraph("29 / 29 Passed (100% in 2.55s)", meta_val)],
+        [Paragraph("Team Leader", meta_label), Paragraph("Tejas Gowda M", meta_val), Paragraph("GitHub Repository", meta_label), Paragraph("tanmayikt98-coder/inkloom-ai-brand-governance", meta_val)],
+        [Paragraph("Team Member", meta_label), Paragraph("Tanmayi K T", meta_val), Paragraph("Commit Version", meta_label), Paragraph("5448785 (Complete Project Files)", meta_val)],
+        [Paragraph("Category", meta_label), Paragraph("AI Brand Compliance & Governance", meta_val), Paragraph("Live Web App", meta_label), Paragraph("lending-pearl-cam-accompanying.trycloudflare.com", meta_val)],
     ]
     t_meta = Table(meta_data, colWidths=[1.1*inch, 2.5*inch, 1.2*inch, 2.2*inch])
     t_meta.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,-1), LIGHT_BG),
         ('BOX', (0,0), (-1,-1), 1, BORDER_COLOR),
         ('INNERGRID', (0,0), (-1,-1), 0.5, BORDER_COLOR),
-        ('TOPPADDING', (0,0), (-1,-1), 6),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 6),
+        ('TOPPADDING', (0,0), (-1,-1), 5),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 5),
         ('LEFTPADDING', (0,0), (-1,-1), 8),
         ('RIGHTPADDING', (0,0), (-1,-1), 8),
     ]))
     story.append(t_meta)
 
-    story.append(Spacer(1, 30))
+    story.append(Spacer(1, 12))
 
     # Executive Abstract Callout
     abstract_text = (
@@ -231,12 +231,53 @@ def build_pdf(filename="Inkloom_AI_Round2_Submission_Report.pdf"):
     t_abstract.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,-1), SUCCESS_BG),
         ('BOX', (0,0), (-1,-1), 1, PRIMARY),
-        ('TOPPADDING', (0,0), (-1,-1), 12),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 12),
-        ('LEFTPADDING', (0,0), (-1,-1), 14),
-        ('RIGHTPADDING', (0,0), (-1,-1), 14),
+        ('TOPPADDING', (0,0), (-1,-1), 8),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 8),
+        ('LEFTPADDING', (0,0), (-1,-1), 12),
+        ('RIGHTPADDING', (0,0), (-1,-1), 12),
     ]))
     story.append(t_abstract)
+
+    story.append(Spacer(1, 10))
+
+    # Official Hackathon Deliverables Access Table
+    story.append(Paragraph("Official Hackathon Deliverables & Live Verification Matrix", h2_style))
+    deliv_matrix = [
+        [Paragraph("Deliverable", table_header), Paragraph("Verified Destination / Access Point", table_header), Paragraph("Operational Verification", table_header)],
+        [
+            Paragraph("<b>Deliverable A:<br/>Working Project Link</b>", table_cell_bold),
+            Paragraph("<b>Live HTTPS Web App:</b><br/><u>https://lending-pearl-cam-accompanying.trycloudflare.com/</u><br/><b>Local Runtime:</b> http://localhost:5173", table_cell),
+            Paragraph("<b>LIVE & VERIFIED (HTTP 200 OK)</b><br/>React 18 + Vite + reverse proxy to FastAPI. Full UI navigation operational.", table_cell)
+        ],
+        [
+            Paragraph("<b>Deliverable B:<br/>Source Repository</b>", table_cell_bold),
+            Paragraph("<b>GitHub URL:</b><br/><u>https://github.com/tanmayikt98-coder/inkloom-ai-brand-governance</u><br/>Latest Commit: <b>5448785</b>", table_cell),
+            Paragraph("<b>VERIFIED & SYNCHRONIZED</b><br/>All 77 files, frontend & backend merged cleanly. Zero credentials committed.", table_cell)
+        ],
+        [
+            Paragraph("<b>Deliverable C:<br/>Interactive API Docs</b>", table_cell_bold),
+            Paragraph("<b>Swagger UI:</b> <u>https://seeing-term-carries-invoice.trycloudflare.com/docs</u><br/><b>Health:</b> https://seeing-term-carries-invoice.trycloudflare.com/health", table_cell),
+            Paragraph("<b>LIVE & INTERACTIVE (HTTP 200 OK)</b><br/>All 36 REST routes typed, documented, and executable interactively.", table_cell)
+        ],
+        [
+            Paragraph("<b>Deliverable D-G:<br/>Artifacts & Specs</b>", table_cell_bold),
+            Paragraph("<b>Technical PDF:</b> docs/Inkloom_AI_Round2_Submission_Report.pdf<br/><b>Windows Launcher:</b> start-inkloom.bat (One-click runner)", table_cell),
+            Paragraph("<b>COMPLETE</b><br/>Formal 10-page report, 29 pytest automated tests, and Docker configs.", table_cell)
+        ]
+    ]
+    t_deliv = Table(deliv_matrix, colWidths=[1.4*inch, 3.2*inch, 2.4*inch])
+    t_deliv.setStyle(TableStyle([
+        ('BACKGROUND', (0,0), (-1,0), PRIMARY),
+        ('ALIGN', (0,0), (-1,-1), 'LEFT'),
+        ('VALIGN', (0,0), (-1,-1), 'TOP'),
+        ('GRID', (0,0), (-1,-1), 0.5, BORDER_COLOR),
+        ('ROWBACKGROUNDS', (0,1), (-1,-1), [WHITE, LIGHT_BG]),
+        ('TOPPADDING', (0,0), (-1,-1), 3),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 3),
+        ('LEFTPADDING', (0,0), (-1,-1), 5),
+        ('RIGHTPADDING', (0,0), (-1,-1), 5),
+    ]))
+    story.append(t_deliv)
 
     story.append(PageBreak())
 
