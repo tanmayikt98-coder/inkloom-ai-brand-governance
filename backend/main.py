@@ -1,4 +1,5 @@
 from contextlib import asynccontextmanager
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
@@ -66,8 +67,12 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# CORS Configuration for Local Development and Deployment
+# CORS Configuration for Local Development and Production Deployment
 origins = [
+    # Production Render Frontend & Backend URLs
+    "https://inkloom-ai-brand-governance-1.onrender.com",
+    "https://inkloom-ai-brand-governance.onrender.com",
+    # Local Development URLs
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "http://localhost:3000",
@@ -75,13 +80,34 @@ origins = [
     "http://127.0.0.1:8000",
 ]
 
+# Allow dynamic injection from environment variables (e.g. FRONTEND_URL or CORS_ORIGINS on Render)
+if getattr(settings, "FRONTEND_URL", None):
+    origins.append(settings.FRONTEND_URL.strip().rstrip("/"))
+
+extra_cors = os.getenv("CORS_ORIGINS", "")
+if extra_cors:
+    for extra_origin in extra_cors.split(","):
+        extra_origin = extra_origin.strip().rstrip("/")
+        if extra_origin:
+            origins.append(extra_origin)
+
+# Deduplicate origins and strip trailing slashes (Origin headers never have trailing slashes)
+seen_origins = set()
+clean_origins = []
+for orig in origins:
+    cleaned = orig.strip().rstrip("/")
+    if cleaned and cleaned not in seen_origins:
+        seen_origins.add(cleaned)
+        clean_origins.append(cleaned)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
-    allow_origin_regex=r"https?://(localhost|127\.0\.0\.1)(:\d+)?|https://.*\.trycloudflare\.com",
+    allow_origins=clean_origins,
+    allow_origin_regex=r"https?://(localhost|127\.0\.0\.1)(:\d+)?|https://.*\.trycloudflare\.com|https://.*\.onrender\.com",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 # Register API Routers
