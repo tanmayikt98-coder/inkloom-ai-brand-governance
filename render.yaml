@@ -1,0 +1,39 @@
+services:
+  # Inkloom AI - FastAPI Backend Service
+  - type: web
+    name: inkloom-backend
+    env: python
+    rootDir: backend
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: PORT
+        value: 10000
+      - key: DEMO_MODE
+        value: "true"
+      - key: AI_PROVIDER
+        value: deterministic_fallback
+      - key: SECRET_KEY
+        generateValue: true
+
+  # Inkloom AI - React Vite Frontend Static Site
+  - type: web
+    name: inkloom-frontend
+    env: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_BASE_URL
+        fromService:
+          type: web
+          name: inkloom-backend
+          property: host
