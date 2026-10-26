@@ -89,8 +89,8 @@ app.include_router(impact_router, prefix=settings.API_V1_PREFIX)
 app.include_router(simulator_router, prefix=settings.API_V1_PREFIX)
 app.include_router(dashboard_router, prefix=settings.API_V1_PREFIX)
 
-@app.get("/health", tags=["Health & System"], summary="System Health Check")
-@app.get("/api/health", tags=["Health & System"], summary="System Health Check (API Prefix)")
+@app.api_route("/health", methods=["GET", "HEAD"], tags=["Health & System"], summary="System Health Check")
+@app.api_route("/api/health", methods=["GET", "HEAD"], tags=["Health & System"], summary="System Health Check (API Prefix)")
 def health_check():
     return {
         "status": "healthy",
