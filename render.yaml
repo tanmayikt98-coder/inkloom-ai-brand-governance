@@ -19,6 +19,8 @@ services:
         value: deterministic_fallback
       - key: SECRET_KEY
         generateValue: true
+      - key: FRONTEND_URL
+        value: https://tanmayikt98-coder.github.io
 
   # Inkloom AI - React Vite Frontend Static Site
   - type: web

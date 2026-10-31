@@ -67,47 +67,71 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# CORS Configuration for Local Development and Production Deployment
-origins = [
-    # Production Render Frontend & Backend URLs
-    "https://inkloom-ai-brand-governance-1.onrender.com",
+# CORS Configuration
+# Allowed Origins Configuration
+# Explicitly allow the deployed production frontend, Render services, and local dev environments
+default_origins = [
+    # Production GitHub Pages frontend
+    "https://tanmayikt98-coder.github.io",
+    # Production Render frontends & backends
+    "https://inkloom-frontend.onrender.com",
     "https://inkloom-ai-brand-governance.onrender.com",
-    # Local Development URLs
+    "https://inkloom-ai-brand-governance-1.onrender.com",
+    "https://inkloom-backend-y97e.onrender.com",
+    # Local development environments
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "http://localhost:3000",
+    "http://127.0.0.1:3000",
     "http://localhost:8000",
     "http://127.0.0.1:8000",
+    "http://localhost:4173",
+    "http://127.0.0.1:4173",
 ]
 
 # Allow dynamic injection from environment variables (e.g. FRONTEND_URL or CORS_ORIGINS on Render)
 if getattr(settings, "FRONTEND_URL", None):
-    origins.append(settings.FRONTEND_URL.strip().rstrip("/"))
+    default_origins.append(settings.FRONTEND_URL)
+
+env_frontend = os.getenv("FRONTEND_URL", "")
+if env_frontend:
+    default_origins.append(env_frontend)
 
 extra_cors = os.getenv("CORS_ORIGINS", "")
 if extra_cors:
-    for extra_origin in extra_cors.split(","):
-        extra_origin = extra_origin.strip().rstrip("/")
-        if extra_origin:
-            origins.append(extra_origin)
+    default_origins.extend(extra_cors.split(","))
 
-# Deduplicate origins and strip trailing slashes (Origin headers never have trailing slashes)
+# Deduplicate origins and strip whitespace and trailing slashes (Origin headers never have trailing slashes)
 seen_origins = set()
 clean_origins = []
-for orig in origins:
+for orig in default_origins:
     cleaned = orig.strip().rstrip("/")
     if cleaned and cleaned not in seen_origins:
         seen_origins.add(cleaned)
         clean_origins.append(cleaned)
 
+# Regex to support GitHub Pages preview/user domains, Render preview/deploy domains, and local hosts
+cors_regex = r"^https://.*\.github\.io$|^https://.*\.onrender\.com$|^https?://(localhost|127\.0\.0\.1)(:\d+)?$"
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=clean_origins,
-    allow_origin_regex=r"https?://(localhost|127\.0\.0\.1)(:\d+)?|https://.*\.trycloudflare\.com|https://.*\.onrender\.com",
+    allow_origin_regex=cors_regex,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD"],
+    allow_headers=[
+        "Authorization",
+        "Content-Type",
+        "X-Demo-Role",
+        "Accept",
+        "Origin",
+        "X-Requested-With",
+        "Access-Control-Request-Method",
+        "Access-Control-Request-Headers",
+        "*",
+    ],
     expose_headers=["*"],
+    max_age=86400,
 )
 
 # Register API Routers

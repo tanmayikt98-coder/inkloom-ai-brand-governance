@@ -13,7 +13,9 @@ import {
   UserCheck,
   ArrowRight,
   History,
+  Sparkles,
 } from "lucide-react";
+import { BoundingBoxViewerModal } from "../components/BoundingBoxViewerModal";
 
 export const TraceabilityView: React.FC = () => {
   const { activeBrand } = useAuth();
@@ -23,6 +25,7 @@ export const TraceabilityView: React.FC = () => {
   const [selectedFindingId, setSelectedFindingId] = useState<string | null>(null);
   const [traceChain, setTraceChain] = useState<TraceabilityChain | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [modalEvidence, setModalEvidence] = useState<{ id: string; title?: string; quote?: string } | null>(null);
 
   useEffect(() => {
     const load = async () => {
@@ -225,6 +228,24 @@ export const TraceabilityView: React.FC = () => {
                   <p className="text-[11px] text-blue-800 font-mono bg-white p-2 rounded border border-blue-100">
                     "{traceChain.exact_passage || "Documented technical specification on record."}"
                   </p>
+                  <div className="pt-2 flex items-center justify-between border-t border-blue-200">
+                    <span className="text-[10px] text-blue-700 font-mono">
+                      PyMuPDF Coordinate Grounding: [x0, y0, x1, y1]
+                    </span>
+                    <button
+                      onClick={() =>
+                        setModalEvidence({
+                          id: traceChain.evidence_id || "ev-bench-001",
+                          title: traceChain.evidence_title,
+                          quote: traceChain.exact_passage,
+                        })
+                      }
+                      className="px-2.5 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md text-[11px] font-bold flex items-center space-x-1 shadow-2xs transition-all"
+                    >
+                      <Sparkles className="w-3 h-3" />
+                      <span>Inspect PDF Bounding Box</span>
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -256,6 +277,15 @@ export const TraceabilityView: React.FC = () => {
           )}
         </div>
       </div>
+
+      {modalEvidence && (
+        <BoundingBoxViewerModal
+          evidenceId={modalEvidence.id}
+          evidenceTitle={modalEvidence.title}
+          citedQuote={modalEvidence.quote}
+          onClose={() => setModalEvidence(null)}
+        />
+      )}
     </div>
   );
 };

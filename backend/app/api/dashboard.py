@@ -13,8 +13,10 @@ from app.enums import AssetStatus, AuditStatus, EvidenceStatus, Severity
 from app.security import get_current_user
 from app.schemas import (
     DashboardOverviewResponse, AuditRunResponse, AffectedAssetDetail,
-    CampaignItem, CampaignAssetSummary, GovernanceReportsResponse
+    CampaignItem, CampaignAssetSummary, GovernanceReportsResponse,
+    WormLedgerBlockResponse, WormVerificationResponse
 )
+from app.services.crypto_worm_ledger import crypto_worm_ledger
 from app.api.audits import get_audit_run_response
 
 router = APIRouter(tags=["Overview Dashboard & Audit Logs"])
@@ -322,4 +324,45 @@ async def export_governance_report(
         "certification_statement": "All approved marketing claims have verified citations to active evidentiary benchmark sources. Maker-checker separation was verified on all approvals."
     }
     return report_payload
+
+# ----------------- Round 3: Cryptographic WORM Ledger & Merkle Proofs -----------------
+@router.get("/dashboard/audit-ledger/worm", response_model=List[WormLedgerBlockResponse])
+async def get_cryptographic_worm_ledger(
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Round 3 - Improvement 3: Returns the immutable cryptographic WORM ledger
+    utilizing SHA-256 hash chaining and HMAC digital signatures.
+    """
+    return [WormLedgerBlockResponse(**b) for b in crypto_worm_ledger.blocks]
+
+@router.post("/dashboard/audit-ledger/verify", response_model=WormVerificationResponse)
+async def verify_worm_ledger_integrity(
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Round 3 - Improvement 3: Cryptographic verification endpoint validating
+    complete ledger integrity, Merkle tree root, and block signatures in <1.0 second.
+    """
+    res = crypto_worm_ledger.verify_ledger_integrity()
+    return WormVerificationResponse(**res)
+
+@router.get("/dashboard/audit-ledger/export-certificate")
+async def export_json_ld_compliance_certificate(
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Round 3 - Improvement 3: Generates exportable tamper-evident JSON-LD
+    compliance certificate package (RFC 3161 compliant) for FTC/SEC/FDA legal audits.
+    """
+    return crypto_worm_ledger.export_compliance_certificate(org_name="Aurevia Technologies Inc.")
+
+@router.get("/dashboard/audit-ledger/merkle-tree")
+async def get_merkle_tree_graph(
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Round 3 - Improvement 3: Returns full hierarchical Merkle tree structure for visual explorer.
+    """
+    return crypto_worm_ledger.get_merkle_tree_visualization()
 

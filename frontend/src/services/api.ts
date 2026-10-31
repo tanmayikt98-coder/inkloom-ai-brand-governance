@@ -5,15 +5,16 @@ import {
   ScenarioSimulationResult, DashboardOverview, TraceabilityChain,
   AuditEventItem, UserRole, FactStatus, EvidenceStatus, EvidenceType,
   RuleType, Severity, AssetType, ApprovalDecision, ScenarioChangeType,
-  CampaignItem, GovernanceReportsResponse
+  CampaignItem, GovernanceReportsResponse,
+  VisualDocument, AdversarialBenchmark, CascadeResult, WormLedgerBlock,
+  WormVerificationResult, TenantOrganization
 } from "../types";
 
-const rawBase = ((import.meta as any).env?.VITE_API_BASE_URL || "").trim();
-// When running locally through the Vite dev server, empty or "/api" ensures all requests
-// use the same origin (http://localhost:5173/api/...) reverse-proxied to http://localhost:8000
-const API_BASE = (!rawBase || rawBase === "/" || rawBase === "/api")
-  ? "/api"
-  : (rawBase.endsWith("/api") ? rawBase : `${rawBase.replace(/\/+$/, '')}/api`);
+const rawBase = (import.meta as any).env?.VITE_API_BASE_URL;
+const trimmedBase = rawBase ? String(rawBase).trim().replace(/\/+$/, '') : "";
+const API_BASE = trimmedBase
+  ? (trimmedBase.endsWith("/api") ? trimmedBase : `${trimmedBase}/api`)
+  : "/api";
 
 // Active demo role stored in local storage for instant demo switching
 let activeDemoRole: UserRole = (localStorage.getItem("inkloom_demo_role") as UserRole) || "BRAND_MANAGER";
@@ -83,6 +84,28 @@ export const api = {
       setDemoRole(role);
       setAuthToken(data.access_token);
       return data;
+    },
+    listOrganizations: async (): Promise<TenantOrganization[]> => {
+      const res = await fetch(`${API_BASE}/auth/organizations`, { headers: getHeaders() });
+      return handleResponse<TenantOrganization[]>(res);
+    },
+    switchTenant: async (organizationId: string): Promise<{ access_token: string; user: User }> => {
+      const res = await fetch(`${API_BASE}/auth/switch-tenant`, {
+        method: "POST",
+        headers: getHeaders(),
+        body: JSON.stringify({ organization_id: organizationId }),
+      });
+      const data = await handleResponse<{ access_token: string; user: User }>(res);
+      setAuthToken(data.access_token);
+      return data;
+    },
+    verifyTenantIsolation: async (): Promise<any> => {
+      const res = await fetch(`${API_BASE}/auth/multi-tenant/verify-isolation`, { headers: getHeaders() });
+      return handleResponse<any>(res);
+    },
+    getSsoProviders: async (): Promise<any> => {
+      const res = await fetch(`${API_BASE}/auth/sso/providers`, { headers: getHeaders() });
+      return handleResponse<any>(res);
     },
   },
 
@@ -181,6 +204,22 @@ export const api = {
         body: JSON.stringify(data),
       });
       return handleResponse<EvidenceSource>(res);
+    },
+    getVisualDocument: async (evidenceId: string): Promise<VisualDocument> => {
+      const res = await fetch(`${API_BASE}/evidence/${evidenceId}/visual-document`, { headers: getHeaders() });
+      return handleResponse<VisualDocument>(res);
+    },
+    getAdversarialBenchmark: async (): Promise<AdversarialBenchmark> => {
+      const res = await fetch(`${API_BASE}/evidence/adversarial-benchmark`, { headers: getHeaders() });
+      return handleResponse<AdversarialBenchmark>(res);
+    },
+    hybridRetrieve: async (query: string, topK: number = 5, denseWeight: number = 0.65): Promise<any> => {
+      const res = await fetch(`${API_BASE}/evidence/hybrid-retrieve`, {
+        method: "POST",
+        headers: getHeaders(),
+        body: JSON.stringify({ query, top_k: topK, dense_weight: denseWeight }),
+      });
+      return handleResponse<any>(res);
     },
   },
 
@@ -330,6 +369,27 @@ export const api = {
       });
       return handleResponse<ImpactAnalysis>(res);
     },
+    triggerCascade: async (data: {
+      fact_id: string;
+      action?: string;
+      new_metric_value?: number;
+      reason?: string;
+    }): Promise<CascadeResult> => {
+      const res = await fetch(`${API_BASE}/impact/cascade/trigger`, {
+        method: "POST",
+        headers: getHeaders(),
+        body: JSON.stringify(data),
+      });
+      return handleResponse<CascadeResult>(res);
+    },
+    getCascadeHistory: async (): Promise<CascadeResult[]> => {
+      const res = await fetch(`${API_BASE}/impact/cascade/history`, { headers: getHeaders() });
+      return handleResponse<CascadeResult[]>(res);
+    },
+    getOutboundWebhooks: async (): Promise<any[]> => {
+      const res = await fetch(`${API_BASE}/impact/cascade/webhooks`, { headers: getHeaders() });
+      return handleResponse<any[]>(res);
+    },
   },
 
   // What-If Simulator
@@ -378,6 +438,25 @@ export const api = {
     getAuditEvents: async (limit: number = 50): Promise<AuditEventItem[]> => {
       const res = await fetch(`${API_BASE}/dashboard/audit-events?limit=${limit}`, { headers: getHeaders() });
       return handleResponse<AuditEventItem[]>(res);
+    },
+    getWormLedger: async (): Promise<WormLedgerBlock[]> => {
+      const res = await fetch(`${API_BASE}/dashboard/audit-ledger/worm`, { headers: getHeaders() });
+      return handleResponse<WormLedgerBlock[]>(res);
+    },
+    verifyWormLedger: async (): Promise<WormVerificationResult> => {
+      const res = await fetch(`${API_BASE}/dashboard/audit-ledger/verify`, {
+        method: "POST",
+        headers: getHeaders(),
+      });
+      return handleResponse<WormVerificationResult>(res);
+    },
+    exportComplianceCertificate: async (): Promise<any> => {
+      const res = await fetch(`${API_BASE}/dashboard/audit-ledger/export-certificate`, { headers: getHeaders() });
+      return handleResponse<any>(res);
+    },
+    getMerkleTree: async (): Promise<any> => {
+      const res = await fetch(`${API_BASE}/dashboard/audit-ledger/merkle-tree`, { headers: getHeaders() });
+      return handleResponse<any>(res);
     },
   },
 

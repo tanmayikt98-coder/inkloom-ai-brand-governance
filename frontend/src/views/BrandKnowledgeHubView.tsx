@@ -18,11 +18,18 @@ import {
   FileText,
   Clock,
   Layers,
+  Sparkles,
+  Cpu,
 } from "lucide-react";
+import { BoundingBoxViewerModal } from "../components/BoundingBoxViewerModal";
 
 export const BrandKnowledgeHubView: React.FC = () => {
   const { activeBrand, canEditFacts, canUploadEvidence } = useAuth();
   const [activeTab, setActiveTab] = useState<"facts" | "evidence" | "rules">("facts");
+  const [selectedEvidenceForModal, setSelectedEvidenceForModal] = useState<{ id: string; title: string } | null>(null);
+  const [hybridQuery, setHybridQuery] = useState<string>("");
+  const [hybridResults, setHybridResults] = useState<any | null>(null);
+  const [hybridSearching, setHybridSearching] = useState<boolean>(false);
   const [facts, setFacts] = useState<BrandFact[]>([]);
   const [evidence, setEvidence] = useState<EvidenceSource[]>([]);
   const [rules, setRules] = useState<BrandRule[]>([]);
@@ -288,6 +295,7 @@ export const BrandKnowledgeHubView: React.FC = () => {
                   <th className="py-3 px-4 font-semibold">Owner / Auditor</th>
                   <th className="py-3 px-4 font-semibold">Validity</th>
                   <th className="py-3 px-4 font-semibold">Extracted Passage</th>
+                  <th className="py-3 px-4 font-semibold">Visual Grounding</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#F0ECE4]">
@@ -321,6 +329,15 @@ export const BrandKnowledgeHubView: React.FC = () => {
                     </td>
                     <td className="py-3 px-4 text-[#5C6460] max-w-xs truncate font-mono text-[11px]">
                       {ev.document_text}
+                    </td>
+                    <td className="py-3 px-4">
+                      <button
+                        onClick={() => setSelectedEvidenceForModal({ id: ev.id, title: ev.title })}
+                        className="px-2.5 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 rounded text-[11px] font-bold flex items-center space-x-1 shadow-2xs transition-all whitespace-nowrap"
+                      >
+                        <Sparkles className="w-3 h-3 text-indigo-600" />
+                        <span>Inspect PDF Bounding Box</span>
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -603,6 +620,15 @@ export const BrandKnowledgeHubView: React.FC = () => {
             </div>
           </form>
         </div>
+      )}
+
+      {/* Round 3 Bounding Box Modal */}
+      {selectedEvidenceForModal && (
+        <BoundingBoxViewerModal
+          evidenceId={selectedEvidenceForModal.id}
+          evidenceTitle={selectedEvidenceForModal.title}
+          onClose={() => setSelectedEvidenceForModal(null)}
+        />
       )}
     </div>
   );

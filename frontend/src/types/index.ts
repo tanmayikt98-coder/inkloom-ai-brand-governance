@@ -431,3 +431,140 @@ export interface GovernanceReportsResponse {
   active_rules_count: number;
 }
 
+// ----------------- Round 3 Types -----------------
+export interface BoundingBoxCoordinates {
+  x0: number;
+  y0: number;
+  x1: number;
+  y1: number;
+  page_width: number;
+  page_height: number;
+}
+
+export interface VisualPassageItem {
+  passage_id: string;
+  page_num: number;
+  text: string;
+  bounding_box: BoundingBoxCoordinates;
+  confidence?: number;
+}
+
+export interface VisualDocument {
+  evidence_id: string;
+  title: string;
+  source_type: string;
+  total_pages: number;
+  passages: VisualPassageItem[];
+  document_text: string;
+}
+
+export interface AdversarialBenchmark {
+  benchmark_title: string;
+  total_samples: number;
+  valid_samples: number;
+  adversarial_samples: number;
+  metrics: {
+    grounded_bounding_box_coverage_pct: number;
+    hallucination_rate_pct: number;
+    adversarial_detection_rate_pct: number;
+    avg_retrieval_latency_ms: number;
+    p95_retrieval_latency_ms: number;
+    sub_400ms_compliance: boolean;
+    total_passages_in_index: number;
+  };
+  acceptance_criteria_results: {
+    bounding_box_provenance: string;
+    sub_400ms_hybrid_latency: string;
+    zero_hallucinated_citations: string;
+  };
+  sample_results: Array<{
+    sample_id: string;
+    claim: string;
+    type: string;
+    grounded: boolean;
+    bounding_box_present: boolean;
+    bounding_box?: BoundingBoxCoordinates;
+    hybrid_score: number;
+    latency_ms: number;
+    status: string;
+  }>;
+}
+
+export interface CascadeResult {
+  cascade_id: string;
+  timestamp: string;
+  target_fact_id: string;
+  target_fact_claim: string;
+  trigger_action: string;
+  total_execution_ms: number;
+  immediate_revocation_ms: number;
+  acceptance_criteria_met: {
+    immediate_revocation_under_2s: boolean;
+    all_collateral_re_audited_100_pct: boolean;
+    automated_webhook_with_deep_link: boolean;
+  };
+  affected_assets_count: number;
+  revoked_assets: Array<{
+    asset_id: string;
+    title: string;
+    previous_status: string;
+    new_status: string;
+    revoked_at: string;
+  }>;
+  re_audit_diff_reports: Array<{
+    asset_id: string;
+    title: string;
+    previous_compliance: string;
+    new_compliance: string;
+    violation_category: string;
+    severity: string;
+    finding_explanation: string;
+    suggested_correction: string;
+    direct_re_approval_url: string;
+  }>;
+  dispatched_webhook: {
+    webhook_id: string;
+    timestamp: string;
+    target: string;
+    event: string;
+    status: string;
+    deep_link: string;
+    payload: any;
+  };
+}
+
+export interface WormLedgerBlock {
+  index: number;
+  timestamp: string;
+  event_type: string;
+  entity_type: string;
+  entity_id: string;
+  actor_name: string;
+  description: string;
+  previous_hash: string;
+  entry_hash: string;
+  signature: string;
+  metadata?: Record<string, any>;
+}
+
+export interface WormVerificationResult {
+  is_valid: boolean;
+  tamper_detected: boolean;
+  blocks_verified: number;
+  merkle_root: string;
+  merkle_tree_depth: number;
+  verification_latency_ms: number;
+  is_sub_second: boolean;
+  cryptographic_algorithm: string;
+  regulatory_status: string;
+}
+
+export interface TenantOrganization {
+  id: string;
+  name: string;
+  slug: string;
+  brand_count: number;
+  asset_count: number;
+  active_framework: string;
+}
+

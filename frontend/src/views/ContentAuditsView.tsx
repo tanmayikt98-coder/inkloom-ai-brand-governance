@@ -17,6 +17,7 @@ import {
   ChevronRight,
   Info,
 } from "lucide-react";
+import { BoundingBoxViewerModal } from "../components/BoundingBoxViewerModal";
 
 const SEVERITY_BADGES: Record<Severity, string> = {
   CRITICAL: "bg-red-100 text-red-800 border-red-200",
@@ -44,6 +45,7 @@ export const ContentAuditsView: React.FC = () => {
   const [auditResult, setAuditResult] = useState<AuditRun | null>(null);
   const [isAuditing, setIsAuditing] = useState<boolean>(false);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
+  const [modalEvidence, setModalEvidence] = useState<{ id: string; quote?: string } | null>(null);
 
   const loadAssets = async () => {
     if (!activeBrand) return;
@@ -272,12 +274,27 @@ export const ContentAuditsView: React.FC = () => {
 
                       {/* Evidence Citation */}
                       {finding.exact_citation_text && (
-                        <div className="p-2 bg-white rounded border border-[#E7E2D8] text-[11px] flex items-center space-x-1.5">
-                          <FileText className="w-3.5 h-3.5 text-[#4A6B5B] shrink-0" />
-                          <span className="text-[#5C6460]">Citation:</span>
-                          <span className="font-medium text-[#1F2421] truncate">
-                            {finding.exact_citation_text}
-                          </span>
+                        <div className="flex items-center justify-between p-2.5 bg-white rounded-lg border border-[#E7E2D8] text-[11px] gap-2">
+                          <div className="flex items-center space-x-1.5 truncate">
+                            <FileText className="w-3.5 h-3.5 text-[#4A6B5B] shrink-0" />
+                            <span className="text-[#5C6460]">Citation:</span>
+                            <span className="font-medium text-[#1F2421] truncate">
+                              "{finding.exact_citation_text}"
+                            </span>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setModalEvidence({
+                                id: finding.evidence_id || "ev-bench-001",
+                                quote: finding.exact_citation_text || undefined,
+                              })
+                            }
+                            className="px-2 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 rounded text-[10px] font-bold flex items-center space-x-1 shrink-0 transition-all shadow-2xs"
+                          >
+                            <Sparkles className="w-2.5 h-2.5 text-indigo-600" />
+                            <span>PDF Bounding Box</span>
+                          </button>
                         </div>
                       )}
 
@@ -301,6 +318,14 @@ export const ContentAuditsView: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {modalEvidence && (
+        <BoundingBoxViewerModal
+          evidenceId={modalEvidence.id}
+          citedQuote={modalEvidence.quote}
+          onClose={() => setModalEvidence(null)}
+        />
+      )}
     </div>
   );
 };

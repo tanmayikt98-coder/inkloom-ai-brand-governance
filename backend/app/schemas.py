@@ -449,3 +449,112 @@ class GovernanceReportsResponse(BaseModel):
     campaigns_analyzed: int
     active_rules_count: int
 
+# ----------------- Round 3: Multi-Modal Bounding Box & Provenance -----------------
+class BoundingBoxCoordinates(BaseModel):
+    x0: float
+    y0: float
+    x1: float
+    y1: float
+    page_width: float = 612.0
+    page_height: float = 792.0
+
+class VisualPassageItem(BaseModel):
+    passage_id: str
+    page_num: int
+    text: str
+    bounding_box: BoundingBoxCoordinates
+    confidence: Optional[float] = 1.0
+
+class VisualDocumentResponse(BaseModel):
+    evidence_id: str
+    title: str
+    source_type: str
+    total_pages: int
+    passages: List[VisualPassageItem]
+    document_text: str
+
+class HybridRetrievalRequest(BaseModel):
+    query: str
+    top_k: int = 5
+    dense_weight: float = 0.65
+
+class HybridRetrievalResponse(BaseModel):
+    query: str
+    latency_ms: float
+    is_sub_400ms: bool
+    total_passages_indexed: int
+    results: List[Dict[str, Any]]
+
+class AdversarialBenchmarkResponse(BaseModel):
+    benchmark_title: str
+    total_samples: int
+    valid_samples: int
+    adversarial_samples: int
+    metrics: Dict[str, Any]
+    acceptance_criteria_results: Dict[str, str]
+    sample_results: List[Dict[str, Any]]
+
+# ----------------- Round 3: Automated Blast-Radius & Cascade -----------------
+class CascadeTriggerRequest(BaseModel):
+    fact_id: str
+    action: str = "DEPRECATED" # DEPRECATED, MODIFIED_METRIC, EXPIRED
+    new_metric_value: Optional[float] = None
+    reason: Optional[str] = None
+
+class CascadeTriggerResponse(BaseModel):
+    cascade_id: str
+    timestamp: str
+    target_fact_id: str
+    target_fact_claim: str
+    trigger_action: str
+    total_execution_ms: float
+    immediate_revocation_ms: float
+    acceptance_criteria_met: Dict[str, Any]
+    affected_assets_count: int
+    revoked_assets: List[Dict[str, Any]]
+    re_audit_diff_reports: List[Dict[str, Any]]
+    dispatched_webhook: Dict[str, Any]
+
+# ----------------- Round 3: Cryptographic WORM Ledger & Multi-Tenancy -----------------
+class WormLedgerBlockResponse(BaseModel):
+    index: int
+    timestamp: str
+    event_type: str
+    entity_type: str
+    entity_id: str
+    actor_name: str
+    description: str
+    previous_hash: str
+    entry_hash: str
+    signature: str
+    metadata: Optional[Dict[str, Any]] = None
+
+class WormVerificationResponse(BaseModel):
+    is_valid: bool
+    tamper_detected: bool
+    blocks_verified: int
+    merkle_root: str
+    merkle_tree_depth: int
+    verification_latency_ms: float
+    is_sub_second: bool
+    cryptographic_algorithm: str
+    regulatory_status: str
+
+class TenantOrganizationResponse(BaseModel):
+    id: str
+    name: str
+    slug: str
+    brand_count: int
+    asset_count: int
+    active_framework: str
+
+class TenantSwitchRequest(BaseModel):
+    organization_id: str
+
+class TenantIsolationVerificationResponse(BaseModel):
+    isolation_verified: bool
+    leak_rate_pct: float
+    total_cross_checks: int
+    organizations_tested: List[str]
+    isolation_report: Dict[str, Any]
+

@@ -1,14 +1,17 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { User, Brand, UserRole } from "../types";
+import { User, Brand, UserRole, TenantOrganization } from "../types";
 import { api, getActiveDemoRole, setDemoRole } from "../services/api";
 
 interface AuthContextType {
   currentUser: User | null;
   activeBrand: Brand | null;
   allBrands: Brand[];
+  activeOrg: TenantOrganization | null;
+  allOrgs: TenantOrganization[];
   demoUsers: User[];
   isLoading: boolean;
   switchRole: (role: UserRole) => Promise<void>;
+  switchTenant: (orgId: string) => Promise<void>;
   setActiveBrand: (brand: Brand) => void;
   hasRole: (...roles: UserRole[]) => boolean;
   canEditFacts: () => boolean;
@@ -25,6 +28,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [activeBrand, setActiveBrand] = useState<Brand | null>(null);
   const [allBrands, setAllBrands] = useState<Brand[]>([]);
+  const [activeOrg, setActiveOrg] = useState<TenantOrganization | null>(null);
+  const [allOrgs, setAllOrgs] = useState<TenantOrganization[]>([]);
   const [demoUsers, setDemoUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -39,11 +44,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const demos = await api.auth.getDemoUsers();
       setDemoUsers(demos);
 
+      // Fetch organizations (Round 3 Multi-Tenancy)
+      const orgs = await api.auth.listOrganizations();
+      setAllOrgs(orgs);
+      if (orgs.length > 0) {
+        const curOrg = orgs.find((o) => o.id === me.organization_id) || orgs[0];
+        setActiveOrg(curOrg);
+      }
+
       // Fetch brands
       const brands = await api.brands.list();
       setAllBrands(brands);
       if (brands.length > 0) {
-        // Set Aurevia as default
         const aurevia = brands.find((b) => b.name.toLowerCase().includes("aurevia")) || brands[0];
         setActiveBrand(aurevia);
       }
@@ -57,6 +69,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     loadInitialData();
   }, []);
+
+  const switchTenant = async (orgId: string) => {
+    try {
+      setIsLoading(true);
+      const res = await api.auth.switchTenant(orgId);
+      setCurrentUser(res.user);
+      const targetOrg = allOrgs.find((o) => o.id === orgId) || null;
+      setActiveOrg(targetOrg);
+      // Reload brands for newly switched tenant
+      const brands = await api.brands.list();
+      setAllBrands(brands);
+      if (brands.length > 0) {
+        setActiveBrand(brands[0]);
+      }
+    } catch (err) {
+      console.error("[Inkloom AI] Failed switching tenant:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const switchRole = async (role: UserRole) => {
     try {
@@ -88,9 +120,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         currentUser,
         activeBrand,
         allBrands,
+        activeOrg,
+        allOrgs,
         demoUsers,
         isLoading,
         switchRole,
+        switchTenant,
         setActiveBrand,
         hasRole,
         canEditFacts,

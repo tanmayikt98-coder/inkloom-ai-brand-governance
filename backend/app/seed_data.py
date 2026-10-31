@@ -30,8 +30,9 @@ def seed_database(db: Session = None, force: bool = False):
         # Check if already seeded unless forced
         if not force:
             existing_org = db.query(Organization).filter_by(slug="aurevia-corp").first()
-            if existing_org:
-                print("[Inkloom AI] Database already seeded.")
+            existing_novubio = db.query(Organization).filter_by(slug="novubio-pharma").first()
+            if existing_org and existing_novubio:
+                print("[Inkloom AI] Database already fully seeded with multi-tenant workspaces.")
                 return
 
         print("[Inkloom AI] Seeding database with Aurevia brand knowledge, demo users, and assets...")
@@ -541,8 +542,188 @@ def seed_database(db: Session = None, force: bool = False):
             AuditEvent(id="evt-006", organization_id=org.id, actor_id="user-creator-03", event_type="AUDIT_RUN_EXECUTED", entity_type="AuditRun", entity_id=audit2.id, description="Audit engine confirmed Revision 2 COMPLIANT with approved benchmark"),
         ]
         db.add_all(events)
+        db.flush()
+
+        # 12. Seed Tenant 2: NovuBio Pharmaceuticals (FDA regulated)
+        org2 = Organization(
+            id="org-novubio-002",
+            name="NovuBio Pharmaceuticals",
+            slug="novubio-pharma"
+        )
+        db.add(org2)
+        db.flush()
+
+        user_novubio = User(
+            id="user-novubio-admin",
+            organization_id=org2.id,
+            email="compliance@novubio.internal",
+            full_name="Dr. Evelyn Vance (Chief Regulatory Officer)",
+            hashed_password=default_pwd,
+            role=UserRole.ORGANIZATION_ADMIN
+        )
+        db.add(user_novubio)
+        db.flush()
+
+        brand2 = Brand(
+            id="brand-novubio-001",
+            organization_id=org2.id,
+            name="NovuBio Oncology",
+            tagline="Precision Immuno-Therapeutics",
+            description="Clinical-stage biopharmaceutical brand operating under FDA 21 CFR Part 202 regulations."
+        )
+        db.add(brand2)
+        db.flush()
+
+        ev_novubio = EvidenceSource(
+            id="ev-novubio-001",
+            brand_id=brand2.id,
+            title="Phase III Clinical Efficacy Trial NB-420 Final Report (FDA Investigational Study)",
+            source_type=EvidenceType.AUDIT_DOCUMENT,
+            url="https://fda.gov/cder/ndas/2026/nb420-phase3.pdf",
+            document_text="CLINICAL STUDY FINDINGS: Multi-center double-blind randomized clinical trial of Compound NB-420 demonstrated 42.5% progression-free survival uplift compared to baseline standard of care (p < 0.001) across 1,200 enrolled patients. Approved for adult solid tumor oncology indications only.",
+            publication_date=now - timedelta(days=45),
+            expiration_date=now + timedelta(days=365),
+            verification_status=EvidenceStatus.VERIFIED,
+            responsible_owner="Medical Affairs Clinical Directorate",
+            verification_notes="Certified under FDA 21 CFR Part 202 truth in prescription advertising."
+        )
+        db.add(ev_novubio)
+        db.flush()
+
+        fact_novubio = BrandFact(
+            id="fact-novubio-001",
+            brand_id=brand2.id,
+            claim_statement="NB-420 delivers 42.5% progression-free survival rate improvement over control group.",
+            category="clinical_efficacy",
+            status=FactStatus.APPROVED,
+            metric_value=42.5,
+            metric_unit="%",
+            validity_start=now - timedelta(days=45),
+            validity_end=now + timedelta(days=365),
+            responsible_owner="Medical Affairs",
+            notes="Requires mandatory FDA indication and contraindication disclosures on all physician collateral."
+        )
+        db.add(fact_novubio)
+        db.flush()
+
+        rule_novubio = BrandRule(
+            id="rule-fda-001",
+            brand_id=brand2.id,
+            rule_code="RULE-FDA-INDICATION",
+            name="Mandatory FDA Black-Box Risk & Indication Statement",
+            rule_type=RuleType.REQUIRED_DISCLAIMER,
+            check_pattern="Indicated for adults with refractory solid tumors. See full prescribing information for adverse reactions.",
+            failure_message="All clinical promotional assets must include the full FDA-approved indication and adverse reaction warnings.",
+            severity=Severity.CRITICAL,
+            is_active=True
+        )
+        db.add(rule_novubio)
+        db.flush()
+
+        asset_novubio = MarketingAsset(
+            id="asset-novubio-001",
+            organization_id=org2.id,
+            brand_id=brand2.id,
+            title="NB-420 Healthcare Provider Clinical Monograph",
+            asset_type=AssetType.PRODUCT_DESCRIPTION,
+            campaign_name="HCP Clinical Launch 2026",
+            status=AssetStatus.APPROVED,
+            author_id=user_novubio.id
+        )
+        db.add(asset_novubio)
+        db.flush()
+
+        # 13. Seed Tenant 3: FinEdge Capital Group (SEC regulated)
+        org3 = Organization(
+            id="org-finedge-003",
+            name="FinEdge Capital Group",
+            slug="finedge-capital"
+        )
+        db.add(org3)
+        db.flush()
+
+        user_finedge = User(
+            id="user-finedge-admin",
+            organization_id=org3.id,
+            email="legal@finedge.internal",
+            full_name="Alexander Hayes (Chief Compliance Officer)",
+            hashed_password=default_pwd,
+            role=UserRole.ORGANIZATION_ADMIN
+        )
+        db.add(user_finedge)
+        db.flush()
+
+        brand3 = Brand(
+            id="brand-finedge-001",
+            organization_id=org3.id,
+            name="FinEdge Prime",
+            tagline="Algorithmic Wealth Intelligence & Custodial Clearing",
+            description="Institutional digital asset custodian and clearinghouse operating under SEC Regulation S-K."
+        )
+        db.add(brand3)
+        db.flush()
+
+        ev_finedge = EvidenceSource(
+            id="ev-finedge-001",
+            brand_id=brand3.id,
+            title="FinEdge Q4 SEC Regulation S-K Liquidity & Asset Custody Audit",
+            source_type=EvidenceType.AUDIT_DOCUMENT,
+            url="https://sec.gov/edgar/data/finedge-q4-2025.pdf",
+            document_text="SEC REGULATION S-K DISCLOSURE: FinEdge maintains 100% 1:1 segregated cold-storage reserve ratio for all custodial institutional balances. Verified by independent audit firm Deloitte & Touche LLP as of December 31, 2025.",
+            publication_date=now - timedelta(days=70),
+            expiration_date=now + timedelta(days=295),
+            verification_status=EvidenceStatus.VERIFIED,
+            responsible_owner="Institutional Custody Audit Desk",
+            verification_notes="Signed audit opinion by Deloitte & Touche LLP."
+        )
+        db.add(ev_finedge)
+        db.flush()
+
+        fact_finedge = BrandFact(
+            id="fact-finedge-001",
+            brand_id=brand3.id,
+            claim_statement="FinEdge maintains 100% 1:1 segregated reserve backing for all institutional custody accounts.",
+            category="custodial_solvency",
+            status=FactStatus.APPROVED,
+            metric_value=100.0,
+            metric_unit="%",
+            validity_start=now - timedelta(days=70),
+            validity_end=now + timedelta(days=295),
+            responsible_owner="Compliance Desk",
+            notes="Deloitte audited reserve report on record."
+        )
+        db.add(fact_finedge)
+        db.flush()
+
+        rule_finedge = BrandRule(
+            id="rule-sec-001",
+            brand_id=brand3.id,
+            rule_code="RULE-SEC-RISK-NOTICE",
+            name="Mandatory SEC Securities & Investment Risk Disclosure",
+            rule_type=RuleType.REQUIRED_DISCLAIMER,
+            check_pattern="Past performance does not guarantee future results. Digital assets are subject to market volatility.",
+            failure_message="All marketing and client collateral must display SEC risk disclosure.",
+            severity=Severity.CRITICAL,
+            is_active=True
+        )
+        db.add(rule_finedge)
+        db.flush()
+
+        asset_finedge = MarketingAsset(
+            id="asset-finedge-001",
+            organization_id=org3.id,
+            brand_id=brand3.id,
+            title="FinEdge Institutional Custody Overview Whitepaper",
+            asset_type=AssetType.CAMPAIGN_BRIEF,
+            campaign_name="Institutional Asset Protection 2026",
+            status=AssetStatus.APPROVED,
+            author_id=user_finedge.id
+        )
+        db.add(asset_finedge)
+        db.flush()
+
         db.commit()
-        print("[Inkloom AI] Fictional demonstration workspace 'Aurevia' seeded successfully.")
+        print("[Inkloom AI] Multi-tenant demonstration workspaces seeded successfully (Aurevia, NovuBio, FinEdge).")
 
     except Exception as e:
         db.rollback()

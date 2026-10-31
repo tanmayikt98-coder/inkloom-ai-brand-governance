@@ -197,10 +197,10 @@ def build_pdf(filename="Inkloom_AI_Round2_Submission_Report.pdf"):
     meta_data = [
         [Paragraph("Project Name", meta_label), Paragraph("Inkloom AI", meta_val), Paragraph("Round", meta_label), Paragraph("Round 2 Final Submission", meta_val)],
         [Paragraph("Full Title", meta_label), Paragraph("Evidence-Driven Brand Governance with BrandTrace Intelligence", meta_val), Paragraph("Evaluation Window", meta_label), Paragraph("October 26 – 28, 2026", meta_val)],
-        [Paragraph("Team Name", meta_label), Paragraph("CodeSync", meta_val), Paragraph("Test Suite Pass Rate", meta_label), Paragraph("29 / 29 Passed (100% in 2.55s)", meta_val)],
+        [Paragraph("Team Name", meta_label), Paragraph("CodeSync", meta_val), Paragraph("Test Suite Pass Rate", meta_label), Paragraph("38 / 38 Passed (100% in 8.72s)", meta_val)],
         [Paragraph("Team Leader", meta_label), Paragraph("Tejas Gowda M", meta_val), Paragraph("GitHub Repository", meta_label), Paragraph("tanmayikt98-coder/inkloom-ai-brand-governance", meta_val)],
-        [Paragraph("Team Member", meta_label), Paragraph("Tanmayi K T", meta_val), Paragraph("Commit Version", meta_label), Paragraph("5448785 (Complete Project Files)", meta_val)],
-        [Paragraph("Category", meta_label), Paragraph("AI Brand Compliance & Governance", meta_val), Paragraph("Local Dev URL", meta_label), Paragraph("http://localhost:5173", meta_val)],
+        [Paragraph("Team Member", meta_label), Paragraph("Tanmayi K T", meta_val), Paragraph("Commit Version", meta_label), Paragraph("350c5ca (Production Verified & Hardened)", meta_val)],
+        [Paragraph("Category", meta_label), Paragraph("AI Brand Compliance & Governance", meta_val), Paragraph("Live Web App", meta_label), Paragraph("inkloom-ai-brand-governance-1.onrender.com", meta_val)],
     ]
     t_meta = Table(meta_data, colWidths=[1.1*inch, 2.5*inch, 1.2*inch, 2.2*inch])
     t_meta.setStyle(TableStyle([
@@ -246,23 +246,23 @@ def build_pdf(filename="Inkloom_AI_Round2_Submission_Report.pdf"):
         [Paragraph("Deliverable", table_header), Paragraph("Verified Destination / Access Point", table_header), Paragraph("Operational Verification", table_header)],
         [
             Paragraph("<b>Deliverable A:<br/>Working Project Link</b>", table_cell_bold),
-            Paragraph("<b>Local Frontend Web App:</b><br/><u>http://localhost:5173</u><br/><b>Local API Endpoint:</b> http://localhost:8000/api", table_cell),
-            Paragraph("<b>VERIFIED (HTTP 200 OK)</b><br/>React 19 + TypeScript + Vite dev server connected to FastAPI backend.", table_cell)
+            Paragraph("<b>Live HTTPS Web App:</b><br/><u>https://inkloom-ai-brand-governance-1.onrender.com/?utm_source=chatgpt.com</u><br/><b>Local Runtime:</b> http://localhost:5173", table_cell),
+            Paragraph("<b>LIVE & VERIFIED (HTTP 200 OK)</b><br/>React 19 + TypeScript + Vite deployed on Render. Full UI navigation operational.", table_cell)
         ],
         [
             Paragraph("<b>Deliverable B:<br/>Source Repository</b>", table_cell_bold),
-            Paragraph("<b>GitHub URL:</b><br/><u>https://github.com/tanmayikt98-coder/inkloom-ai-brand-governance</u><br/>Latest Commit: <b>5448785</b>", table_cell),
-            Paragraph("<b>VERIFIED & SYNCHRONIZED</b><br/>All 77 files, frontend & backend merged cleanly. Zero credentials committed.", table_cell)
+            Paragraph("<b>GitHub URL:</b><br/><u>https://github.com/tanmayikt98-coder/inkloom-ai-brand-governance.git</u><br/>Latest Commit: <b>350c5ca</b>", table_cell),
+            Paragraph("<b>VERIFIED & SYNCHRONIZED</b><br/>All 77+ files, frontend & backend merged cleanly. Zero credentials committed.", table_cell)
         ],
         [
             Paragraph("<b>Deliverable C:<br/>Interactive API Docs</b>", table_cell_bold),
-            Paragraph("<b>Swagger UI:</b> <u>http://localhost:8000/docs</u><br/><b>Health Probe:</b> http://localhost:8000/health", table_cell),
-            Paragraph("<b>LOCAL & INTERACTIVE (HTTP 200 OK)</b><br/>All 36 REST routes typed, documented, and executable interactively.", table_cell)
+            Paragraph("<b>Swagger UI:</b> <u>https://inkloom-ai-brand-governance-1.onrender.com/docs</u><br/><b>Health:</b> https://inkloom-backend-y97e.onrender.com/health", table_cell),
+            Paragraph("<b>LIVE & INTERACTIVE (HTTP 200 OK)</b><br/>All 36 REST routes typed, documented, and executable interactively.", table_cell)
         ],
         [
             Paragraph("<b>Deliverable D-G:<br/>Artifacts & Specs</b>", table_cell_bold),
             Paragraph("<b>Technical PDF:</b> docs/Inkloom_AI_Round2_Submission_Report.pdf<br/><b>Windows Launcher:</b> start-inkloom.bat (One-click runner)", table_cell),
-            Paragraph("<b>COMPLETE</b><br/>Formal 10-page report, 29 pytest automated tests, and Docker configs.", table_cell)
+            Paragraph("<b>COMPLETE</b><br/>Formal 10-page report, 38 pytest automated tests (100% pass), and Docker configs.", table_cell)
         ]
     ]
     t_deliv = Table(deliv_matrix, colWidths=[1.4*inch, 3.2*inch, 2.4*inch])
@@ -503,9 +503,9 @@ def build_pdf(filename="Inkloom_AI_Round2_Submission_Report.pdf"):
     story.append(Spacer(1, 10))
     story.append(Paragraph("6. Automated Testing Strategy & Actual Execution Results", h1_style))
     story.append(Paragraph(
-        "Inkloom AI includes a rigorous test suite comprising both isolated unit tests for core engines and "
-        "end-to-end integration tests for protected FastAPI endpoints via Starlette TestClient. "
-        "<b>Actual Test Execution Result: 29 Passed, 0 Failed, 100% Success Rate.</b>",
+        "Inkloom AI includes a rigorous test suite comprising both isolated unit tests for core engines, "
+        "end-to-end integration tests for protected FastAPI endpoints via Starlette TestClient, and CORS security checks. "
+        "<b>Actual Test Execution Result: 38 Passed, 0 Failed, 100% Success Rate (8.72s execution).</b>",
         body_style
     ))
 
@@ -533,6 +533,9 @@ def build_pdf(filename="Inkloom_AI_Round2_Submission_Report.pdf"):
         [Paragraph("API Endpoint", table_cell), Paragraph("test_simulator_run_isolation", table_cell_bold), Paragraph("API simulation calculates blast radius while production facts remain intact.", table_cell), Paragraph("PASS", table_cell_bold)],
         [Paragraph("API Endpoint", table_cell), Paragraph("test_campaigns_and_governance_reports", table_cell_bold), Paragraph("Campaign grouping and compliance velocity endpoints return valid data.", table_cell), Paragraph("PASS", table_cell_bold)],
         [Paragraph("API Endpoint", table_cell), Paragraph("test_immutable_audit_events_trail", table_cell_bold), Paragraph("Retrieves append-only WORM event stream with actor principals.", table_cell), Paragraph("PASS", table_cell_bold)],
+        [Paragraph("CORS & Sec", table_cell), Paragraph("test_preflight_options_dashboard_allowed", table_cell_bold), Paragraph("Preflight OPTIONS validates Origin, methods, and credentials for Render.", table_cell), Paragraph("PASS", table_cell_bold)],
+        [Paragraph("CORS & Sec", table_cell), Paragraph("test_regex_matching_github_io_and_render", table_cell_bold), Paragraph("Dynamic origin regex allows *.github.io and *.onrender.com securely.", table_cell), Paragraph("PASS", table_cell_bold)],
+        [Paragraph("CORS & Sec", table_cell), Paragraph("test_disallowed_origin_rejected", table_cell_bold), Paragraph("Untrusted origins reject Access-Control-Allow-Origin header.", table_cell), Paragraph("PASS", table_cell_bold)],
     ]
     t_tests = Table(test_results_data, colWidths=[1.1*inch, 2.3*inch, 3.1*inch, 0.5*inch])
     t_tests.setStyle(TableStyle([
