@@ -339,7 +339,7 @@ def build_cover_page(styles):
         [Paragraph("Live Application (CDN)", styles["meta_label"]), Paragraph("<u>https://tanmayikt98-coder.github.io/inkloom-ai-brand-governance/</u>", styles["meta_val"])],
         [Paragraph("Backend API Mirror", styles["meta_label"]), Paragraph("<u>https://inkloom-ai-brand-governance.onrender.com</u>", styles["meta_val"])],
         [Paragraph("Source Repository", styles["meta_label"]), Paragraph("<u>https://github.com/tanmayikt98-coder/inkloom-ai-brand-governance</u>", styles["meta_val"])],
-        [Paragraph("Submission Date", styles["meta_label"]), Paragraph("October 2026", styles["meta_val"])],
+        
     ]
     t_meta = Table(meta_data, colWidths=[1.8*inch, 5.3*inch])
     t_meta.setStyle(TableStyle([
@@ -398,7 +398,7 @@ def build_toc_page(styles, toc_page_map=None):
         ("SECTION 13", "Security, Reliability, and Enterprise Readiness", 18),
         ("SECTION 14", "Team Contributions and Collaborative Methodology", 19),
         ("SECTION 15", "Product Roadmap and Future Development Plan", 20),
-        ("SECTION 16", "Conclusion and Official Submission Certification", 21),
+        
     ]
 
     toc_rows = []
@@ -1466,7 +1466,6 @@ def build_roadmap(styles):
         ('VALIGN', (0,0), (-1,-1), 'TOP'),
     ]))
     story.append(t_road)
-    story.append(PageBreak())
     return story
 
 
@@ -1558,8 +1557,7 @@ def build_story(styles, toc_page_map=None):
     # 15. Product Roadmap
     story.extend(build_roadmap(styles))
 
-    # 16. Conclusion & Official Submission Certification
-    story.extend(build_conclusion(styles))
+
 
     return story
 
