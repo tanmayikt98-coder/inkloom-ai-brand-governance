@@ -98,127 +98,154 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ onNavigate, onStartD
   ];
 
   return (
-    <div className="p-6 sm:p-8 space-y-8 max-w-7xl mx-auto">
-      {/* Title & Action Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-[#E8E6D9] dark:border-[#2E2C26] gap-4">
-        <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold text-[#26251E] dark:text-[#FCFDFD] tracking-tight">
-              Governance Posture — {activeBrand?.name || "Aurevia"}
-            </h1>
-            <span className="px-3 py-0.5 rounded-full text-[10px] font-mono font-medium bg-[#F3F2EB] dark:bg-[#1C1B16] text-[#26251E] dark:text-[#FCFDFD] border border-[#E8E6D9] dark:border-[#2E2C26]">
-              TENANT: AUREVIA-001
-            </span>
-          </div>
-          <p className="text-xs text-[#6F6C5B] dark:text-[#A9A593] mt-1">
-            Real-time status of brand claims, evidence substantiation, and deterministic maker-checker gates.
-          </p>
+    <div className="space-y-12 max-w-7xl mx-auto pb-16">
+      {/* Nudge-Style Grand Hero Section */}
+      <section className="text-center pt-8 pb-4 px-4 max-w-4xl mx-auto space-y-6">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F3F2EB] dark:bg-[#1C1B16] border border-[#E8E6D9] dark:border-[#2E2C26] text-xs font-medium text-[#26251E] dark:text-[#FCFDFD] shadow-xs">
+          <span className="w-2 h-2 rounded-full bg-[#F97316] animate-pulse" />
+          <span>BrandTrace v3.0 • Continuous Deterministic Governance</span>
+          <span className="text-[#6F6C5B] dark:text-[#A9A593]">|</span>
+          <span className="font-mono text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">RFC 3161 Attested</span>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2.5">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-[#26251E] dark:text-[#FCFDFD] leading-[1.12]">
+          Evidence before judgment.
+          <span className="block text-[#6F6C5B] dark:text-[#A9A593] font-normal text-2xl sm:text-3xl md:text-4xl mt-3">
+            Continuous brand governance for enterprise teams.
+          </span>
+        </h1>
+
+        <p className="text-sm sm:text-base text-[#6F6C5B] dark:text-[#A9A593] max-w-2xl mx-auto leading-relaxed font-sans">
+          Mathematically substantiates every marketing claim against ground-truth benchmarks. Enforces sub-second cascade revocation, maker-checker sign-offs, and tamper-evident WORM provenance.
+        </p>
+
+        <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
           {onStartDemoTour && (
             <button
               onClick={onStartDemoTour}
-              className="px-4 py-2 bg-[#F3F2EB] dark:bg-[#1C1B16] hover:bg-[#E8E6D9] dark:hover:bg-[#25241E] text-[#26251E] dark:text-[#FCFDFD] text-xs font-semibold rounded-full border border-[#E8E6D9] dark:border-[#2E2C26] shadow-xs transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer"
+              className="px-6 py-3 rounded-full bg-[#26251E] text-white dark:bg-white dark:text-[#26251E] text-xs font-bold shadow-md hover:opacity-90 active:scale-95 transition-all flex items-center gap-2 cursor-pointer"
             >
-              <Sparkles className="w-3.5 h-3.5 text-orange-500" />
-              <span>Launch Guided Demo</span>
+              <Play className="w-3.5 h-3.5 fill-current text-[#F97316]" />
+              <span>Launch Guided Walkthrough</span>
             </button>
           )}
 
           <button
-            onClick={handleResetData}
-            disabled={isResetting}
-            className="px-4 py-2 bg-[#F3F2EB] dark:bg-[#1C1B16] hover:bg-[#E8E6D9] dark:hover:bg-[#25241E] text-[#26251E] dark:text-[#FCFDFD] text-xs font-semibold rounded-full border border-[#E8E6D9] dark:border-[#2E2C26] transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer disabled:opacity-50"
-            title="Reset to 12 facts, 8 evidence docs, 6 rules, and 9 assets"
+            onClick={() => onNavigate("content-audits")}
+            className="px-6 py-3 rounded-full bg-[#FCFDFD] dark:bg-[#181714] text-[#26251E] dark:text-[#FCFDFD] border border-[#E8E6D9] dark:border-[#2E2C26] text-xs font-bold hover:bg-[#F3F2EB] dark:hover:bg-[#1C1B16] active:scale-95 transition-all flex items-center gap-2 shadow-xs cursor-pointer"
           >
-            <RotateCcw className={`w-3.5 h-3.5 text-orange-500 ${isResetting ? "animate-spin" : ""}`} />
-            <span>Reset Demo Data</span>
+            <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+            <span>Audit Marketing Collateral</span>
           </button>
 
           <button
-            onClick={() => onNavigate("content-audits")}
-            className="px-4 py-2 bg-[#26251E] hover:bg-[#3B392F] text-[#FCFDFD] dark:bg-[#FCFDFD] dark:text-[#26251E] dark:hover:bg-[#E8E6D9] text-xs font-semibold rounded-full shadow-xs transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer"
+            onClick={() => onNavigate("impact-map")}
+            className="px-6 py-3 rounded-full bg-[#F3F2EB] dark:bg-[#1C1B16] text-[#26251E] dark:text-[#FCFDFD] border border-[#E8E6D9] dark:border-[#2E2C26] text-xs font-bold hover:bg-[#E8E6D9] active:scale-95 transition-all flex items-center gap-2 cursor-pointer shadow-xs"
           >
-            <ShieldCheck className="w-4 h-4 text-orange-400" />
-            <span>Audit Content Now</span>
+            <Zap className="w-3.5 h-3.5 text-[#F97316]" />
+            <span>Simulate Cascade Blast Radius</span>
+          </button>
+
+          <button
+            onClick={handleResetData}
+            disabled={isResetting}
+            className="px-4 py-3 rounded-full bg-transparent text-[#6F6C5B] dark:text-[#A9A593] hover:text-[#26251E] dark:hover:text-white text-xs font-medium active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer"
+            title="Reset and reload complete 12-fact demo dataset"
+          >
+            <RotateCcw className={`w-3.5 h-3.5 text-[#F97316] ${isResetting ? "animate-spin" : ""}`} />
+            <span>{isResetting ? "Seeding..." : "Reset Data"}</span>
           </button>
         </div>
-      </div>
+      </section>
 
-      {/* KPI Metric Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* KPI Metric Cards (Nudge-Style Spacious Curved Cards) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 px-4 sm:px-6">
         {/* Approved Facts */}
-        <div className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-2xs hover:border-[#C5C1AF] transition-all">
+        <div
+          onClick={() => onNavigate("knowledge-hub")}
+          className="bg-[#FCFDFD] dark:bg-[#181714] p-7 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-xs hover:border-[#26251E] dark:hover:border-white transition-all cursor-pointer group"
+        >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-[#6F6C5B] dark:text-[#A9A593] uppercase tracking-wider">Brand Facts</span>
-            <span className="p-2 rounded-full bg-[#F3F2EB] dark:bg-[#25241E] text-[#26251E] dark:text-[#FCFDFD]">
-              <FileText className="w-4 h-4" />
+            <span className="text-xs font-mono font-bold text-[#6F6C5B] dark:text-[#A9A593] uppercase tracking-wider">Approved Brand Facts</span>
+            <span className="p-2.5 rounded-full bg-[#F3F2EB] dark:bg-[#25241E] text-[#26251E] dark:text-[#FCFDFD] group-hover:scale-110 transition-transform">
+              <FileText className="w-4 h-4 text-[#F97316]" />
             </span>
           </div>
-          <div className="mt-4 flex items-baseline justify-between">
-            <span className="text-3xl font-extrabold text-[#26251E] dark:text-[#FCFDFD] tracking-tight">{data?.total_facts || 12}</span>
-            <span className="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-[#EBF2EE] dark:bg-emerald-950/60 text-[#3D5A4C] dark:text-emerald-300 border border-[#D1E0D7] dark:border-emerald-800">
-              100% Verified
+          <div className="mt-5 flex items-baseline justify-between">
+            <span className="text-4xl font-extrabold text-[#26251E] dark:text-[#FCFDFD] tracking-tight">{data?.total_facts || 12}</span>
+            <span className="text-[11px] font-medium px-3 py-0.5 rounded-full bg-[#EBF2EE] dark:bg-emerald-950/60 text-[#3D5A4C] dark:text-emerald-300 border border-[#D1E0D7] dark:border-emerald-800">
+              100% Grounded
             </span>
           </div>
-          <p className="text-[11px] text-[#6F6C5B] dark:text-[#A9A593] mt-2">Grounded in verified benchmark reports</p>
+          <p className="text-xs text-[#6F6C5B] dark:text-[#A9A593] mt-3 leading-relaxed">
+            Bound to active benchmark reports &amp; SLAs in the Knowledge Hub.
+          </p>
         </div>
 
         {/* Pending Reviews */}
-        <div className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-2xs hover:border-[#C5C1AF] transition-all">
+        <div
+          onClick={() => onNavigate("review-queue")}
+          className="bg-[#FCFDFD] dark:bg-[#181714] p-7 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-xs hover:border-[#26251E] dark:hover:border-white transition-all cursor-pointer group"
+        >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-[#6F6C5B] dark:text-[#A9A593] uppercase tracking-wider">Review Queue</span>
-            <span className="p-2 rounded-full bg-[#FEF7EE] dark:bg-[#25241E] text-amber-700 dark:text-amber-400">
-              <Clock className="w-4 h-4" />
+            <span className="text-xs font-mono font-bold text-[#6F6C5B] dark:text-[#A9A593] uppercase tracking-wider">Review Queue</span>
+            <span className="p-2.5 rounded-full bg-[#F3F2EB] dark:bg-[#25241E] text-amber-700 dark:text-amber-400 group-hover:scale-110 transition-transform">
+              <Clock className="w-4 h-4 text-amber-600" />
             </span>
           </div>
-          <div className="mt-4 flex items-baseline justify-between">
-            <span className="text-3xl font-extrabold text-[#26251E] dark:text-[#FCFDFD] tracking-tight">{data?.pending_reviews_count || 5}</span>
-            <button
-              onClick={() => onNavigate("review-queue")}
-              className="text-[11px] font-medium text-orange-600 dark:text-orange-400 hover:underline flex items-center"
-            >
-              Inspect Queue <ArrowRight className="w-3 h-3 ml-0.5" />
-            </button>
+          <div className="mt-5 flex items-baseline justify-between">
+            <span className="text-4xl font-extrabold text-[#26251E] dark:text-[#FCFDFD] tracking-tight">{data?.pending_reviews_count || 3}</span>
+            <span className="text-[11px] font-medium px-3 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-200">
+              Maker-Checker
+            </span>
           </div>
-          <p className="text-[11px] text-[#6F6C5B] dark:text-[#A9A593] mt-2">Awaiting maker-checker sign-off</p>
+          <p className="text-xs text-[#6F6C5B] dark:text-[#A9A593] mt-3 leading-relaxed">
+            Awaiting executive sign-off with strict segregation of duties.
+          </p>
         </div>
 
         {/* Evidence Sources */}
-        <div className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-2xs hover:border-[#C5C1AF] transition-all">
+        <div
+          onClick={() => onNavigate("knowledge-hub")}
+          className="bg-[#FCFDFD] dark:bg-[#181714] p-7 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-xs hover:border-[#26251E] dark:hover:border-white transition-all cursor-pointer group"
+        >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-[#6F6C5B] dark:text-[#A9A593] uppercase tracking-wider">Evidence Sources</span>
-            <span className="p-2 rounded-full bg-[#F3F2EB] dark:bg-[#25241E] text-[#26251E] dark:text-[#FCFDFD]">
-              <ShieldCheck className="w-4 h-4" />
+            <span className="text-xs font-mono font-bold text-[#6F6C5B] dark:text-[#A9A593] uppercase tracking-wider">Evidence Sources</span>
+            <span className="p-2.5 rounded-full bg-[#F3F2EB] dark:bg-[#25241E] text-[#26251E] dark:text-[#FCFDFD] group-hover:scale-110 transition-transform">
+              <ShieldCheck className="w-4 h-4 text-emerald-600" />
             </span>
           </div>
-          <div className="mt-4 flex items-baseline justify-between">
-            <span className="text-3xl font-extrabold text-[#26251E] dark:text-[#FCFDFD] tracking-tight">{data?.total_evidence_sources || 8}</span>
-            <span className="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-[#F3F2EB] dark:bg-[#1C1B16] text-[#26251E] dark:text-[#FCFDFD] border border-[#E8E6D9] dark:border-[#2E2C26]">
-              Audits &amp; SLAs
+          <div className="mt-5 flex items-baseline justify-between">
+            <span className="text-4xl font-extrabold text-[#26251E] dark:text-[#FCFDFD] tracking-tight">{data?.total_evidence_sources || 8}</span>
+            <span className="text-[11px] font-medium px-3 py-0.5 rounded-full bg-[#F3F2EB] dark:bg-[#1C1B16] text-[#26251E] dark:text-[#FCFDFD] border border-[#E8E6D9] dark:border-[#2E2C26]">
+              PyMuPDF Verified
             </span>
           </div>
-          <p className="text-[11px] text-[#6F6C5B] dark:text-[#A9A593] mt-2">
-            {data?.expired_evidence_count ? `${data.expired_evidence_count} requiring renewal` : "All records active"}
+          <p className="text-xs text-[#6F6C5B] dark:text-[#A9A593] mt-3 leading-relaxed">
+            Exact bounding-box coordinates mapped on certified source PDFs.
           </p>
         </div>
 
         {/* Active Collateral */}
-        <div className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-2xs hover:border-[#C5C1AF] transition-all">
+        <div
+          onClick={() => onNavigate("content-audits")}
+          className="bg-[#FCFDFD] dark:bg-[#181714] p-7 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-xs hover:border-[#26251E] dark:hover:border-white transition-all cursor-pointer group"
+        >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-[#6F6C5B] dark:text-[#A9A593] uppercase tracking-wider">Active Collateral</span>
-            <span className="p-2 rounded-full bg-[#FDF2F4] dark:bg-[#25241E] text-rose-700 dark:text-rose-400">
-              <TrendingUp className="w-4 h-4" />
+            <span className="text-xs font-mono font-bold text-[#6F6C5B] dark:text-[#A9A593] uppercase tracking-wider">Active Collateral</span>
+            <span className="p-2.5 rounded-full bg-[#F3F2EB] dark:bg-[#25241E] text-rose-700 dark:text-rose-400 group-hover:scale-110 transition-transform">
+              <TrendingUp className="w-4 h-4 text-[#F97316]" />
             </span>
           </div>
-          <div className="mt-4 flex items-baseline justify-between">
-            <span className="text-3xl font-extrabold text-[#26251E] dark:text-[#FCFDFD] tracking-tight">{data?.total_assets || 9}</span>
-            <span className="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-[#EBF2EE] dark:bg-emerald-950/60 text-[#3D5A4C] dark:text-emerald-300 border border-[#D1E0D7] dark:border-emerald-800">
+          <div className="mt-5 flex items-baseline justify-between">
+            <span className="text-4xl font-extrabold text-[#26251E] dark:text-[#FCFDFD] tracking-tight">{data?.total_assets || 9}</span>
+            <span className="text-[11px] font-medium px-3 py-0.5 rounded-full bg-[#EBF2EE] dark:bg-emerald-950/60 text-[#3D5A4C] dark:text-emerald-300 border border-[#D1E0D7] dark:border-emerald-800">
               {data?.compliant_assets_count || 4} Approved
             </span>
           </div>
-          <p className="text-[11px] text-[#6F6C5B] dark:text-[#A9A593] mt-2">Across Landing Pages, Ads &amp; Emails</p>
+          <p className="text-xs text-[#6F6C5B] dark:text-[#A9A593] mt-3 leading-relaxed">
+            Landing pages, social copy, and briefs audited in &lt;15ms.
+          </p>
         </div>
       </div>
 
