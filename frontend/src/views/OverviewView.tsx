@@ -14,6 +14,9 @@ import {
   Activity,
   History,
   Sparkles,
+  Zap,
+  Lock,
+  Cpu,
   Layers,
   RotateCcw,
   Play,
@@ -212,6 +215,94 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ onNavigate, onStartD
             </span>
           </div>
           <p className="text-[11px] text-[#5C6460] dark:text-gray-400 mt-1">Across Landing Pages, Ads &amp; Emails</p>
+        </div>
+      </div>
+
+      {/* Enterprise Governance Capabilities */}
+      <div className="space-y-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-1">
+          <div>
+            <h2 className="text-sm font-bold text-[#1F2421] dark:text-white uppercase tracking-wider">
+              Governance Intelligence &amp; Verification Engines
+            </h2>
+            <p className="text-xs text-[#5C6460] dark:text-gray-400">
+              Deterministic evidence grounding, automated cascade invalidation, and cryptographic compliance proofs.
+            </p>
+          </div>
+          <span className="text-[11px] text-[#5C6460] dark:text-gray-400 font-mono hidden md:inline-block">
+            Sub-400ms Hybrid Retrieval • &lt;2.0s Cascade Revocation • RFC 3161 WORM Ledger
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Feature 1 */}
+          <div
+            onClick={() => onNavigate("traceability")}
+            className="p-5 bg-white dark:bg-[#131926] hover:bg-slate-50 dark:hover:bg-[#182234] border border-[#E7E2D8] dark:border-gray-800 hover:border-indigo-400 dark:hover:border-indigo-500 rounded-2xl cursor-pointer transition-all space-y-3 group shadow-xs"
+          >
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider font-mono bg-indigo-50 dark:bg-indigo-950/60 px-2 py-0.5 rounded-full border border-indigo-200 dark:border-indigo-900/60">
+                Evidence Grounding
+              </span>
+              <Cpu className="w-4 h-4 text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform" />
+            </div>
+            <h3 className="text-sm font-bold text-[#1F2421] dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-300">
+              Multi-Modal Evidence Grounding &amp; Bounding Boxes
+            </h3>
+            <p className="text-xs text-[#5C6460] dark:text-gray-400 leading-relaxed">
+              PyMuPDF vector mapping, sub-400ms dense + BM25 hybrid retrieval, zero hallucinated citations benchmarked.
+            </p>
+            <div className="text-[11px] text-indigo-600 dark:text-indigo-400 font-semibold flex items-center space-x-1 pt-1">
+              <span>Inspect Bounding Box Provenance</span>
+              <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </div>
+
+          {/* Feature 2 */}
+          <div
+            onClick={() => onNavigate("impact-map")}
+            className="p-5 bg-white dark:bg-[#131926] hover:bg-slate-50 dark:hover:bg-[#182234] border border-[#E7E2D8] dark:border-gray-800 hover:border-amber-400 dark:hover:border-amber-500 rounded-2xl cursor-pointer transition-all space-y-3 group shadow-xs"
+          >
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider font-mono bg-amber-50 dark:bg-amber-950/60 px-2 py-0.5 rounded-full border border-amber-200 dark:border-amber-900/60">
+                Cascade Automation
+              </span>
+              <Zap className="w-4 h-4 text-amber-600 dark:text-amber-400 group-hover:scale-110 transition-transform" />
+            </div>
+            <h3 className="text-sm font-bold text-[#1F2421] dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-300">
+              Automated Blast-Radius &amp; Cascade Re-Audit
+            </h3>
+            <p className="text-xs text-[#5C6460] dark:text-gray-400 leading-relaxed">
+              Instant approval invalidation (&lt; 2.0s SLA), 100% automated background re-auditing with diffs, Slack webhook dispatch.
+            </p>
+            <div className="text-[11px] text-amber-600 dark:text-amber-400 font-semibold flex items-center space-x-1 pt-1">
+              <span>Launch Automated Cascade Hub</span>
+              <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </div>
+
+          {/* Feature 3 */}
+          <div
+            onClick={() => onNavigate("audit-history")}
+            className="p-5 bg-white dark:bg-[#131926] hover:bg-slate-50 dark:hover:bg-[#182234] border border-[#E7E2D8] dark:border-gray-800 hover:border-emerald-400 dark:hover:border-emerald-500 rounded-2xl cursor-pointer transition-all space-y-3 group shadow-xs"
+          >
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider font-mono bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-900/60">
+                WORM Provenance
+              </span>
+              <Lock className="w-4 h-4 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform" />
+            </div>
+            <h3 className="text-sm font-bold text-[#1F2421] dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-300">
+              Cryptographic WORM Ledger &amp; Multi-Tenancy
+            </h3>
+            <p className="text-xs text-[#5C6460] dark:text-gray-400 leading-relaxed">
+              SHA-256 Merkle-tree hash chaining, sub-second verification, 0% cross-tenant leakage, exportable JSON-LD proof.
+            </p>
+            <div className="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold flex items-center space-x-1 pt-1">
+              <span>Verify Cryptographic WORM Proof</span>
+              <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </div>
         </div>
       </div>
 
