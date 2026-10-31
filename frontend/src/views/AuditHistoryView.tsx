@@ -133,7 +133,7 @@ export const AuditHistoryView: React.FC = () => {
           <div className="flex items-center space-x-2">
             <h1 className="text-2xl font-bold text-[#1F2421]">Cryptographic WORM Audit Trail</h1>
             <span className="px-2 py-0.5 text-[10px] font-semibold bg-[#EBF2EE] text-[#4A6B5B] border border-[#D1E0D7] rounded-full">
-              Round 3 Merkle Ledger
+              Cryptographic Merkle Ledger
             </span>
           </div>
           <p className="text-xs text-[#5C6460] mt-1">

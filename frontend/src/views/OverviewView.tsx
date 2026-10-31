@@ -14,9 +14,6 @@ import {
   Activity,
   History,
   Sparkles,
-  Zap,
-  Lock,
-  Cpu,
   Layers,
   RotateCcw,
   Play,
@@ -215,92 +212,6 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ onNavigate, onStartD
             </span>
           </div>
           <p className="text-[11px] text-[#5C6460] dark:text-gray-400 mt-1">Across Landing Pages, Ads &amp; Emails</p>
-        </div>
-      </div>
-
-      {/* Round 3 Technological Advancements Banner */}
-      <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white p-6 rounded-2xl shadow-xl border border-slate-800 space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
-          <div className="flex items-center space-x-2">
-            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30">
-              Round 3 Major Innovations
-            </span>
-            <h2 className="text-base font-bold text-white">Three Major Enterprise Advancements Active</h2>
-          </div>
-          <span className="text-[11px] text-slate-400 font-mono">
-            Sub-400ms Hybrid Retrieval • &lt;2.0s Cascade Revocation • RFC 3161 WORM Ledger
-          </span>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
-          {/* Card 1 */}
-          <div
-            onClick={() => onNavigate("traceability")}
-            className="p-4 bg-slate-800/70 hover:bg-slate-800 border border-slate-700 hover:border-indigo-400 rounded-xl cursor-pointer transition-all space-y-2 group shadow-sm"
-          >
-            <div className="flex items-center justify-between">
-              <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-wider font-mono">
-                Improvement 1
-              </span>
-              <Cpu className="w-4 h-4 text-indigo-400 group-hover:scale-110 transition-transform" />
-            </div>
-            <h3 className="text-sm font-bold text-white group-hover:text-indigo-200">
-              Multi-Modal Evidence Grounding &amp; Bounding Boxes
-            </h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              PyMuPDF vector mapping, sub-400ms dense + BM25 hybrid retrieval, zero hallucinated citations benchmarked.
-            </p>
-            <div className="text-[11px] text-indigo-300 font-semibold flex items-center space-x-1 pt-1">
-              <span>Inspect Bounding Box Provenance</span>
-              <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-            </div>
-          </div>
-
-          {/* Card 2 */}
-          <div
-            onClick={() => onNavigate("impact-map")}
-            className="p-4 bg-slate-800/70 hover:bg-slate-800 border border-slate-700 hover:border-amber-400 rounded-xl cursor-pointer transition-all space-y-2 group shadow-sm"
-          >
-            <div className="flex items-center justify-between">
-              <span className="text-[10px] font-bold text-amber-400 uppercase tracking-wider font-mono">
-                Improvement 2
-              </span>
-              <Zap className="w-4 h-4 text-amber-400 group-hover:scale-110 transition-transform" />
-            </div>
-            <h3 className="text-sm font-bold text-white group-hover:text-amber-200">
-              Automated Blast-Radius &amp; Cascade Re-Audit
-            </h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Instant approval invalidation (&lt; 2.0s SLA), 100% automated background re-auditing with diffs, Slack webhook dispatch.
-            </p>
-            <div className="text-[11px] text-amber-300 font-semibold flex items-center space-x-1 pt-1">
-              <span>Launch Automated Cascade Hub</span>
-              <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-            </div>
-          </div>
-
-          {/* Card 3 */}
-          <div
-            onClick={() => onNavigate("audit-history")}
-            className="p-4 bg-slate-800/70 hover:bg-slate-800 border border-slate-700 hover:border-emerald-400 rounded-xl cursor-pointer transition-all space-y-2 group shadow-sm"
-          >
-            <div className="flex items-center justify-between">
-              <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider font-mono">
-                Improvement 3
-              </span>
-              <Lock className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform" />
-            </div>
-            <h3 className="text-sm font-bold text-white group-hover:text-emerald-200">
-              Cryptographic WORM Ledger &amp; Multi-Tenancy
-            </h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              SHA-256 Merkle-tree hash chaining, sub-second verification, 0% cross-tenant leakage, exportable JSON-LD proof.
-            </p>
-            <div className="text-[11px] text-emerald-300 font-semibold flex items-center space-x-1 pt-1">
-              <span>Verify Cryptographic WORM Proof</span>
-              <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-            </div>
-          </div>
         </div>
       </div>
 

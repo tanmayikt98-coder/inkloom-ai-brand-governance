@@ -156,7 +156,7 @@ export const ImpactMapView: React.FC = () => {
               Brand Impact Map &amp; Blast Radius
             </h1>
             <span className="px-2.5 py-0.5 text-[10px] font-mono font-bold bg-[#EBF2EE] dark:bg-emerald-950/60 text-[#4A6B5B] dark:text-emerald-400 border border-[#D1E0D7] dark:border-emerald-800 rounded-full">
-              Round 3 Cascade Engine • 39 Nodes Chained
+              Automated Cascade Engine • 39 Nodes Chained
             </span>
           </div>
           <p className="text-xs text-[#5C6460] dark:text-gray-400 mt-1">

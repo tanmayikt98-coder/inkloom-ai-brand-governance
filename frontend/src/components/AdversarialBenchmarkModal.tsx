@@ -64,7 +64,7 @@ export const AdversarialBenchmarkModal: React.FC<AdversarialBenchmarkModalProps>
                   Adversarial Ground-Truth Citation Benchmark
                 </h2>
                 <span className="px-2 py-0.5 text-[10px] font-bold bg-emerald-100 text-emerald-800 rounded-full border border-emerald-200">
-                  Round 3 Verified
+                  Deterministic Benchmark Verified
                 </span>
               </div>
               <p className="text-xs text-slate-500 mt-0.5">
