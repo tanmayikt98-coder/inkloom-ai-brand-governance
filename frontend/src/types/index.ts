@@ -568,3 +568,65 @@ export interface TenantOrganization {
   active_framework: string;
 }
 
+export interface BrandClearanceCertificate {
+  certificate_id: string;
+  asset_id: string;
+  asset_title: string;
+  asset_type: string;
+  revision_number: number;
+  content_text: string;
+  content_sha256: string;
+  attestation_fingerprint: string;
+  reviewed_by: string;
+  reviewer_role: string;
+  decision: string;
+  decision_reason: string;
+  separation_of_duties_verified: boolean;
+  is_state_locked: boolean;
+  timestamp_utc: string;
+  governance_framework: string;
+  cited_facts: Array<{
+    fact_id: string;
+    claim: string;
+    metric?: string;
+    status: string;
+  }>;
+  evidence_lineage: Array<{
+    evidence_id: string;
+    title: string;
+    owner: string;
+    authority_tier: string;
+  }>;
+  immutable_block_reference: string;
+}
+
+export interface EvidenceConflict {
+  conflict_id: string;
+  claim_topic: string;
+  primary_source_id: string;
+  primary_source_title: string;
+  primary_metric: number;
+  primary_tier: string;
+  conflicting_source_id: string;
+  conflicting_source_title: string;
+  conflicting_metric: number;
+  conflicting_tier: string;
+  variance_pct: number;
+  detected_discrepancy: string;
+  recommended_action: string;
+  status: string;
+}
+
+export interface IntegrationSimulation {
+  simulation_id: string;
+  platform: string;
+  event_type: string;
+  timestamp: string;
+  status: string;
+  governance_decision: "BLOCKED" | "APPROVED";
+  summary_message: string;
+  raw_payload: Record<string, any>;
+  details: Record<string, any>;
+}
+
+

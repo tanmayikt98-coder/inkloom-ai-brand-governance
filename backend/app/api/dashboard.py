@@ -14,10 +14,12 @@ from app.security import get_current_user
 from app.schemas import (
     DashboardOverviewResponse, AuditRunResponse, AffectedAssetDetail,
     CampaignItem, CampaignAssetSummary, GovernanceReportsResponse,
-    WormLedgerBlockResponse, WormVerificationResponse
+    WormLedgerBlockResponse, WormVerificationResponse,
+    IntegrationSimulationRequest, IntegrationSimulationResponse
 )
 from app.services.crypto_worm_ledger import crypto_worm_ledger
 from app.api.audits import get_audit_run_response
+from app.seed_data import seed_database
 
 router = APIRouter(tags=["Overview Dashboard & Audit Logs"])
 
@@ -365,4 +367,108 @@ async def get_merkle_tree_graph(
     Round 3 - Improvement 3: Returns full hierarchical Merkle tree structure for visual explorer.
     """
     return crypto_worm_ledger.get_merkle_tree_visualization()
+
+@router.post("/dashboard/reset-demo")
+@router.post("/dashboard/seed-demo")
+def reset_or_seed_demo_dataset(
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Wipes and re-seeds the comprehensive demo dataset for Aurevia, NovuBio, and FinEdge.
+    Provides instant recovery and guarantee that every module has dense, meaningful data.
+    """
+    seed_database(force=True)
+    return {
+        "status": "success",
+        "message": "Demo dataset re-initialized successfully with 12 approved facts, 8 evidence documents, 6 brand rules, 9 marketing assets, and 3 pre-simulated what-if scenarios.",
+        "tenant_id": current_user.organization_id,
+        "facts_count": 12,
+        "evidence_count": 8,
+        "assets_count": 9,
+        "timestamp_utc": datetime.utcnow().isoformat()
+    }
+
+@router.post("/dashboard/integrations/simulate", response_model=IntegrationSimulationResponse)
+async def simulate_integration_event(
+    payload: IntegrationSimulationRequest,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db)
+):
+    """
+    Simulates webhook calls from GitHub PR checks, Figma design tokens, and Slack alerts.
+    Returns realistic JSON payloads demonstrating automated BLOCKED or APPROVED governance gates.
+    """
+    platform = payload.platform.lower()
+    sim_id = f"sim-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}"
+
+    if platform == "github":
+        # Simulates GitHub Actions PR compliance gate check
+        is_blocked = True if payload.asset_id == "asset-landing-001" else False
+        decision = "BLOCKED" if is_blocked else "APPROVED"
+        summary = (
+            "GitHub PR #412 BLOCKED: Automated compliance gate failed. Copy claims 50% processing uplift contradicting approved 30% benchmark."
+            if is_blocked else
+            "GitHub PR #415 APPROVED: All claims match verified benchmark (30.0%) and required performance disclaimer is present."
+        )
+        raw = {
+            "action": "check_run.completed",
+            "check_run": {
+                "name": "Inkloom AI / Brand Compliance Gate",
+                "head_sha": "d7a8f9c1e4b3",
+                "conclusion": "failure" if is_blocked else "success",
+                "output": {
+                    "title": "Deterministic Compliance Gate: " + decision,
+                    "summary": summary,
+                    "findings_count": 3 if is_blocked else 0,
+                    "critical_violations": 2 if is_blocked else 0
+                }
+            }
+        }
+        details = {
+            "repository": "enterprise-marketing/landing-pages",
+            "branch": "feature/q2-launch-refresh",
+            "enforced_policy": "RULE-DISCLAIM-01 & RULE-FORBIDDEN-01"
+        }
+
+    elif platform == "figma":
+        decision = "APPROVED"
+        summary = "Figma Design Token Sync: Verified 4.8:1 contrast ratio against Aurevia Emerald palette. Logo clear-space bounding box verified (15% padding)."
+        raw = {
+            "event": "document.sync",
+            "file_key": "figma-aurevia-design-tokens",
+            "tokens_checked": 24,
+            "contrast_ratio": "4.8:1 (WCAG AA Compliant)",
+            "clear_space_margin": "15.0%",
+            "decision": "APPROVED"
+        }
+        details = {
+            "component": "Hero-Banner-Container",
+            "status": "DESIGN_SYSTEM_ALIGNED"
+        }
+
+    else: # slack
+        decision = "APPROVED"
+        summary = "Slack Alert Broadcast: Dispatched governance status notification to #compliance-alerts with direct re-approval deep link."
+        raw = {
+            "channel": "#compliance-alerts",
+            "bot_name": "Inkloom Governance Bot",
+            "blocks_count": 4,
+            "deep_link": "https://inkloom-ai-brand-governance-1.onrender.com/review-queue",
+            "delivery_status": "DELIVERED_200_OK"
+        }
+        details = {
+            "destination": "Slack Workspace Aurevia Global",
+            "latency_ms": 14.2
+        }
+
+    return IntegrationSimulationResponse(
+        simulation_id=sim_id,
+        platform=payload.platform.upper(),
+        event_type=payload.event_type or f"{platform}.webhook.test",
+        timestamp=datetime.utcnow().isoformat(),
+        governance_decision=decision,
+        summary_message=summary,
+        raw_payload=raw,
+        details=details
+    )
 

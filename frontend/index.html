@@ -8,9 +8,110 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+      /* Inline pre-hydration branding */
+      .inkloom-preloader {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #0B0F17;
+        color: #F1F5F9;
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+      .inkloom-pulse-logo {
+        position: relative;
+        width: 72px;
+        height: 72px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .inkloom-pulse-ring {
+        position: absolute;
+        inset: 0;
+        border-radius: 18px;
+        border: 2px solid #10B981;
+        opacity: 0.8;
+        animation: inkloomPing 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+      }
+      .inkloom-pulse-ring-2 {
+        position: absolute;
+        inset: -8px;
+        border-radius: 22px;
+        border: 1px dashed rgba(16, 185, 129, 0.4);
+        animation: inkloomSpin 12s linear infinite;
+      }
+      .inkloom-logo-box {
+        position: relative;
+        width: 56px;
+        height: 56px;
+        background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 35px rgba(16, 185, 129, 0.5);
+      }
+      @keyframes inkloomPing {
+        75%, 100% {
+          transform: scale(1.4);
+          opacity: 0;
+        }
+      }
+      @keyframes inkloomSpin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      .shimmer-bar {
+        width: 220px;
+        height: 4px;
+        background: #1F293D;
+        border-radius: 4px;
+        overflow: hidden;
+        position: relative;
+        margin-top: 24px;
+      }
+      .shimmer-fill {
+        position: absolute;
+        height: 100%;
+        width: 45%;
+        background: linear-gradient(90deg, transparent, #10B981, transparent);
+        animation: shimmerSlide 1.5s infinite;
+      }
+      @keyframes shimmerSlide {
+        from { left: -45%; }
+        to { left: 100%; }
+      }
+    </style>
   </head>
-  <body class="bg-[#FAF8F5] text-[#1F2421]">
-    <div id="root"></div>
+  <body class="bg-[#FAF8F5] dark:bg-[#0B0F17] text-[#1F2421] dark:text-[#F1F5F9] transition-colors duration-200">
+    <div id="root">
+      <!-- Animated Brand Skeleton Loader Before React Bundles Mount -->
+      <div class="inkloom-preloader">
+        <div class="inkloom-pulse-logo">
+          <div class="inkloom-pulse-ring"></div>
+          <div class="inkloom-pulse-ring-2"></div>
+          <div class="inkloom-logo-box">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="m9 12 2 2 4-4"/>
+            </svg>
+          </div>
+        </div>
+        <div style="margin-top: 20px; font-weight: 800; font-size: 20px; letter-spacing: -0.02em;">INKLOOM AI</div>
+        <div style="font-size: 13px; color: #94A3B8; margin-top: 6px; font-weight: 500;">
+          Evidence-Driven Brand Governance &bull; BrandTrace Intelligence
+        </div>
+        <div class="shimmer-bar">
+          <div class="shimmer-fill"></div>
+        </div>
+        <div style="margin-top: 12px; font-size: 11px; color: #64748B; font-family: monospace;">
+          Waking compliance runtime & verifying cryptographic ledger...
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

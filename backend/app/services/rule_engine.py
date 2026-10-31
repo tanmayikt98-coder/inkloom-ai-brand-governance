@@ -63,8 +63,22 @@ class DeterministicRuleEngine:
 
             # 2. REQUIRED DISCLAIMER
             elif r_type == RuleType.REQUIRED_DISCLAIMER:
+                # Contextual relevance filter: only enforce domain-specific disclaimers when relevant topics are invoked
+                applies = True
+                rule_code = getattr(rule, "rule_code", "")
+                if rule_code == "RULE-SEC-01":
+                    applies = any(k in lower_content for k in ["soc 2", "iso 27001", "attestation", "soc2"])
+                elif rule_code == "RULE-FIN-01":
+                    applies = any(k in lower_content for k in ["cloud spend", "savings", "spend by", "cost reduction", "tco"])
+                elif rule_code == "RULE-ESG-01":
+                    applies = any(k in lower_content for k in ["carbon", "renewable", "net-zero", "green compute"])
+                elif rule_code == "RULE-FDA-INDICATION":
+                    applies = any(k in lower_content for k in ["nb-420", "clinical", "oncology", "trial", "survival"])
+                elif rule_code == "RULE-SEC-RISK-NOTICE":
+                    applies = any(k in lower_content for k in ["finedge", "custodial", "digital asset", "clearing", "reserve"])
+
                 # If disclaimer phrase is missing, flag as MISSING_DISCLOSURE
-                if pattern.lower() not in lower_content:
+                if applies and pattern.lower() not in lower_content:
                     results.append(RuleEvaluationResult(
                         rule_id=rule.id,
                         rule_code=rule.rule_code,

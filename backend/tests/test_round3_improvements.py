@@ -148,3 +148,4 @@ def test_round3_improvement3_cryptographic_worm_ledger_and_multitenancy():
     tree_data = tree_resp.json()
     assert tree_data["total_levels"] > 0
     assert len(tree_data["nodes"]) > 0
+

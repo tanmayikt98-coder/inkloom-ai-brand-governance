@@ -359,3 +359,4 @@ export const BoundingBoxViewerModal: React.FC<BoundingBoxViewerModalProps> = ({
     </div>
   );
 };
+

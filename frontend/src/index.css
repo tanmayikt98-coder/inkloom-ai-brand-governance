@@ -24,6 +24,29 @@
     --crimson-border: #F8D1D1;
   }
 
+  .dark {
+    --bg-warm: #0B0F17;
+    --bg-surface: #131926;
+    --bg-card: #131926;
+    --border-warm: #1F293D;
+    --border-light: #182234;
+    --text-charcoal: #F1F5F9;
+    --text-muted: #94A3B8;
+    --sage-primary: #10B981;
+    --sage-hover: #059669;
+    --sage-light: rgba(16, 185, 129, 0.15);
+    --sage-border: rgba(16, 185, 129, 0.3);
+    --rose-accent: #EF4444;
+    --rose-light: rgba(239, 68, 68, 0.15);
+    --rose-border: rgba(239, 68, 68, 0.3);
+    --amber-warning: #F59E0B;
+    --amber-light: rgba(245, 158, 11, 0.15);
+    --amber-border: rgba(245, 158, 11, 0.3);
+    --crimson-danger: #F43F5E;
+    --crimson-light: rgba(244, 63, 94, 0.15);
+    --crimson-border: rgba(244, 63, 94, 0.3);
+  }
+
   body {
     background-color: var(--bg-warm);
     color: var(--text-charcoal);
@@ -45,14 +68,14 @@
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #F5F2EB;
+  background: var(--bg-warm);
 }
 ::-webkit-scrollbar-thumb {
-  background: #D8D2C5;
+  background: var(--border-warm);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #B8B0A0;
+  background: var(--text-muted);
 }
 
 @keyframes pulseGlow {
@@ -66,4 +89,42 @@
 
 .bounding-box-highlight {
   animation: pulseGlow 2s infinite ease-in-out;
+}
+
+/* Card Depth and Subtle Elevation */
+.enterprise-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-warm);
+  border-radius: 0.75rem;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.enterprise-card:hover {
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.08);
+}
+.dark .enterprise-card:hover {
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+/* Diff Highlighting */
+.diff-added {
+  background-color: rgba(16, 185, 129, 0.18);
+  color: #065F46;
+  border-bottom: 2px solid #10B981;
+  padding: 0 2px;
+}
+.dark .diff-added {
+  background-color: rgba(16, 185, 129, 0.25);
+  color: #34D399;
+}
+.diff-removed {
+  background-color: rgba(239, 68, 68, 0.18);
+  color: #991B1B;
+  text-decoration: line-through;
+  border-bottom: 2px solid #EF4444;
+  padding: 0 2px;
+}
+.dark .diff-removed {
+  background-color: rgba(239, 68, 68, 0.25);
+  color: #F87171;
 }

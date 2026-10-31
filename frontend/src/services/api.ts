@@ -7,11 +7,23 @@ import {
   RuleType, Severity, AssetType, ApprovalDecision, ScenarioChangeType,
   CampaignItem, GovernanceReportsResponse,
   VisualDocument, AdversarialBenchmark, CascadeResult, WormLedgerBlock,
-  WormVerificationResult, TenantOrganization
+  WormVerificationResult, TenantOrganization,
+  BrandClearanceCertificate, EvidenceConflict, IntegrationSimulation
 } from "../types";
 
 const rawBase = (import.meta as any).env?.VITE_API_BASE_URL;
-const trimmedBase = rawBase ? String(rawBase).trim().replace(/\/+$/, '') : "";
+let trimmedBase = rawBase ? String(rawBase).trim().replace(/\/+$/, '') : "";
+
+// If no explicit VITE_API_BASE_URL is configured:
+// When running in production on Render static site or GitHub Pages, default to the live Render backend.
+// When running locally on localhost/127.0.0.1, use relative "/api" (Vite dev proxy).
+if (!trimmedBase && typeof window !== "undefined") {
+  const host = window.location.hostname;
+  if (host && host !== "localhost" && host !== "127.0.0.1") {
+    trimmedBase = "https://inkloom-ai-brand-governance.onrender.com";
+  }
+}
+
 const API_BASE = trimmedBase
   ? (trimmedBase.endsWith("/api") ? trimmedBase : `${trimmedBase}/api`)
   : "/api";
@@ -221,6 +233,18 @@ export const api = {
       });
       return handleResponse<any>(res);
     },
+    getConflicts: async (): Promise<EvidenceConflict[]> => {
+      const res = await fetch(`${API_BASE}/evidence/conflicts`, { headers: getHeaders() });
+      return handleResponse<EvidenceConflict[]>(res);
+    },
+    resolveConflict: async (conflictId: string, action: string, justification: string): Promise<any> => {
+      const res = await fetch(`${API_BASE}/evidence/conflicts/resolve`, {
+        method: "POST",
+        headers: getHeaders(),
+        body: JSON.stringify({ conflict_id: conflictId, action, justification }),
+      });
+      return handleResponse<any>(res);
+    },
   },
 
   // Brand Rules
@@ -333,6 +357,10 @@ export const api = {
         body: JSON.stringify(data),
       });
       return handleResponse<ApprovalRecord>(res);
+    },
+    getClearanceCertificate: async (assetId: string): Promise<BrandClearanceCertificate> => {
+      const res = await fetch(`${API_BASE}/assets/${assetId}/clearance-certificate`, { headers: getHeaders() });
+      return handleResponse<BrandClearanceCertificate>(res);
     },
   },
 
@@ -456,6 +484,30 @@ export const api = {
     },
     getMerkleTree: async (): Promise<any> => {
       const res = await fetch(`${API_BASE}/dashboard/audit-ledger/merkle-tree`, { headers: getHeaders() });
+      return handleResponse<any>(res);
+    },
+    resetDemoDataset: async (): Promise<any> => {
+      const res = await fetch(`${API_BASE}/dashboard/reset-demo`, {
+        method: "POST",
+        headers: getHeaders(),
+      });
+      return handleResponse<any>(res);
+    },
+    simulateIntegration: async (platform: string, assetId?: string): Promise<IntegrationSimulation> => {
+      const res = await fetch(`${API_BASE}/dashboard/integrations/simulate`, {
+        method: "POST",
+        headers: getHeaders(),
+        body: JSON.stringify({ platform, asset_id: assetId }),
+      });
+      return handleResponse<IntegrationSimulation>(res);
+    },
+  },
+
+  // System & Cold-Start Resilience
+  system: {
+    checkHealth: async (): Promise<{ status: string; system: string }> => {
+      const healthUrl = trimmedBase ? `${trimmedBase}/health` : "/health";
+      const res = await fetch(healthUrl);
       return handleResponse<any>(res);
     },
   },

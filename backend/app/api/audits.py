@@ -1,4 +1,5 @@
 import time
+import re
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
@@ -105,6 +106,28 @@ async def run_content_audit(
             med_c += 1
         else:
             low_c += 1
+
+    # Adversarial Injection & Prompt Jailbreak Protection
+    adversarial_patterns = [
+        r"ignore\s+(all\s+)?(previous|prior)\s+instructions",
+        r"system\s+prompt\s*:",
+        r"override\s+(compliance|rules|governance)",
+        r"grant\s+(full\s+)?approval",
+        r"<script.*?>.*?</script>",
+        r"sudo\s+approve",
+        r"bypass\s+maker-checker",
+    ]
+    for pat in adversarial_patterns:
+        if re.search(pat, revision.content_text, re.IGNORECASE):
+            findings_to_create.append(AuditFinding(
+                category=FindingCategory.BRAND_GUIDELINE_VIOLATION,
+                severity=Severity.CRITICAL,
+                explanation="ADVERSARIAL INJECTION DETECTED: Copy attempts prompt injection or unauthorized governance override. Content quarantined.",
+                suggested_correction="Sanitize input text and remove instructional prompt tampering phrases.",
+                exact_citation_text="Security Protocol: SEC-ADVERSARIAL-SHIELD"
+            ))
+            critical_c += 1
+            break
 
     # B. Check extracted claims against facts and evidence
     for claim in db_claims:

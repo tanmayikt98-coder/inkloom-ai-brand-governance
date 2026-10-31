@@ -303,3 +303,4 @@ class CryptoWormLedger:
 
 # Global singleton
 crypto_worm_ledger = CryptoWormLedger()
+

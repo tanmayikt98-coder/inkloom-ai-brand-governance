@@ -558,3 +558,63 @@ class TenantIsolationVerificationResponse(BaseModel):
     organizations_tested: List[str]
     isolation_report: Dict[str, Any]
 
+# ----------------- High-Value Enterprise Additions -----------------
+class BrandClearanceCertificateResponse(BaseModel):
+    certificate_id: str
+    asset_id: str
+    asset_title: str
+    asset_type: str
+    revision_number: int
+    content_text: str
+    content_sha256: str
+    attestation_fingerprint: str
+    reviewed_by: str
+    reviewer_role: str
+    decision: str
+    decision_reason: str
+    separation_of_duties_verified: bool
+    is_state_locked: bool
+    timestamp_utc: str
+    governance_framework: str
+    cited_facts: List[Dict[str, Any]]
+    evidence_lineage: List[Dict[str, Any]]
+    immutable_block_reference: str
+
+class EvidenceConflictItem(BaseModel):
+    conflict_id: str
+    claim_topic: str
+    primary_source_id: str
+    primary_source_title: str
+    primary_metric: float
+    primary_tier: str
+    conflicting_source_id: str
+    conflicting_source_title: str
+    conflicting_metric: float
+    conflicting_tier: str
+    variance_pct: float
+    detected_discrepancy: str
+    recommended_action: str
+    status: str
+
+class EvidenceConflictResolutionRequest(BaseModel):
+    conflict_id: str
+    action: str  # "ENFORCE_TIER_1" or "CREATE_DISCREPANCY_TICKET"
+    justification: str
+
+class IntegrationSimulationRequest(BaseModel):
+    platform: str  # "github", "figma", "slack"
+    asset_id: Optional[str] = None
+    event_type: Optional[str] = None
+
+class IntegrationSimulationResponse(BaseModel):
+    simulation_id: str
+    platform: str
+    event_type: str
+    timestamp: str
+    status: str
+    governance_decision: str  # "BLOCKED" or "APPROVED"
+    summary_message: str
+    raw_payload: Dict[str, Any]
+    details: Dict[str, Any]
+
+

@@ -22,6 +22,9 @@ import {
   Cpu,
 } from "lucide-react";
 import { BoundingBoxViewerModal } from "../components/BoundingBoxViewerModal";
+import { ConflictResolutionModal } from "../components/ConflictResolutionModal";
+import { EvidenceConflict } from "../types";
+import { Scale } from "lucide-react";
 
 export const BrandKnowledgeHubView: React.FC = () => {
   const { activeBrand, canEditFacts, canUploadEvidence } = useAuth();
@@ -33,6 +36,8 @@ export const BrandKnowledgeHubView: React.FC = () => {
   const [facts, setFacts] = useState<BrandFact[]>([]);
   const [evidence, setEvidence] = useState<EvidenceSource[]>([]);
   const [rules, setRules] = useState<BrandRule[]>([]);
+  const [conflicts, setConflicts] = useState<EvidenceConflict[]>([]);
+  const [showConflictModal, setShowConflictModal] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
@@ -60,14 +65,16 @@ export const BrandKnowledgeHubView: React.FC = () => {
     if (!activeBrand) return;
     try {
       setLoading(true);
-      const [factsData, evData, rulesData] = await Promise.all([
+      const [factsData, evData, rulesData, conflictsData] = await Promise.all([
         api.facts.listByBrand(activeBrand.id),
         api.evidence.listByBrand(activeBrand.id),
         api.rules.listByBrand(activeBrand.id),
+        api.evidence.getConflicts().catch(() => []),
       ]);
       setFacts(factsData);
       setEvidence(evData);
       setRules(rulesData);
+      setConflicts(conflictsData);
     } catch (err) {
       console.error("Failed to load Knowledge Hub data:", err);
     } finally {
@@ -175,6 +182,13 @@ export const BrandKnowledgeHubView: React.FC = () => {
               Ingest Evidence
             </button>
           )}
+          <button
+            onClick={() => setShowConflictModal(true)}
+            className="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 rounded-lg text-xs font-semibold flex items-center transition-colors shadow-xs"
+          >
+            <Scale className="w-3.5 h-3.5 mr-1 text-amber-600" />
+            Check Contradictions ({conflicts.length})
+          </button>
         </div>
       </div>
 
@@ -630,6 +644,14 @@ export const BrandKnowledgeHubView: React.FC = () => {
           onClose={() => setSelectedEvidenceForModal(null)}
         />
       )}
+
+      {/* Conflict Resolution Modal */}
+      <ConflictResolutionModal
+        isOpen={showConflictModal}
+        onClose={() => setShowConflictModal(false)}
+        conflicts={conflicts}
+        onResolved={loadData}
+      />
     </div>
   );
 };
