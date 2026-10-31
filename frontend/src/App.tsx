@@ -76,14 +76,14 @@ const MainLayout: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#FAF8F5] dark:bg-[#0B0F17] text-[#1F2421] dark:text-gray-100 flex flex-col font-sans transition-colors duration-200">
+    <div className="min-h-screen bg-[#FCFDFD] dark:bg-[#121210] text-[#26251E] dark:text-[#FCFDFD] flex flex-col font-sans transition-colors duration-200">
       {/* Cold-Start Banner (Shows only if Render free-tier is waking) */}
       {backendWaking && (
-        <div className="bg-amber-500/15 border-b border-amber-500/25 px-4 py-2 text-xs flex items-center justify-between text-amber-800 dark:text-amber-300">
+        <div className="bg-[#F3F2EB] dark:bg-[#1C1B16] border-b border-[#E8E6D9] dark:border-[#2E2C26] px-4 py-2 text-xs flex items-center justify-between text-[#26251E] dark:text-[#FCFDFD]">
           <div className="flex items-center gap-2">
-            <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+            <RefreshCw className="w-3.5 h-3.5 animate-spin text-orange-500" />
             <span>
-              <strong>Waking compliance runtime...</strong> Initializing PostgreSQL vector store & cryptographic ledger (approx. 10s on first load).
+              <strong>Waking compliance runtime...</strong> Initializing PostgreSQL vector store &amp; cryptographic ledger (approx. 10s on first load).
             </span>
           </div>
           <span className="font-mono text-[10px] opacity-75 hidden sm:inline">Render Cold-Start Protection Active</span>

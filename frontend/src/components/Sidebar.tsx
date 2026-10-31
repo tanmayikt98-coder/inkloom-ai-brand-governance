@@ -98,32 +98,32 @@ export const Sidebar: React.FC<SidebarProps> = ({
   ];
 
   return (
-    <aside className="w-64 bg-white dark:bg-[#131926] border-r border-[#E7E2D8] dark:border-gray-800 flex flex-col justify-between py-5 shrink-0 min-h-[calc(100vh-61px)] transition-colors">
+    <aside className="w-64 bg-[#FCFDFD] dark:bg-[#151410] border-r border-[#E8E6D9] dark:border-[#2E2C26] flex flex-col justify-between py-5 shrink-0 min-h-[calc(100vh-61px)] transition-colors">
       <div>
-        <div className="px-5 mb-3 text-[10px] font-bold text-[#5C6460] dark:text-gray-400 uppercase tracking-wider">
+        <div className="px-5 mb-3 text-[10px] font-bold text-[#6F6C5B] dark:text-[#A9A593] uppercase tracking-wider">
           Brand Governance Modules
         </div>
-        <nav className="space-y-0.5 px-3">
+        <nav className="space-y-1 px-3">
           {navItems.map((item) => {
             const isActive = currentSection === item.id;
             return (
               <button
                 key={item.id}
                 onClick={() => onSelectSection(item.id)}
-                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs font-medium transition-all ${
+                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-full text-xs font-medium active:scale-95 transition-all ${
                   isActive
-                    ? "bg-[#EBF2EE] dark:bg-emerald-950/40 text-[#4A6B5B] dark:text-emerald-400 font-semibold shadow-2xs border border-[#D1E0D7] dark:border-emerald-800/60"
-                    : "text-[#2B2D2F] dark:text-gray-300 hover:bg-[#FAF8F5] dark:hover:bg-gray-800/60 hover:text-[#1F2421] dark:hover:text-white"
+                    ? "bg-[#26251E] text-[#FCFDFD] dark:bg-[#FCFDFD] dark:text-[#26251E] font-semibold shadow-xs"
+                    : "text-[#6F6C5B] dark:text-[#A9A593] hover:bg-[#F3F2EB] dark:hover:bg-[#1C1B16] hover:text-[#26251E] dark:hover:text-[#FCFDFD]"
                 }`}
               >
                 <div className="flex items-center">
-                  <span className={isActive ? "text-[#4A6B5B] dark:text-emerald-400" : "text-[#5C6460] dark:text-gray-400"}>
+                  <span className={`transition-colors ${isActive ? "text-[#FCFDFD] dark:text-[#26251E]" : "text-[#8C8976] dark:text-[#6F6C5B]"}`}>
                     {item.icon}
                   </span>
                   <span>{item.label}</span>
                 </div>
                 {item.badge !== undefined && (
-                  <span className="bg-[#A36B73] text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+                  <span className="bg-orange-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
                     {item.badge}
                   </span>
                 )}
@@ -134,13 +134,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
       </div>
 
       {/* Governance Trust Badge */}
-      <div className="px-4 mt-6">
-        <div className="p-3 bg-[#FAF8F5] dark:bg-[#0B0F17] border border-[#E7E2D8] dark:border-gray-800 rounded-lg">
-          <div className="flex items-center space-x-2 text-[#4A6B5B] dark:text-emerald-400 mb-1">
-            <ShieldAlert className="w-4 h-4" />
+      <div className="px-3 mt-6">
+        <div className="p-3.5 bg-[#F3F2EB] dark:bg-[#1C1B16] border border-[#E8E6D9] dark:border-[#2E2C26] rounded-2xl">
+          <div className="flex items-center space-x-2 text-[#26251E] dark:text-[#FCFDFD] mb-1">
+            <ShieldAlert className="w-4 h-4 text-orange-500" />
             <span className="text-[11px] font-bold">Deterministic Gate</span>
           </div>
-          <p className="text-[10px] text-[#5C6460] dark:text-gray-400 leading-relaxed">
+          <p className="text-[10px] text-[#6F6C5B] dark:text-[#A9A593] leading-relaxed">
             Strict evidence substantiation active. Zero unverified claims permitted in production.
           </p>
         </div>

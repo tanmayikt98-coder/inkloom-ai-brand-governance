@@ -118,43 +118,43 @@ export const GuidedDemoTour: React.FC<Props> = ({ isOpen, onClose, onNavigate })
 
   return (
     <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-xl px-4 animate-slideUp">
-      <div className="bg-[#131926] text-white border-2 border-emerald-500/70 rounded-2xl p-5 shadow-2xl shadow-emerald-950/60 backdrop-blur-xl relative overflow-hidden">
+      <div className="bg-[#181714] text-[#F5F4EE] border border-[#2E2C26] rounded-3xl p-6 shadow-2xl relative overflow-hidden backdrop-blur-md">
         {/* Glow corner */}
-        <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/15 rounded-full blur-2xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-32 h-32 bg-[#F97316]/10 rounded-full blur-2xl pointer-events-none" />
 
         {/* Top bar with progress */}
         <div className="flex items-center justify-between mb-3 text-xs">
           <div className="flex items-center gap-2">
             <span className="flex h-2 w-2 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#F97316] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#F97316]"></span>
             </span>
-            <span className="font-mono text-emerald-400 font-bold uppercase tracking-wider text-[10px]">
+            <span className="font-mono text-[#F97316] font-bold uppercase tracking-wider text-[10px]">
               Guided Demo Tour ({currentStep.stepNumber} of {steps.length})
             </span>
           </div>
 
-          <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-950 text-emerald-300 border border-emerald-800">
+          <span className="px-3 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#2E2C26] text-[#F5F4EE] border border-[#444238]">
             {currentStep.badge}
           </span>
 
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-white p-1 rounded-lg hover:bg-gray-800 transition-colors"
+            className="text-[#A9A593] hover:text-white p-1 rounded-full hover:bg-[#2E2C26] transition-colors cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Step Title & Content */}
-        <h3 className="text-base font-bold text-white mb-2">{currentStep.title}</h3>
-        <p className="text-xs text-gray-300 leading-relaxed mb-3">
+        <h3 className="text-base font-extrabold text-[#F5F4EE] mb-2">{currentStep.title}</h3>
+        <p className="text-xs text-[#A9A593] leading-relaxed mb-3 font-sans">
           {currentStep.summary}
         </p>
 
         {/* Enterprise Takeaway Box */}
-        <div className="p-2.5 rounded-lg bg-[#0B0F17] border border-gray-800 text-[11px] text-emerald-300 mb-4 flex items-center gap-2">
-          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+        <div className="p-3 rounded-2xl bg-[#121210] border border-[#2E2C26] text-[11px] text-[#F5F4EE] mb-4 flex items-center gap-2">
+          <CheckCircle2 className="w-4 h-4 text-[#F97316] shrink-0" />
           <span><strong>Key Enterprise Value:</strong> {currentStep.takeaway}</span>
         </div>
 
@@ -169,12 +169,12 @@ export const GuidedDemoTour: React.FC<Props> = ({ isOpen, onClose, onNavigate })
                   setCurrentIndex(idx);
                   onNavigate(s.section);
                 }}
-                className={`h-1.5 rounded-full transition-all ${
+                className={`h-1.5 rounded-full transition-all cursor-pointer ${
                   idx === currentIndex
-                    ? "w-6 bg-emerald-400"
+                    ? "w-6 bg-white"
                     : idx < currentIndex
-                    ? "w-2 bg-emerald-700"
-                    : "w-1.5 bg-gray-700 hover:bg-gray-500"
+                    ? "w-2 bg-[#6F6C5B]"
+                    : "w-1.5 bg-[#2E2C26] hover:bg-[#6F6C5B]"
                 }`}
               />
             ))}
@@ -185,7 +185,7 @@ export const GuidedDemoTour: React.FC<Props> = ({ isOpen, onClose, onNavigate })
             {currentIndex > 0 && (
               <button
                 onClick={handlePrev}
-                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-gray-700 bg-[#182234] hover:bg-[#202E46] text-gray-300 text-xs font-medium transition-colors"
+                className="inline-flex items-center gap-1 px-4 py-1.5 rounded-full border border-[#2E2C26] bg-[#121210] hover:bg-[#26251E] text-[#F5F4EE] text-xs font-medium transition-all active:scale-95 cursor-pointer"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
                 Previous
@@ -193,7 +193,7 @@ export const GuidedDemoTour: React.FC<Props> = ({ isOpen, onClose, onNavigate })
             )}
             <button
               onClick={handleNext}
-              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-md shadow-emerald-950/40 transition-colors"
+              className="inline-flex items-center gap-1.5 px-5 py-2 rounded-full bg-white hover:bg-gray-100 text-[#181714] text-xs font-bold shadow-md transition-all active:scale-95 cursor-pointer"
             >
               {currentIndex === steps.length - 1 ? "Complete Tour" : "Next Module"}
               <ArrowRight className="w-3.5 h-3.5" />

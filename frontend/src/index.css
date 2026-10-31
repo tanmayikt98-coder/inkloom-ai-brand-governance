@@ -2,18 +2,20 @@
 
 @layer base {
   :root {
-    --bg-warm: #FAF8F5;
-    --bg-surface: #FFFFFF;
-    --bg-card: #FFFFFF;
-    --border-warm: #E7E2D8;
-    --border-light: #F0ECE4;
-    --text-charcoal: #1F2421;
-    --text-muted: #5C6460;
-    --sage-primary: #4A6B5B;
-    --sage-hover: #3D5A4C;
+    --bg-warm: #FCFDFD;
+    --bg-surface: #F3F2EB;
+    --bg-card: #FCFDFD;
+    --border-warm: #E8E6D9;
+    --border-light: #F0EEE4;
+    --text-charcoal: #26251E;
+    --text-muted: #6F6C5B;
+    --primary-dark: #26251E;
+    --primary-accent: #F97316;
+    --sage-primary: #3D5A4C;
+    --sage-hover: #2E453A;
     --sage-light: #EBF2EE;
     --sage-border: #D1E0D7;
-    --rose-accent: #A36B73;
+    --rose-accent: #9E4A56;
     --rose-light: #FDF2F4;
     --rose-border: #F3D2D7;
     --amber-warning: #B4782B;
@@ -25,13 +27,15 @@
   }
 
   .dark {
-    --bg-warm: #0B0F17;
-    --bg-surface: #131926;
-    --bg-card: #131926;
-    --border-warm: #1F293D;
-    --border-light: #182234;
-    --text-charcoal: #F1F5F9;
-    --text-muted: #94A3B8;
+    --bg-warm: #121210;
+    --bg-surface: #1C1B16;
+    --bg-card: #181714;
+    --border-warm: #2E2C26;
+    --border-light: #24221D;
+    --text-charcoal: #FCFDFD;
+    --text-muted: #A9A593;
+    --primary-dark: #FCFDFD;
+    --primary-accent: #F97316;
     --sage-primary: #10B981;
     --sage-hover: #059669;
     --sage-light: rgba(16, 185, 129, 0.15);

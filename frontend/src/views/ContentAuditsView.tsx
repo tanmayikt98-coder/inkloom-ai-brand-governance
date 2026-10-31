@@ -280,17 +280,18 @@ export const ContentAuditsView: React.FC = () => {
   return (
     <div className="p-6 sm:p-8 space-y-6 max-w-7xl mx-auto">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-[#E7E2D8] dark:border-gray-800 gap-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-[#E8E6D9] dark:border-[#2E2C26] gap-4">
         <div>
           <div className="flex items-center space-x-2">
-            <h1 className="text-2xl font-bold text-[#1F2421] dark:text-gray-100 tracking-tight">
+            <h1 className="text-2xl font-extrabold text-[#26251E] dark:text-[#F5F4EE] tracking-tight">
               Evidence-Driven Content Audit Studio
             </h1>
-            <span className="px-2.5 py-0.5 text-[10px] font-mono font-bold bg-[#EBF2EE] dark:bg-emerald-950/60 text-[#4A6B5B] dark:text-emerald-400 border border-[#D1E0D7] dark:border-emerald-800 rounded-full">
-              Deterministic Rule Engine Active
+            <span className="px-3 py-1 text-[11px] font-mono font-medium bg-[#F3F2EB] dark:bg-[#1C1B16] text-[#26251E] dark:text-[#F5F4EE] border border-[#E8E6D9] dark:border-[#2E2C26] rounded-full inline-flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F97316]"></span>
+              Deterministic Rule Engine
             </span>
           </div>
-          <p className="text-xs text-[#5C6460] dark:text-gray-400 mt-1">
+          <p className="text-xs text-[#6F6C5B] dark:text-[#A9A593] mt-1 font-sans">
             Deterministic claim substantiation, Auto-Fix Diff Studio, and selective visual inspection.
           </p>
         </div>
@@ -300,16 +301,16 @@ export const ContentAuditsView: React.FC = () => {
             <button
               onClick={handleRunAudit}
               disabled={isAuditing}
-              className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white text-xs font-semibold rounded-xl shadow-xs flex items-center transition-colors cursor-pointer"
+              className="px-5 py-2.5 bg-[#26251E] hover:bg-[#38362B] dark:bg-white dark:hover:bg-gray-100 dark:text-[#26251E] disabled:opacity-50 text-white text-xs font-semibold rounded-full shadow-sm flex items-center transition-all active:scale-95 cursor-pointer"
             >
-              <ShieldCheck className="w-4 h-4 mr-1.5" />
+              <ShieldCheck className="w-4 h-4 mr-1.5 text-[#F97316]" />
               {isAuditing ? "Auditing Claims..." : "Run Compliance Audit"}
             </button>
             <button
               onClick={handleSubmitForReview}
-              className="px-3.5 py-2 bg-white dark:bg-[#182234] border border-[#E7E2D8] dark:border-gray-700 hover:bg-[#FAF8F5] dark:hover:bg-gray-800 text-[#1F2421] dark:text-gray-200 text-xs font-semibold rounded-xl shadow-xs flex items-center transition-colors cursor-pointer"
+              className="px-4 py-2.5 bg-[#FCFDFD] dark:bg-[#181714] border border-[#E8E6D9] dark:border-[#2E2C26] hover:bg-[#F3F2EB] dark:hover:bg-[#1C1B16] text-[#26251E] dark:text-[#F5F4EE] text-xs font-semibold rounded-full shadow-xs flex items-center transition-all active:scale-95 cursor-pointer"
             >
-              <Send className="w-3.5 h-3.5 mr-1.5 text-emerald-600 dark:text-emerald-400" />
+              <Send className="w-3.5 h-3.5 mr-1.5 text-[#6F6C5B] dark:text-[#A9A593]" />
               Submit to Review Queue
             </button>
           </div>
@@ -318,7 +319,7 @@ export const ContentAuditsView: React.FC = () => {
 
       {/* Adversarial Quarantine Warning Banner */}
       {hasAdversarialFinding && (
-        <div className="p-4 rounded-xl border border-rose-500/50 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-100 flex items-start gap-3 shadow-md">
+        <div className="p-4 rounded-2xl border border-rose-500/40 bg-rose-50/70 dark:bg-rose-950/40 text-rose-900 dark:text-rose-100 flex items-start gap-3 shadow-xs">
           <ShieldAlert className="w-5 h-5 text-rose-600 dark:text-rose-400 shrink-0 mt-0.5" />
           <div className="text-xs">
             <span className="font-bold font-mono tracking-wide uppercase block">
@@ -333,18 +334,18 @@ export const ContentAuditsView: React.FC = () => {
 
       {/* Empty State Fallback */}
       {assets.length === 0 && (
-        <div className="p-12 bg-white dark:bg-[#131926] rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 text-center space-y-4">
-          <FileText className="w-10 h-10 text-emerald-500 mx-auto opacity-75" />
+        <div className="p-12 bg-[#FCFDFD] dark:bg-[#181714] rounded-3xl border border-dashed border-[#E8E6D9] dark:border-[#2E2C26] text-center space-y-4 shadow-xs">
+          <FileText className="w-10 h-10 text-[#6F6C5B] dark:text-[#A9A593] mx-auto opacity-75" />
           <div>
-            <h3 className="text-base font-bold text-gray-900 dark:text-white">No Marketing Collateral Loaded</h3>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 max-w-md mx-auto">
+            <h3 className="text-base font-bold text-[#26251E] dark:text-[#F5F4EE]">No Marketing Collateral Loaded</h3>
+            <p className="text-xs text-[#6F6C5B] dark:text-[#A9A593] mt-1 max-w-md mx-auto">
               Initialize the 9 Aurevia marketing assets across Landing Pages, Executive Social Posts, and Email Briefs.
             </p>
           </div>
           <button
             onClick={handleSeedAssets}
             disabled={isSeeding}
-            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl shadow-xs transition-colors inline-flex items-center gap-1.5"
+            className="px-5 py-2.5 bg-[#26251E] hover:bg-[#38362B] dark:bg-white dark:hover:bg-gray-100 dark:text-[#26251E] text-white text-xs font-semibold rounded-full shadow-sm transition-all active:scale-95 inline-flex items-center gap-1.5"
           >
             <RotateCcw className={`w-3.5 h-3.5 ${isSeeding ? "animate-spin" : ""}`} />
             <span>{isSeeding ? "Seeding Assets..." : "Load Demo Assets (9 Collateral)"}</span>
@@ -356,13 +357,13 @@ export const ContentAuditsView: React.FC = () => {
       {assets.length > 0 && (
         <>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="flex items-center space-x-1.5 p-1 bg-stone-100 dark:bg-[#182234] border border-stone-200 dark:border-gray-800 rounded-xl">
+            <div className="flex items-center space-x-1 p-1 bg-[#F3F2EB] dark:bg-[#1C1B16] border border-[#E8E6D9] dark:border-[#2E2C26] rounded-full">
               <button
                 onClick={() => setActiveTab("copy_audit")}
-                className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer ${
+                className={`px-4 py-2 text-xs font-semibold rounded-full transition-all flex items-center gap-1.5 cursor-pointer ${
                   activeTab === "copy_audit"
-                    ? "bg-white dark:bg-emerald-600 text-gray-900 dark:text-white shadow-xs"
-                    : "text-stone-600 dark:text-gray-400 hover:text-stone-900 dark:hover:text-white"
+                    ? "bg-[#26251E] text-white dark:bg-white dark:text-[#26251E] shadow-sm"
+                    : "text-[#6F6C5B] dark:text-[#A9A593] hover:text-[#26251E] dark:hover:text-white"
                 }`}
               >
                 <FileText className="w-3.5 h-3.5" />
@@ -370,10 +371,10 @@ export const ContentAuditsView: React.FC = () => {
               </button>
               <button
                 onClick={() => setActiveTab("diff_studio")}
-                className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer ${
+                className={`px-4 py-2 text-xs font-semibold rounded-full transition-all flex items-center gap-1.5 cursor-pointer ${
                   activeTab === "diff_studio"
-                    ? "bg-white dark:bg-emerald-600 text-gray-900 dark:text-white shadow-xs"
-                    : "text-stone-600 dark:text-gray-400 hover:text-stone-900 dark:hover:text-white"
+                    ? "bg-[#26251E] text-white dark:bg-white dark:text-[#26251E] shadow-sm"
+                    : "text-[#6F6C5B] dark:text-[#A9A593] hover:text-[#26251E] dark:hover:text-white"
                 }`}
               >
                 <Wand2 className="w-3.5 h-3.5" />
@@ -381,10 +382,10 @@ export const ContentAuditsView: React.FC = () => {
               </button>
               <button
                 onClick={() => setActiveTab("visual_inspection")}
-                className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer ${
+                className={`px-4 py-2 text-xs font-semibold rounded-full transition-all flex items-center gap-1.5 cursor-pointer ${
                   activeTab === "visual_inspection"
-                    ? "bg-white dark:bg-emerald-600 text-gray-900 dark:text-white shadow-xs"
-                    : "text-stone-600 dark:text-gray-400 hover:text-stone-900 dark:hover:text-white"
+                    ? "bg-[#26251E] text-white dark:bg-white dark:text-[#26251E] shadow-sm"
+                    : "text-[#6F6C5B] dark:text-[#A9A593] hover:text-[#26251E] dark:hover:text-white"
                 }`}
               >
                 <Eye className="w-3.5 h-3.5" />
@@ -395,16 +396,16 @@ export const ContentAuditsView: React.FC = () => {
             {/* Revision Selector Pill */}
             {revisions.length > 0 && (
               <div className="flex items-center gap-2">
-                <span className="text-[11px] text-gray-500 dark:text-gray-400 font-medium">Revision:</span>
-                <div className="flex items-center gap-1 p-1 bg-stone-100 dark:bg-[#182234] border border-stone-200 dark:border-gray-800 rounded-lg">
+                <span className="text-[11px] text-[#6F6C5B] dark:text-[#A9A593] font-medium">Revision:</span>
+                <div className="flex items-center gap-1 p-1 bg-[#F3F2EB] dark:bg-[#1C1B16] border border-[#E8E6D9] dark:border-[#2E2C26] rounded-full">
                   {revisions.map((rev) => (
                     <button
                       key={rev.id}
                       onClick={() => handleSelectRevision(rev)}
-                      className={`px-2.5 py-1 text-[11px] font-mono rounded font-semibold transition-colors cursor-pointer ${
+                      className={`px-3 py-1 text-[11px] font-mono rounded-full font-semibold transition-all cursor-pointer ${
                         selectedRevisionId === rev.id
-                          ? "bg-white dark:bg-emerald-600 text-gray-900 dark:text-white shadow-xs"
-                          : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                          ? "bg-[#26251E] text-white dark:bg-white dark:text-[#26251E] shadow-sm"
+                          : "text-[#6F6C5B] dark:text-[#A9A593] hover:text-[#26251E] dark:hover:text-white"
                       }`}
                     >
                       v{rev.revision_number} {rev.revision_number === 1 ? "(Draft)" : "(Fixed)"}
@@ -416,22 +417,22 @@ export const ContentAuditsView: React.FC = () => {
           </div>
 
           {/* Asset Selector Strip */}
-          <div className="flex items-center space-x-2 overflow-x-auto pb-2">
+          <div className="flex items-center space-x-2 overflow-x-auto pb-2 scrollbar-none">
             {assets.map((a) => {
               const isSelected = selectedAsset?.id === a.id;
               return (
                 <button
                   key={a.id}
                   onClick={() => handleSelectAsset(a)}
-                  className={`px-3.5 py-2 rounded-xl text-xs font-medium border shrink-0 transition-all cursor-pointer ${
+                  className={`px-4 py-2 rounded-full text-xs font-medium border shrink-0 transition-all cursor-pointer ${
                     isSelected
-                      ? "bg-[#EBF2EE] dark:bg-emerald-950/40 text-[#4A6B5B] dark:text-emerald-400 border-[#4A6B5B] dark:border-emerald-700 font-semibold shadow-xs ring-1 ring-[#4A6B5B]/30"
-                      : "bg-white dark:bg-[#131926] text-[#1F2421] dark:text-gray-300 border-[#E7E2D8] dark:border-gray-800 hover:bg-[#FAF8F5] dark:hover:bg-gray-800/60"
+                      ? "bg-[#26251E] text-white dark:bg-white dark:text-[#26251E] border-[#26251E] dark:border-white font-semibold shadow-sm"
+                      : "bg-[#FCFDFD] dark:bg-[#181714] text-[#26251E] dark:text-[#F5F4EE] border-[#E8E6D9] dark:border-[#2E2C26] hover:bg-[#F3F2EB] dark:hover:bg-[#1C1B16]"
                   }`}
                 >
                   <div className="flex items-center space-x-1.5">
                     <span>{a.title}</span>
-                    <span className="text-[10px] text-[#5C6460] dark:text-gray-400">({a.asset_type})</span>
+                    <span className={`text-[10px] ${isSelected ? "text-stone-300 dark:text-stone-600" : "text-[#6F6C5B] dark:text-[#A9A593]"}`}>({a.asset_type})</span>
                   </div>
                 </button>
               );
@@ -442,10 +443,10 @@ export const ContentAuditsView: React.FC = () => {
           {activeTab === "copy_audit" && selectedAsset && (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Left Pane: Copy Editor with Real-Time Claim Highlighting */}
-              <div className="bg-white dark:bg-[#131926] p-6 rounded-2xl border border-[#E7E2D8] dark:border-gray-800 shadow-xs space-y-4">
+              <div className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-xs space-y-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-sm font-bold text-[#1F2421] dark:text-white">Marketing Copy Draft</h3>
-                  <span className="text-[10px] font-mono text-gray-500 dark:text-gray-400">
+                  <h3 className="text-sm font-bold text-[#26251E] dark:text-[#F5F4EE]">Marketing Copy Draft</h3>
+                  <span className="text-[10px] font-mono text-[#6F6C5B] dark:text-[#A9A593]">
                     {contentText.length} characters • {contentText.split(/\s+/).filter(Boolean).length} words
                   </span>
                 </div>
@@ -455,33 +456,33 @@ export const ContentAuditsView: React.FC = () => {
                   value={contentText}
                   onChange={(e) => setContentText(e.target.value)}
                   placeholder="Paste or write marketing copy here to audit claims..."
-                  className="w-full text-xs p-4 border border-[#E7E2D8] dark:border-gray-700 rounded-xl focus:ring-1 focus:ring-emerald-500 bg-[#FAF8F5] dark:bg-[#182234] text-gray-900 dark:text-white leading-relaxed font-sans"
+                  className="w-full text-xs p-4 border border-[#E8E6D9] dark:border-[#2E2C26] rounded-2xl focus:ring-1 focus:ring-[#26251E] dark:focus:ring-white bg-[#F3F2EB]/50 dark:bg-[#1C1B16] text-[#26251E] dark:text-[#F5F4EE] leading-relaxed font-sans outline-none"
                 />
 
-                <div className="flex items-center justify-between text-xs text-[#5C6460] dark:text-gray-400 pt-2 border-t border-[#F0ECE4] dark:border-gray-800">
+                <div className="flex items-center justify-between text-xs text-[#6F6C5B] dark:text-[#A9A593] pt-2 border-t border-[#E8E6D9] dark:border-[#2E2C26]">
                   <span>Deterministic token evaluation active</span>
                   <button
                     onClick={() => setActiveTab("diff_studio")}
-                    className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline flex items-center gap-1 cursor-pointer"
+                    className="text-[#26251E] dark:text-[#F5F4EE] font-semibold hover:underline flex items-center gap-1 cursor-pointer"
                   >
-                    Open in Auto-Fix Diff Studio <ArrowRight className="w-3.5 h-3.5" />
+                    Open in Auto-Fix Diff Studio <ArrowRight className="w-3.5 h-3.5 text-[#F97316]" />
                   </button>
                 </div>
               </div>
 
               {/* Right Pane: Audit Findings & Rule Citations */}
-              <div className="bg-white dark:bg-[#131926] p-6 rounded-2xl border border-[#E7E2D8] dark:border-gray-800 shadow-xs space-y-4">
-                <div className="flex items-center justify-between pb-3 border-b border-[#F0ECE4] dark:border-gray-800">
+              <div className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-xs space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-[#E8E6D9] dark:border-[#2E2C26]">
                   <div className="flex items-center space-x-2">
-                    <h3 className="text-sm font-bold text-[#1F2421] dark:text-white">
+                    <h3 className="text-sm font-bold text-[#26251E] dark:text-[#F5F4EE]">
                       Audit Findings ({auditResult?.findings.length || 0})
                     </h3>
                     {auditResult && (
                       <span
-                        className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                        className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full ${
                           auditResult.status === "COMPLIANT"
-                            ? "bg-[#EBF2EE] dark:bg-emerald-950/60 text-[#4A6B5B] dark:text-emerald-400"
-                            : "bg-red-50 dark:bg-rose-950/60 text-red-700 dark:text-rose-400"
+                            ? "bg-[#EBF2EE] dark:bg-emerald-950/60 text-[#4A6B5B] dark:text-emerald-400 border border-[#D1E0D7] dark:border-emerald-800"
+                            : "bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-400 border border-rose-200 dark:border-rose-800"
                         }`}
                       >
                         {auditResult.status}
@@ -489,7 +490,7 @@ export const ContentAuditsView: React.FC = () => {
                     )}
                   </div>
                   {auditResult && (
-                    <span className="text-[10px] font-mono text-gray-500 dark:text-gray-400">
+                    <span className="text-[10px] font-mono text-[#6F6C5B] dark:text-[#A9A593]">
                       Evaluated in {auditResult.execution_ms?.toFixed(1) || "12.0"}ms
                     </span>
                   )}
@@ -500,41 +501,41 @@ export const ContentAuditsView: React.FC = () => {
                     auditResult.findings.map((f) => (
                       <div
                         key={f.id}
-                        className={`p-3.5 rounded-xl border text-xs space-y-2 ${
+                        className={`p-4 rounded-2xl border text-xs space-y-2 ${
                           f.severity === "CRITICAL"
                             ? "bg-rose-50/50 dark:bg-rose-950/30 border-rose-200 dark:border-rose-900"
                             : f.severity === "HIGH"
                             ? "bg-amber-50/50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-900"
-                            : "bg-emerald-50/50 dark:bg-emerald-950/30 border-emerald-200 dark:border-emerald-900"
+                            : "bg-[#F3F2EB]/60 dark:bg-[#1C1B16] border-[#E8E6D9] dark:border-[#2E2C26]"
                         }`}
                       >
                         <div className="flex items-center justify-between">
                           <span
-                            className={`text-[10px] font-bold px-2 py-0.5 rounded ${
+                            className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
                               SEVERITY_BADGES[f.severity] || "bg-stone-100"
                             }`}
                           >
                             {f.severity}
                           </span>
-                          <span className="text-[10px] font-mono font-semibold text-gray-500 dark:text-gray-400">
+                          <span className="text-[10px] font-mono font-semibold text-[#6F6C5B] dark:text-[#A9A593]">
                             {CATEGORY_LABELS[f.category] || f.category}
                           </span>
                         </div>
 
-                        <p className="text-gray-900 dark:text-gray-100 font-medium leading-relaxed">
+                        <p className="text-[#26251E] dark:text-[#F5F4EE] font-medium leading-relaxed">
                           {f.explanation}
                         </p>
 
                         {f.exact_citation_text && (
-                          <div className="text-[11px] font-mono text-gray-600 dark:text-gray-300 bg-white/70 dark:bg-black/30 p-2 rounded-lg border border-gray-200 dark:border-gray-800">
-                            <span className="text-[10px] text-gray-400 block font-sans">Official Benchmark Grounding:</span>
+                          <div className="text-[11px] font-mono text-[#26251E] dark:text-stone-300 bg-white/70 dark:bg-black/30 p-2.5 rounded-xl border border-[#E8E6D9] dark:border-[#2E2C26]">
+                            <span className="text-[10px] text-[#6F6C5B] dark:text-[#A9A593] block font-sans">Official Benchmark Grounding:</span>
                             "{f.exact_citation_text}"
                           </div>
                         )}
 
                         {f.suggested_correction && (
-                          <div className="text-[11px] text-emerald-800 dark:text-emerald-300 bg-emerald-100/60 dark:bg-emerald-950/60 p-2 rounded-lg border border-emerald-300 dark:border-emerald-800 flex items-start gap-1.5">
-                            <Wand2 className="w-3.5 h-3.5 shrink-0 mt-0.5 text-emerald-600 dark:text-emerald-400" />
+                          <div className="text-[11px] text-[#26251E] dark:text-emerald-300 bg-[#EBF2EE] dark:bg-emerald-950/40 p-2.5 rounded-xl border border-[#D1E0D7] dark:border-emerald-800 flex items-start gap-1.5">
+                            <Wand2 className="w-3.5 h-3.5 shrink-0 mt-0.5 text-[#F97316]" />
                             <span>
                               <strong>Suggested Fix:</strong> {f.suggested_correction}
                             </span>
@@ -543,9 +544,9 @@ export const ContentAuditsView: React.FC = () => {
                       </div>
                     ))
                   ) : (
-                    <div className="p-12 text-center text-xs text-gray-500 dark:text-gray-400 space-y-2">
-                      <CheckCircle2 className="w-8 h-8 text-emerald-500 mx-auto" />
-                      <p className="font-semibold text-gray-900 dark:text-white">All Evaluated Claims Compliant</p>
+                    <div className="p-12 text-center text-xs text-[#6F6C5B] dark:text-[#A9A593] space-y-2">
+                      <CheckCircle2 className="w-8 h-8 text-emerald-600 dark:text-emerald-400 mx-auto" />
+                      <p className="font-semibold text-[#26251E] dark:text-[#F5F4EE]">All Evaluated Claims Compliant</p>
                       <p>Every metric is substantiated by an active Tier 1 evidentiary benchmark.</p>
                     </div>
                   )}
@@ -558,13 +559,13 @@ export const ContentAuditsView: React.FC = () => {
           {activeTab === "diff_studio" && selectedAsset && (
             <div className="space-y-6">
               {/* Studio Action Header */}
-              <div className="p-4 bg-emerald-50/70 dark:bg-emerald-950/40 rounded-2xl border border-emerald-200 dark:border-emerald-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="p-5 bg-[#F3F2EB] dark:bg-[#1C1B16] rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs">
                 <div>
-                  <h4 className="text-sm font-bold text-emerald-900 dark:text-emerald-300 flex items-center gap-1.5">
-                    <Wand2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                  <h4 className="text-sm font-bold text-[#26251E] dark:text-[#F5F4EE] flex items-center gap-1.5">
+                    <Wand2 className="w-4 h-4 text-[#F97316]" />
                     Deterministic Auto-Fix Diff Studio
                   </h4>
-                  <p className="text-xs text-emerald-800/80 dark:text-emerald-400/80 mt-0.5">
+                  <p className="text-xs text-[#6F6C5B] dark:text-[#A9A593] mt-0.5">
                     Reconciles unverified claims to official 30% benchmark, removes prohibited superlatives, and appends mandatory FTC disclaimers.
                   </p>
                 </div>
@@ -572,9 +573,9 @@ export const ContentAuditsView: React.FC = () => {
                 <button
                   onClick={handleApplyAutoFix}
                   disabled={isAutoFixing}
-                  className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md flex items-center gap-2 transition-transform active:scale-95 shrink-0 cursor-pointer disabled:opacity-50"
+                  className="px-6 py-3 bg-[#26251E] hover:bg-[#38362B] dark:bg-white dark:hover:bg-gray-100 dark:text-[#26251E] text-white rounded-full text-xs font-bold shadow-md flex items-center gap-2 transition-transform active:scale-95 shrink-0 cursor-pointer disabled:opacity-50"
                 >
-                  <Sparkles className="w-4 h-4" />
+                  <Sparkles className="w-4 h-4 text-[#F97316]" />
                   <span>{isAutoFixing ? "Applying & Re-evaluating..." : "Accept Suggestion & Re-evaluate"}</span>
                 </button>
               </div>
@@ -582,18 +583,18 @@ export const ContentAuditsView: React.FC = () => {
               {/* Two-Pane Diff Studio */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Left Pane: Original Draft */}
-                <div className="bg-white dark:bg-[#131926] p-6 rounded-2xl border border-rose-200 dark:border-rose-900/60 shadow-xs space-y-3">
+                <div className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-rose-200 dark:border-rose-900/60 shadow-xs space-y-3">
                   <div className="flex items-center justify-between pb-2 border-b border-rose-100 dark:border-rose-950">
                     <span className="text-xs font-bold text-rose-700 dark:text-rose-400 flex items-center gap-1.5">
                       <XCircle className="w-3.5 h-3.5" />
                       Original Draft (Non-Compliant)
                     </span>
-                    <span className="text-[10px] uppercase font-mono font-bold px-2 py-0.5 rounded bg-rose-100 dark:bg-rose-950 text-rose-800 dark:text-rose-300">
+                    <span className="text-[10px] uppercase font-mono font-bold px-2.5 py-0.5 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-800 dark:text-rose-300">
                       3 Violations Flagged
                     </span>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-rose-50/30 dark:bg-rose-950/20 text-xs font-sans leading-relaxed text-gray-800 dark:text-gray-200 space-y-3 min-h-[180px]">
+                  <div className="p-4 rounded-2xl bg-rose-50/30 dark:bg-rose-950/20 text-xs font-sans leading-relaxed text-[#26251E] dark:text-gray-200 space-y-3 min-h-[180px]">
                     <p>
                       Welcome to Aurevia. Aurevia{" "}
                       <span className="bg-rose-200/80 dark:bg-rose-900/80 text-rose-900 dark:text-rose-200 px-1 py-0.5 rounded line-through font-bold">
@@ -612,32 +613,32 @@ export const ContentAuditsView: React.FC = () => {
                 </div>
 
                 {/* Right Pane: Suggested Compliant Copy */}
-                <div className="bg-white dark:bg-[#131926] p-6 rounded-2xl border border-emerald-200 dark:border-emerald-900/60 shadow-xs space-y-3">
-                  <div className="flex items-center justify-between pb-2 border-b border-emerald-100 dark:border-emerald-950">
-                    <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
-                      <CheckCircle2 className="w-3.5 h-3.5" />
+                <div className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-xs space-y-3">
+                  <div className="flex items-center justify-between pb-2 border-b border-[#E8E6D9] dark:border-[#2E2C26]">
+                    <span className="text-xs font-bold text-[#26251E] dark:text-[#F5F4EE] flex items-center gap-1.5">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                       Suggested Compliant Copy (Substantiated)
                     </span>
-                    <span className="text-[10px] uppercase font-mono font-bold px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">
+                    <span className="text-[10px] uppercase font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#EBF2EE] dark:bg-emerald-950 text-[#4A6B5B] dark:text-emerald-300 border border-[#D1E0D7] dark:border-emerald-800">
                       100% Compliant Score
                     </span>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-emerald-50/30 dark:bg-emerald-950/20 text-xs font-sans leading-relaxed text-gray-800 dark:text-gray-200 space-y-3 min-h-[180px]">
+                  <div className="p-4 rounded-2xl bg-[#F3F2EB]/50 dark:bg-[#1C1B16]/50 text-xs font-sans leading-relaxed text-[#26251E] dark:text-gray-200 space-y-3 min-h-[180px]">
                     <p>
                       Welcome to Aurevia. Aurevia{" "}
-                      <span className="bg-emerald-200/80 dark:bg-emerald-900/80 text-emerald-900 dark:text-emerald-200 px-1 py-0.5 rounded font-bold underline">
+                      <span className="bg-[#EBF2EE] dark:bg-emerald-900/60 text-[#4A6B5B] dark:text-emerald-200 px-1 py-0.5 rounded font-bold underline">
                         reduces average processing time by 30%
                       </span>{" "}
                       across verified benchmark workloads.{" "}
-                      <span className="bg-emerald-200/80 dark:bg-emerald-900/80 text-emerald-900 dark:text-emerald-200 px-1 py-0.5 rounded font-bold">
+                      <span className="bg-[#EBF2EE] dark:bg-emerald-900/60 text-[#4A6B5B] dark:text-emerald-200 px-1 py-0.5 rounded font-bold">
                         Delivering robust enterprise reliability for global organizations.
                       </span>{" "}
-                      <span className="bg-emerald-200/80 dark:bg-emerald-900/80 text-emerald-900 dark:text-emerald-200 px-1 py-0.5 rounded font-bold">
+                      <span className="bg-[#EBF2EE] dark:bg-emerald-900/60 text-[#4A6B5B] dark:text-emerald-200 px-1 py-0.5 rounded font-bold">
                         Results may vary based on workload parameters and enterprise tier configuration.
                       </span>
                     </p>
-                    <p className="text-[11px] text-emerald-700 dark:text-emerald-400 font-mono">
+                    <p className="text-[11px] text-[#6F6C5B] dark:text-[#A9A593] font-mono">
                       ✓ Grounded in Apex Benchmark ev-bench-001 (Sec 3.2) • Rule RULE-DISCLAIM-01 satisfied.
                     </p>
                   </div>

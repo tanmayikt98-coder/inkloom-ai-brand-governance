@@ -43,24 +43,24 @@ export const SettingsView: React.FC = () => {
   return (
     <div className="p-6 sm:p-8 space-y-6 max-w-7xl mx-auto">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[#E7E2D8] dark:border-gray-800 gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[#E8E6D9] dark:border-[#2E2C26] gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-[#1F2421] dark:text-gray-100">
+          <h1 className="text-2xl font-extrabold text-[#26251E] dark:text-[#F5F4EE] tracking-tight">
             Enterprise Settings &amp; Governance Architecture
           </h1>
-          <p className="text-xs text-[#5C6460] dark:text-gray-400 mt-1">
+          <p className="text-xs text-[#6F6C5B] dark:text-[#A9A593] mt-1 font-sans">
             Multi-tenant organizational boundaries, RBAC permissions matrix, and CI/CD automated governance webhooks.
           </p>
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex items-center gap-1.5 p-1 bg-stone-100 dark:bg-[#182234] rounded-xl border border-stone-200 dark:border-gray-700 text-xs font-semibold">
+        <div className="flex items-center gap-1 p-1 bg-[#F3F2EB] dark:bg-[#1C1B16] rounded-full border border-[#E8E6D9] dark:border-[#2E2C26] text-xs font-semibold">
           <button
             onClick={() => setActiveTab("rbac")}
-            className={`px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 ${
+            className={`px-4 py-1.5 rounded-full transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === "rbac"
-                ? "bg-white dark:bg-emerald-600 text-gray-900 dark:text-white shadow-xs"
-                : "text-stone-600 dark:text-gray-400 hover:text-stone-900 dark:hover:text-white"
+                ? "bg-[#26251E] text-white dark:bg-white dark:text-[#26251E] shadow-sm"
+                : "text-[#6F6C5B] dark:text-[#A9A593] hover:text-[#26251E] dark:hover:text-white"
             }`}
           >
             <Shield className="w-3.5 h-3.5" />
@@ -68,10 +68,10 @@ export const SettingsView: React.FC = () => {
           </button>
           <button
             onClick={() => setActiveTab("integrations")}
-            className={`px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 ${
+            className={`px-4 py-1.5 rounded-full transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === "integrations"
-                ? "bg-white dark:bg-emerald-600 text-gray-900 dark:text-white shadow-xs"
-                : "text-stone-600 dark:text-gray-400 hover:text-stone-900 dark:hover:text-white"
+                ? "bg-[#26251E] text-white dark:bg-white dark:text-[#26251E] shadow-sm"
+                : "text-[#6F6C5B] dark:text-[#A9A593] hover:text-[#26251E] dark:hover:text-white"
             }`}
           >
             <GitPullRequest className="w-3.5 h-3.5" />
@@ -79,10 +79,10 @@ export const SettingsView: React.FC = () => {
           </button>
           <button
             onClick={() => setActiveTab("multi_tenant")}
-            className={`px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 ${
+            className={`px-4 py-1.5 rounded-full transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === "multi_tenant"
-                ? "bg-white dark:bg-emerald-600 text-gray-900 dark:text-white shadow-xs"
-                : "text-stone-600 dark:text-gray-400 hover:text-stone-900 dark:hover:text-white"
+                ? "bg-[#26251E] text-white dark:bg-white dark:text-[#26251E] shadow-sm"
+                : "text-[#6F6C5B] dark:text-[#A9A593] hover:text-[#26251E] dark:hover:text-white"
             }`}
           >
             <Database className="w-3.5 h-3.5" />
@@ -96,33 +96,33 @@ export const SettingsView: React.FC = () => {
       {activeTab === "rbac" && (
         <div className="space-y-6">
           {/* Active User Security Status */}
-          <div className="bg-white dark:bg-[#131926] p-6 rounded-2xl border border-[#E7E2D8] dark:border-gray-800 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <span className="text-[10px] uppercase font-bold text-[#5C6460] dark:text-gray-400 tracking-wider block">
+              <span className="text-[10px] uppercase font-bold text-[#6F6C5B] dark:text-[#A9A593] tracking-wider block font-mono">
                 Current Authenticated Principal
               </span>
               <div className="flex items-center space-x-2 mt-1">
-                <span className="text-lg font-bold text-[#1F2421] dark:text-white">{currentUser?.full_name}</span>
-                <span className="px-2.5 py-0.5 rounded text-xs font-semibold bg-[#EBF2EE] dark:bg-emerald-950/60 text-[#4A6B5B] dark:text-emerald-400 border border-[#D1E0D7] dark:border-emerald-800">
+                <span className="text-lg font-bold text-[#26251E] dark:text-[#F5F4EE]">{currentUser?.full_name}</span>
+                <span className="px-3 py-0.5 rounded-full text-xs font-semibold bg-[#EBF2EE] dark:bg-emerald-950/60 text-[#4A6B5B] dark:text-emerald-400 border border-[#D1E0D7] dark:border-emerald-800">
                   {currentUser?.role}
                 </span>
               </div>
-              <p className="text-xs text-[#5C6460] dark:text-gray-400 mt-0.5">
-                Email: {currentUser?.email} • Organization: Aurevia Technologies Inc. (Tenant-Scoped: <code className="font-mono text-[10px] bg-stone-100 dark:bg-gray-800 px-1 py-0.5 rounded">tenant-aurevia-001</code>)
+              <p className="text-xs text-[#6F6C5B] dark:text-[#A9A593] mt-0.5">
+                Email: {currentUser?.email} • Organization: Aurevia Technologies Inc. (Tenant-Scoped: <code className="font-mono text-[10px] bg-[#F3F2EB] dark:bg-gray-800 px-1.5 py-0.5 rounded-md">tenant-aurevia-001</code>)
               </p>
             </div>
 
-            <div className="flex items-center space-x-2 text-xs text-[#5C6460] dark:text-gray-400">
-              <Lock className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+            <div className="flex items-center space-x-2 text-xs text-[#6F6C5B] dark:text-[#A9A593]">
+              <Lock className="w-4 h-4 text-[#F97316]" />
               <span>Backend Authorization (HTTP 403 Enforcement Active)</span>
             </div>
           </div>
 
           {/* Demo Accounts Quick-Switching Grid */}
-          <div className="bg-white dark:bg-[#131926] p-6 rounded-2xl border border-[#E7E2D8] dark:border-gray-800 shadow-xs space-y-4">
+          <div className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-xs space-y-4">
             <div>
-              <h3 className="text-sm font-bold text-[#1F2421] dark:text-white">Demo Accounts (All 8 Human Governance Roles)</h3>
-              <p className="text-xs text-[#5C6460] dark:text-gray-400 mt-0.5">
+              <h3 className="text-sm font-bold text-[#26251E] dark:text-[#F5F4EE]">Demo Accounts (All 8 Human Governance Roles)</h3>
+              <p className="text-xs text-[#6F6C5B] dark:text-[#A9A593] mt-0.5">
                 Click any role to immediately test permission gates, creator separation-of-duties, and review capabilities.
               </p>
             </div>
@@ -134,15 +134,15 @@ export const SettingsView: React.FC = () => {
                   <button
                     key={u.id}
                     onClick={() => switchRole(u.role)}
-                    className={`p-3.5 rounded-xl border text-left transition-all ${
+                    className={`p-4 rounded-2xl border text-left transition-all cursor-pointer ${
                       isCurrent
-                        ? "bg-[#EBF2EE] dark:bg-emerald-950/40 border-[#4A6B5B] dark:border-emerald-700 shadow-xs"
-                        : "bg-[#FAF8F5] dark:bg-[#182234]/50 border-[#E7E2D8] dark:border-gray-800 hover:border-[#D1E0D7] dark:hover:border-gray-700"
+                        ? "bg-[#F3F2EB] dark:bg-[#1C1B16] border-[#26251E] dark:border-white shadow-xs"
+                        : "bg-[#FCFDFD] dark:bg-[#181714] border-[#E8E6D9] dark:border-[#2E2C26] hover:border-[#6F6C5B]"
                     }`}
                   >
-                    <div className="font-bold text-xs text-[#1F2421] dark:text-white">{u.full_name}</div>
+                    <div className="font-bold text-xs text-[#26251E] dark:text-[#F5F4EE]">{u.full_name}</div>
                     <div className="text-[10px] text-[#4A6B5B] dark:text-emerald-400 font-semibold mt-0.5">{u.role}</div>
-                    <div className="text-[10px] text-[#5C6460] dark:text-gray-400 mt-1 truncate">{u.email}</div>
+                    <div className="text-[10px] text-[#6F6C5B] dark:text-[#A9A593] mt-1 truncate">{u.email}</div>
                   </button>
                 );
               })}
@@ -150,39 +150,39 @@ export const SettingsView: React.FC = () => {
           </div>
 
           {/* Complete Role-Permission Matrix */}
-          <div className="bg-white dark:bg-[#131926] p-6 rounded-2xl border border-[#E7E2D8] dark:border-gray-800 shadow-xs space-y-4">
+          <div className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-xs space-y-4">
             <div>
-              <h3 className="text-sm font-bold text-[#1F2421] dark:text-white">Role-Based Access Control (RBAC) Permission Matrix</h3>
-              <p className="text-xs text-[#5C6460] dark:text-gray-400 mt-0.5">
+              <h3 className="text-sm font-bold text-[#26251E] dark:text-[#F5F4EE]">Role-Based Access Control (RBAC) Permission Matrix</h3>
+              <p className="text-xs text-[#6F6C5B] dark:text-[#A9A593] mt-0.5">
                 Verified server-side enforcement. Unauthorized requests return HTTP 403 Forbidden.
               </p>
             </div>
 
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
-                <thead className="bg-[#FAF8F5] dark:bg-[#182234] border-b border-[#E7E2D8] dark:border-gray-800 text-[#5C6460] dark:text-gray-400">
+                <thead className="bg-[#F3F2EB]/50 dark:bg-[#1C1B16] border-b border-[#E8E6D9] dark:border-[#2E2C26] text-[#6F6C5B] dark:text-[#A9A593]">
                   <tr>
-                    <th className="py-2.5 px-3 font-semibold">Governance Capability</th>
-                    <th className="py-2.5 px-3 font-semibold">Module</th>
-                    <th className="py-2.5 px-3 font-semibold text-center">Admin</th>
-                    <th className="py-2.5 px-3 font-semibold text-center">Brand Mgr</th>
-                    <th className="py-2.5 px-3 font-semibold text-center">Creator</th>
-                    <th className="py-2.5 px-3 font-semibold text-center">Auditor</th>
-                    <th className="py-2.5 px-3 font-semibold text-center">Approver</th>
-                    <th className="py-2.5 px-3 font-semibold text-center">Custodian</th>
+                    <th className="py-3 px-3 font-semibold">Governance Capability</th>
+                    <th className="py-3 px-3 font-semibold">Module</th>
+                    <th className="py-3 px-3 font-semibold text-center">Admin</th>
+                    <th className="py-3 px-3 font-semibold text-center">Brand Mgr</th>
+                    <th className="py-3 px-3 font-semibold text-center">Creator</th>
+                    <th className="py-3 px-3 font-semibold text-center">Auditor</th>
+                    <th className="py-3 px-3 font-semibold text-center">Approver</th>
+                    <th className="py-3 px-3 font-semibold text-center">Custodian</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#F0ECE4] dark:divide-gray-800">
+                <tbody className="divide-y divide-[#E8E6D9]/60 dark:divide-[#2E2C26]">
                   {PERMISSION_MATRIX.map((perm, i) => (
-                    <tr key={i} className="hover:bg-[#FAF8F5] dark:hover:bg-gray-800/40">
-                      <td className="py-2.5 px-3 font-semibold text-[#1F2421] dark:text-white">{perm.action}</td>
-                      <td className="py-2.5 px-3 text-[#5C6460] dark:text-gray-400 text-[11px]">{perm.module}</td>
+                    <tr key={i} className="hover:bg-[#F3F2EB]/30 dark:hover:bg-[#1C1B16]/50">
+                      <td className="py-3 px-3 font-semibold text-[#26251E] dark:text-[#F5F4EE]">{perm.action}</td>
+                      <td className="py-3 px-3 text-[#6F6C5B] dark:text-[#A9A593] text-[11px]">{perm.module}</td>
                       {/* Admin */}
-                      <td className="py-2.5 px-3 text-center">
+                      <td className="py-3 px-3 text-center">
                         <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 inline" />
                       </td>
                       {/* Brand Mgr */}
-                      <td className="py-2.5 px-3 text-center">
+                      <td className="py-3 px-3 text-center">
                         {perm.roles.includes("BRAND_MANAGER") ? (
                           <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 inline" />
                         ) : (
@@ -190,7 +190,7 @@ export const SettingsView: React.FC = () => {
                         )}
                       </td>
                       {/* Creator */}
-                      <td className="py-2.5 px-3 text-center">
+                      <td className="py-3 px-3 text-center">
                         {perm.roles.includes("CONTENT_CREATOR") ? (
                           <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 inline" />
                         ) : (
@@ -198,7 +198,7 @@ export const SettingsView: React.FC = () => {
                         )}
                       </td>
                       {/* Compliance Auditor */}
-                      <td className="py-2.5 px-3 text-center">
+                      <td className="py-3 px-3 text-center">
                         {perm.roles.includes("COMPLIANCE_ANALYST") ? (
                           <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 inline" />
                         ) : (
@@ -206,7 +206,7 @@ export const SettingsView: React.FC = () => {
                         )}
                       </td>
                       {/* Approver */}
-                      <td className="py-2.5 px-3 text-center">
+                      <td className="py-3 px-3 text-center">
                         {perm.roles.includes("REVIEWER_APPROVER") ? (
                           <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 inline" />
                         ) : (
@@ -214,7 +214,7 @@ export const SettingsView: React.FC = () => {
                         )}
                       </td>
                       {/* Custodian */}
-                      <td className="py-2.5 px-3 text-center">
+                      <td className="py-3 px-3 text-center">
                         {perm.roles.includes("EVIDENCE_CUSTODIAN") ? (
                           <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 inline" />
                         ) : (
@@ -232,43 +232,43 @@ export const SettingsView: React.FC = () => {
 
       {activeTab === "multi_tenant" && (
         <div className="space-y-6">
-          <div className="bg-white dark:bg-[#131926] p-6 rounded-2xl border border-[#E7E2D8] dark:border-gray-800 shadow-xs space-y-4">
-            <h3 className="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
-              <Database className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+          <div className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-xs space-y-4">
+            <h3 className="text-base font-bold text-[#26251E] dark:text-[#F5F4EE] flex items-center gap-2">
+              <Database className="w-4 h-4 text-[#F97316]" />
               Multi-Tenant Architecture &amp; Cryptographic WORM Specifications
             </h3>
-            <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+            <p className="text-xs text-[#6F6C5B] dark:text-[#A9A593] leading-relaxed">
               Inkloom AI implements enterprise-grade multi-tenancy backed by strict foreign key and tenant scoping across every database table.
               All audit records are sealed in an immutable Write-Once-Read-Many (WORM) ledger with cryptographic SHA-256 Merkle-tree hash chaining.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-              <div className="p-4 rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50/60 dark:bg-[#182234]/40 space-y-2">
-                <span className="text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400 uppercase">
+              <div className="p-5 rounded-2xl border border-[#E8E6D9] dark:border-[#2E2C26] bg-[#F3F2EB]/40 dark:bg-[#1C1B16]/40 space-y-2">
+                <span className="text-[10px] font-mono font-bold text-[#26251E] dark:text-emerald-400 uppercase">
                   Data Isolation
                 </span>
-                <h4 className="text-sm font-bold text-gray-900 dark:text-white">0.0% Cross-Tenant Leakage</h4>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+                <h4 className="text-sm font-bold text-[#26251E] dark:text-[#F5F4EE]">0.0% Cross-Tenant Leakage</h4>
+                <p className="text-xs text-[#6F6C5B] dark:text-[#A9A593]">
                   Every SQL query automatically injects <code>tenant_id</code> filters. Verified in 41 automated pytest integration runs.
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50/60 dark:bg-[#182234]/40 space-y-2">
-                <span className="text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400 uppercase">
+              <div className="p-5 rounded-2xl border border-[#E8E6D9] dark:border-[#2E2C26] bg-[#F3F2EB]/40 dark:bg-[#1C1B16]/40 space-y-2">
+                <span className="text-[10px] font-mono font-bold text-[#26251E] dark:text-emerald-400 uppercase">
                   RFC 3161 Attestation
                 </span>
-                <h4 className="text-sm font-bold text-gray-900 dark:text-white">Cryptographic Timestamping</h4>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+                <h4 className="text-sm font-bold text-[#26251E] dark:text-[#F5F4EE]">Cryptographic Timestamping</h4>
+                <p className="text-xs text-[#6F6C5B] dark:text-[#A9A593]">
                   Audit events and approvals include millisecond UTC timestamps chained via <code>prev_hash</code> digests for forensic verification.
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50/60 dark:bg-[#182234]/40 space-y-2">
-                <span className="text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400 uppercase">
+              <div className="p-5 rounded-2xl border border-[#E8E6D9] dark:border-[#2E2C26] bg-[#F3F2EB]/40 dark:bg-[#1C1B16]/40 space-y-2">
+                <span className="text-[10px] font-mono font-bold text-[#26251E] dark:text-emerald-400 uppercase">
                   Legal Compliance
                 </span>
-                <h4 className="text-sm font-bold text-gray-900 dark:text-white">FTC &amp; SEC Audit Ready</h4>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+                <h4 className="text-sm font-bold text-[#26251E] dark:text-[#F5F4EE]">FTC &amp; SEC Audit Ready</h4>
+                <p className="text-xs text-[#6F6C5B] dark:text-[#A9A593]">
                   Exportable Brand Clearance Certificates and JSON-LD tamper-evident compliance packages ready for external regulatory audits.
                 </p>
               </div>

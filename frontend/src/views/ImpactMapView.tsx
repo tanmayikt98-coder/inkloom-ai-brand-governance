@@ -149,50 +149,51 @@ export const ImpactMapView: React.FC = () => {
   return (
     <div className="p-6 sm:p-8 space-y-6 max-w-7xl mx-auto">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-[#E7E2D8] dark:border-gray-800 gap-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-[#E8E6D9] dark:border-[#2E2C26] gap-4">
         <div>
           <div className="flex items-center space-x-2">
-            <h1 className="text-2xl font-bold text-[#1F2421] dark:text-gray-100">
+            <h1 className="text-2xl font-extrabold text-[#26251E] dark:text-[#F5F4EE] tracking-tight">
               Brand Impact Map &amp; Blast Radius
             </h1>
-            <span className="px-2.5 py-0.5 text-[10px] font-mono font-bold bg-[#EBF2EE] dark:bg-emerald-950/60 text-[#4A6B5B] dark:text-emerald-400 border border-[#D1E0D7] dark:border-emerald-800 rounded-full">
+            <span className="px-3 py-1 text-[11px] font-mono font-medium bg-[#F3F2EB] dark:bg-[#1C1B16] text-[#26251E] dark:text-[#F5F4EE] border border-[#E8E6D9] dark:border-[#2E2C26] rounded-full inline-flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F97316]"></span>
               Automated Cascade Engine • 39 Nodes Chained
             </span>
           </div>
-          <p className="text-xs text-[#5C6460] dark:text-gray-400 mt-1">
+          <p className="text-xs text-[#6F6C5B] dark:text-[#A9A593] mt-1 font-sans">
             Navigable topological graph &amp; event-driven automated pipeline for instant approval revocation and blast-radius tracing.
           </p>
         </div>
 
         {/* View Switcher */}
-        <div className="flex items-center space-x-1.5 bg-stone-100 dark:bg-[#182234] p-1 rounded-xl border border-stone-200 dark:border-gray-800 text-xs">
+        <div className="flex items-center space-x-1 bg-[#F3F2EB] dark:bg-[#1C1B16] p-1 rounded-full border border-[#E8E6D9] dark:border-[#2E2C26] text-xs">
           <button
             onClick={() => setViewMode("graph")}
-            className={`px-3 py-1.5 rounded-lg font-semibold transition-all cursor-pointer ${
+            className={`px-4 py-1.5 rounded-full font-semibold transition-all cursor-pointer ${
               viewMode === "graph"
-                ? "bg-white dark:bg-emerald-600 text-gray-900 dark:text-white shadow-xs"
-                : "text-stone-600 dark:text-gray-400 hover:text-stone-900 dark:hover:text-white"
+                ? "bg-[#26251E] text-white dark:bg-white dark:text-[#26251E] shadow-sm"
+                : "text-[#6F6C5B] dark:text-[#A9A593] hover:text-[#26251E] dark:hover:text-white"
             }`}
           >
             Visual Graph
           </button>
           <button
             onClick={() => setViewMode("cascade")}
-            className={`px-3 py-1.5 rounded-lg font-semibold flex items-center space-x-1.5 transition-all cursor-pointer ${
+            className={`px-4 py-1.5 rounded-full font-semibold flex items-center space-x-1.5 transition-all cursor-pointer ${
               viewMode === "cascade"
-                ? "bg-amber-500 text-white shadow-xs"
-                : "text-amber-800 dark:text-amber-300 hover:bg-amber-100/60 dark:hover:bg-amber-950/40"
+                ? "bg-[#26251E] text-white dark:bg-white dark:text-[#26251E] shadow-sm"
+                : "text-[#6F6C5B] dark:text-[#A9A593] hover:text-[#26251E] dark:hover:text-white"
             }`}
           >
-            <Zap className="w-3.5 h-3.5" />
+            <Zap className="w-3.5 h-3.5 text-[#F97316]" />
             <span>Automated Cascade Hub</span>
           </button>
           <button
             onClick={() => setViewMode("list")}
-            className={`px-3 py-1.5 rounded-lg font-semibold transition-all cursor-pointer ${
+            className={`px-4 py-1.5 rounded-full font-semibold transition-all cursor-pointer ${
               viewMode === "list"
-                ? "bg-white dark:bg-emerald-600 text-gray-900 dark:text-white shadow-xs"
-                : "text-stone-600 dark:text-gray-400 hover:text-stone-900 dark:hover:text-white"
+                ? "bg-[#26251E] text-white dark:bg-white dark:text-[#26251E] shadow-sm"
+                : "text-[#6F6C5B] dark:text-[#A9A593] hover:text-[#26251E] dark:hover:text-white"
             }`}
           >
             Searchable List
@@ -203,8 +204,8 @@ export const ImpactMapView: React.FC = () => {
       {/* Loading State */}
       {loading && (
         <div className="p-16 flex flex-col items-center justify-center min-h-[400px] space-y-4">
-          <Activity className="w-8 h-8 animate-spin text-emerald-600 dark:text-emerald-400" />
-          <p className="text-sm font-semibold text-gray-900 dark:text-white">
+          <Activity className="w-8 h-8 animate-spin text-[#26251E] dark:text-[#F5F4EE]" />
+          <p className="text-sm font-semibold text-[#26251E] dark:text-[#F5F4EE]">
             Synthesizing Topological Brand Impact Graph (39 Nodes, 105 Edges)...
           </p>
         </div>
@@ -212,17 +213,17 @@ export const ImpactMapView: React.FC = () => {
 
       {/* Empty State Fallback */}
       {!loading && !graphData && (
-        <div className="p-12 bg-white dark:bg-[#131926] rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 text-center space-y-4">
-          <Network className="w-10 h-10 text-emerald-500 mx-auto opacity-75" />
+        <div className="p-12 bg-[#FCFDFD] dark:bg-[#181714] rounded-3xl border border-dashed border-[#E8E6D9] dark:border-[#2E2C26] text-center space-y-4 shadow-xs">
+          <Network className="w-10 h-10 text-[#6F6C5B] dark:text-[#A9A593] mx-auto opacity-75" />
           <div>
-            <h3 className="text-base font-bold text-gray-900 dark:text-white">Impact Graph Needs Synthesis</h3>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 max-w-md mx-auto">
+            <h3 className="text-base font-bold text-[#26251E] dark:text-[#F5F4EE]">Impact Graph Needs Synthesis</h3>
+            <p className="text-xs text-[#6F6C5B] dark:text-[#A9A593] mt-1 max-w-md mx-auto">
               Synthesize all 39 topological dependency edges across 12 facts, 8 evidence sources, 6 rules, and 9 marketing collateral assets.
             </p>
           </div>
           <button
             onClick={handleSeedGraph}
-            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl shadow-xs transition-colors inline-flex items-center gap-1.5"
+            className="px-5 py-2.5 bg-[#26251E] hover:bg-[#38362B] dark:bg-white dark:hover:bg-gray-100 dark:text-[#26251E] text-white text-xs font-semibold rounded-full shadow-sm transition-all active:scale-95 inline-flex items-center gap-1.5"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             <span>Load Impact Graph (39 Nodes)</span>
@@ -243,31 +244,31 @@ export const ImpactMapView: React.FC = () => {
           {/* Selected Node Blast Radius & Affected Assets Summary */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Selected Entity Inspector */}
-            <div className="bg-white dark:bg-[#131926] p-6 rounded-2xl border border-[#E7E2D8] dark:border-gray-800 shadow-xs space-y-4">
-              <h3 className="text-sm font-bold text-[#1F2421] dark:text-white">Selected Knowledge Node</h3>
+            <div className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-xs space-y-4">
+              <h3 className="text-sm font-bold text-[#26251E] dark:text-[#F5F4EE]">Selected Knowledge Node</h3>
               {selectedNode ? (
                 <div className="space-y-3 text-xs">
-                  <div className="p-3 bg-[#FAF8F5] dark:bg-[#182234] border border-[#E7E2D8] dark:border-gray-700 rounded-xl">
-                    <span className="text-[10px] uppercase font-bold text-[#5C6460] dark:text-gray-400 block font-mono">
+                  <div className="p-3.5 bg-[#F3F2EB]/60 dark:bg-[#1C1B16] border border-[#E8E6D9] dark:border-[#2E2C26] rounded-2xl">
+                    <span className="text-[10px] uppercase font-bold text-[#6F6C5B] dark:text-[#A9A593] block font-mono">
                       {selectedNode.type} Node
                     </span>
-                    <span className="font-bold text-[#1F2421] dark:text-white text-sm block mt-1">
+                    <span className="font-bold text-[#26251E] dark:text-[#F5F4EE] text-sm block mt-1">
                       {selectedNode.label}
                     </span>
                   </div>
 
                   {impactAnalysis && (
-                    <div className="p-4 bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900 rounded-xl space-y-2">
+                    <div className="p-4 bg-[#F3F2EB] dark:bg-[#1C1B16] border border-[#E8E6D9] dark:border-[#2E2C26] rounded-2xl space-y-2">
                       <div className="flex items-center justify-between">
-                        <span className="font-bold text-amber-900 dark:text-amber-300">Blast Radius Magnitude</span>
-                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-200 dark:bg-amber-900 text-amber-900 dark:text-amber-200">
+                        <span className="font-bold text-[#26251E] dark:text-[#F5F4EE]">Blast Radius Magnitude</span>
+                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#E8E6D9] dark:bg-[#2E2C26] text-[#26251E] dark:text-[#F5F4EE]">
                           Score: {impactAnalysis.blast_radius_score} / 100
                         </span>
                       </div>
-                      <div className="text-2xl font-bold text-amber-800 dark:text-amber-300">
+                      <div className="text-2xl font-extrabold text-[#26251E] dark:text-[#F5F4EE]">
                         {impactAnalysis.affected_assets.length} Downstream Assets
                       </div>
-                      <p className="text-[11px] text-amber-700 dark:text-amber-400 leading-snug">
+                      <p className="text-[11px] text-[#6F6C5B] dark:text-[#A9A593] leading-snug">
                         Direct dependencies: {impactAnalysis.direct_affected_count} • Indirect propagation: {impactAnalysis.indirect_affected_count}
                       </p>
                     </div>
@@ -280,31 +281,31 @@ export const ImpactMapView: React.FC = () => {
                       }
                       setViewMode("cascade");
                     }}
-                    className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold flex items-center justify-center space-x-1.5 shadow-xs transition-all cursor-pointer"
+                    className="w-full py-2.5 bg-[#26251E] hover:bg-[#38362B] dark:bg-white dark:hover:bg-gray-100 dark:text-[#26251E] text-white rounded-full text-xs font-bold flex items-center justify-center space-x-1.5 shadow-sm transition-all active:scale-95 cursor-pointer"
                   >
-                    <Zap className="w-3.5 h-3.5" />
+                    <Zap className="w-3.5 h-3.5 text-[#F97316]" />
                     <span>Launch Cascade Pipeline for this Node</span>
                   </button>
                 </div>
               ) : (
-                <div className="p-8 text-center text-xs text-[#5C6460] dark:text-gray-400">
+                <div className="p-8 text-center text-xs text-[#6F6C5B] dark:text-[#A9A593]">
                   Click any node on the graph canvas to inspect dependencies.
                 </div>
               )}
             </div>
 
             {/* Affected Collateral Drawer */}
-            <div className="bg-white dark:bg-[#131926] p-6 rounded-2xl border border-[#E7E2D8] dark:border-gray-800 shadow-xs lg:col-span-2 space-y-4">
+            <div className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-xs lg:col-span-2 space-y-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-sm font-bold text-[#1F2421] dark:text-white">
+                  <h3 className="text-sm font-bold text-[#26251E] dark:text-[#F5F4EE]">
                     Dependent Marketing Collateral ({impactAnalysis?.affected_assets.length || 0})
                   </h3>
-                  <p className="text-xs text-[#5C6460] dark:text-gray-400 mt-0.5">
+                  <p className="text-xs text-[#6F6C5B] dark:text-[#A9A593] mt-0.5">
                     Assets asserting claims or governed by rules originating from this node.
                   </p>
                 </div>
-                {analyzing && <Activity className="w-4 h-4 animate-spin text-emerald-500" />}
+                {analyzing && <Activity className="w-4 h-4 animate-spin text-[#F97316]" />}
               </div>
 
               <div className="space-y-3 max-h-[380px] overflow-y-auto pr-1">
@@ -312,33 +313,33 @@ export const ImpactMapView: React.FC = () => {
                   impactAnalysis.affected_assets.map((asset) => (
                     <div
                       key={asset.asset_id}
-                      className="p-3.5 bg-[#FAF8F5] dark:bg-[#182234] border border-[#E7E2D8] dark:border-gray-700 rounded-xl space-y-2 text-xs"
+                      className="p-3.5 bg-[#F3F2EB]/50 dark:bg-[#1C1B16] border border-[#E8E6D9] dark:border-[#2E2C26] rounded-2xl space-y-2 text-xs"
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-2">
-                          <span className="font-bold text-[#1F2421] dark:text-white">{asset.asset_title}</span>
-                          <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-stone-200 dark:bg-gray-700 text-stone-700 dark:text-gray-300">
+                          <span className="font-bold text-[#26251E] dark:text-[#F5F4EE]">{asset.asset_title}</span>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#E8E6D9] dark:bg-[#2E2C26] text-[#26251E] dark:text-[#F5F4EE]">
                             {asset.asset_type}
                           </span>
                         </div>
                         <span
-                          className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                          className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
                             asset.impact_level === "CRITICAL"
-                              ? "bg-red-100 dark:bg-rose-950/60 text-red-800 dark:text-rose-300"
-                              : "bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300"
+                              ? "bg-rose-100 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 border border-rose-200"
+                              : "bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-200"
                           }`}
                         >
                           {asset.impact_level} RISK
                         </span>
                       </div>
-                      <p className="text-gray-600 dark:text-gray-300">{asset.reason}</p>
-                      <div className="text-[11px] text-emerald-700 dark:text-emerald-400 font-medium">
+                      <p className="text-[#6F6C5B] dark:text-[#A9A593]">{asset.reason}</p>
+                      <div className="text-[11px] text-[#26251E] dark:text-[#F5F4EE] font-medium">
                         Action Required: {asset.action_required}
                       </div>
                     </div>
                   ))
                 ) : (
-                  <div className="p-8 text-center text-xs text-gray-500 dark:text-gray-400">
+                  <div className="p-8 text-center text-xs text-[#6F6C5B] dark:text-[#A9A593]">
                     No downstream collateral currently dependent on this isolated node.
                   </div>
                 )}
@@ -350,17 +351,17 @@ export const ImpactMapView: React.FC = () => {
 
       {/* VIEW 2: SEARCHABLE LIST VIEW */}
       {!loading && viewMode === "list" && graphData && (
-        <div className="bg-white dark:bg-[#131926] p-6 rounded-2xl border border-[#E7E2D8] dark:border-gray-800 shadow-xs space-y-4">
+        <div className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-xs space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-bold text-gray-900 dark:text-white">All Knowledge &amp; Collateral Nodes ({graphData.nodes.length})</h3>
+            <h3 className="text-sm font-bold text-[#26251E] dark:text-[#F5F4EE]">All Knowledge &amp; Collateral Nodes ({graphData.nodes.length})</h3>
             <div className="relative">
-              <Search className="w-3.5 h-3.5 text-gray-400 absolute left-3 top-2.5" />
+              <Search className="w-3.5 h-3.5 text-[#6F6C5B] dark:text-[#A9A593] absolute left-3.5 top-2.5" />
               <input
                 type="text"
                 placeholder="Search nodes by title or type..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-8 pr-3 py-1.5 text-xs bg-stone-50 dark:bg-[#182234] border border-stone-200 dark:border-gray-700 rounded-xl w-64 text-gray-900 dark:text-white"
+                className="pl-9 pr-3 py-1.5 text-xs bg-[#F3F2EB]/50 dark:bg-[#1C1B16] border border-[#E8E6D9] dark:border-[#2E2C26] rounded-full w-64 text-[#26251E] dark:text-[#F5F4EE] outline-none"
               />
             </div>
           </div>
@@ -373,15 +374,15 @@ export const ImpactMapView: React.FC = () => {
                   handleSelectNode(node);
                   setViewMode("graph");
                 }}
-                className="p-3.5 rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-[#182234]/40 hover:border-emerald-500 cursor-pointer transition-colors space-y-1"
+                className="p-4 rounded-2xl border border-[#E8E6D9] dark:border-[#2E2C26] bg-[#F3F2EB]/40 dark:bg-[#1C1B16]/40 hover:border-[#26251E] dark:hover:border-white cursor-pointer transition-all space-y-1"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400 uppercase">
+                  <span className="text-[10px] font-mono font-bold text-[#26251E] dark:text-[#F5F4EE] uppercase">
                     {node.type}
                   </span>
-                  <span className="text-[10px] text-gray-400">{node.status || "ACTIVE"}</span>
+                  <span className="text-[10px] text-[#6F6C5B] dark:text-[#A9A593]">{node.status || "ACTIVE"}</span>
                 </div>
-                <div className="font-bold text-xs text-gray-900 dark:text-white truncate">{node.label}</div>
+                <div className="font-bold text-xs text-[#26251E] dark:text-[#F5F4EE] truncate">{node.label}</div>
               </div>
             ))}
           </div>
@@ -391,24 +392,24 @@ export const ImpactMapView: React.FC = () => {
       {/* VIEW 3: AUTOMATED CASCADE HUB */}
       {!loading && viewMode === "cascade" && (
         <div className="space-y-6">
-          <div className="bg-gradient-to-r from-amber-500/10 via-amber-600/5 to-transparent p-6 rounded-2xl border border-amber-500/20 space-y-4">
+          <div className="bg-[#F3F2EB] dark:bg-[#1C1B16] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] space-y-4">
             <div className="flex items-center space-x-2">
-              <Zap className="w-5 h-5 text-amber-500" />
-              <h3 className="text-base font-bold text-gray-900 dark:text-white">
+              <Zap className="w-5 h-5 text-[#F97316]" />
+              <h3 className="text-base font-bold text-[#26251E] dark:text-[#F5F4EE]">
                 Automated Blast-Radius Revocation &amp; Cascade Re-Audit Engine
               </h3>
             </div>
-            <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed max-w-3xl">
+            <p className="text-xs text-[#6F6C5B] dark:text-[#A9A593] leading-relaxed max-w-3xl">
               When a brand fact or specification changes, Inkloom AI automatically executes background invalidation on all dependent marketing collateral within &lt;2.0s, computes before/after diffs, and dispatches webhook alerts.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
               <div>
-                <label className="text-xs font-semibold text-gray-700 dark:text-gray-300 block mb-1">Target Brand Fact</label>
+                <label className="text-xs font-semibold text-[#26251E] dark:text-[#F5F4EE] block mb-1.5">Target Brand Fact</label>
                 <select
                   value={selectedFactId}
                   onChange={(e) => setSelectedFactId(e.target.value)}
-                  className="w-full text-xs p-2.5 bg-white dark:bg-[#182234] border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white"
+                  className="w-full text-xs p-2.5 bg-[#FCFDFD] dark:bg-[#181714] border border-[#E8E6D9] dark:border-[#2E2C26] rounded-xl text-[#26251E] dark:text-[#F5F4EE]"
                 >
                   {facts.map((f) => (
                     <option key={f.id} value={f.id}>
@@ -419,11 +420,11 @@ export const ImpactMapView: React.FC = () => {
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-gray-700 dark:text-gray-300 block mb-1">Trigger Action</label>
+                <label className="text-xs font-semibold text-[#26251E] dark:text-[#F5F4EE] block mb-1.5">Trigger Action</label>
                 <select
                   value={cascadeAction}
                   onChange={(e) => setCascadeAction(e.target.value)}
-                  className="w-full text-xs p-2.5 bg-white dark:bg-[#182234] border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white"
+                  className="w-full text-xs p-2.5 bg-[#FCFDFD] dark:bg-[#181714] border border-[#E8E6D9] dark:border-[#2E2C26] rounded-xl text-[#26251E] dark:text-[#F5F4EE]"
                 >
                   <option value="DEPRECATED">Deprecate Fact (Retire Benchmark)</option>
                   <option value="MODIFIED_METRIC">Modify Benchmark Metric (30% ➔ 20%)</option>
@@ -434,9 +435,9 @@ export const ImpactMapView: React.FC = () => {
                 <button
                   onClick={handleExecuteCascade}
                   disabled={cascadeExecuting}
-                  className="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-xs font-bold shadow-xs flex items-center justify-center space-x-1.5 transition-all cursor-pointer disabled:opacity-50"
+                  className="w-full py-2.5 bg-[#26251E] hover:bg-[#38362B] dark:bg-white dark:hover:bg-gray-100 dark:text-[#26251E] text-white rounded-full text-xs font-bold shadow-sm flex items-center justify-center space-x-1.5 transition-all active:scale-95 cursor-pointer disabled:opacity-50"
                 >
-                  <Zap className={`w-3.5 h-3.5 ${cascadeExecuting ? "animate-spin" : ""}`} />
+                  <Zap className={`w-3.5 h-3.5 text-[#F97316] ${cascadeExecuting ? "animate-spin" : ""}`} />
                   <span>{cascadeExecuting ? "Executing Cascade..." : "Execute Automated Cascade"}</span>
                 </button>
               </div>
@@ -445,31 +446,31 @@ export const ImpactMapView: React.FC = () => {
 
           {/* Latest Cascade Result Display */}
           {latestCascade && (
-            <div className="bg-white dark:bg-[#131926] p-6 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-gray-800">
-                <span className="text-xs font-bold text-gray-900 dark:text-white">
-                  Cascade Execution Log: <code className="font-mono text-emerald-600 dark:text-emerald-400">{latestCascade.cascade_id}</code>
+            <div className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-xs space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-[#E8E6D9] dark:border-[#2E2C26]">
+                <span className="text-xs font-bold text-[#26251E] dark:text-[#F5F4EE]">
+                  Cascade Execution Log: <code className="font-mono text-[#F97316]">{latestCascade.cascade_id}</code>
                 </span>
-                <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-300 dark:border-emerald-800">
+                <span className="text-[10px] font-mono text-[#26251E] dark:text-[#F5F4EE] bg-[#F3F2EB] dark:bg-[#1C1B16] px-2.5 py-0.5 rounded-full border border-[#E8E6D9] dark:border-[#2E2C26]">
                   Executed in {((latestCascade.immediate_revocation_ms || latestCascade.total_execution_ms || 12.4)).toFixed(1)}ms (&lt; 2.0s SLA Met)
                 </span>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-                <div className="p-3 bg-stone-50 dark:bg-[#182234] rounded-xl">
-                  <span className="text-gray-500 dark:text-gray-400 block text-[10px]">Revocation Status</span>
+                <div className="p-3.5 bg-[#F3F2EB]/50 dark:bg-[#1C1B16] rounded-2xl border border-[#E8E6D9] dark:border-[#2E2C26]">
+                  <span className="text-[#6F6C5B] dark:text-[#A9A593] block text-[10px]">Revocation Status</span>
                   <span className="font-bold text-rose-600 dark:text-rose-400 text-sm mt-0.5 block">
                     {latestCascade.acceptance_criteria_met?.immediate_revocation_under_2s ? "IMMEDIATE REVOCATION ENFORCED" : "REVOKED"}
                   </span>
                 </div>
-                <div className="p-3 bg-stone-50 dark:bg-[#182234] rounded-xl">
-                  <span className="text-gray-500 dark:text-gray-400 block text-[10px]">Collateral Re-Audited</span>
-                  <span className="font-bold text-gray-900 dark:text-white text-sm mt-0.5 block">
+                <div className="p-3.5 bg-[#F3F2EB]/50 dark:bg-[#1C1B16] rounded-2xl border border-[#E8E6D9] dark:border-[#2E2C26]">
+                  <span className="text-[#6F6C5B] dark:text-[#A9A593] block text-[10px]">Collateral Re-Audited</span>
+                  <span className="font-bold text-[#26251E] dark:text-[#F5F4EE] text-sm mt-0.5 block">
                     {latestCascade.re_audit_diff_reports?.length || latestCascade.affected_assets_count || 0} Assets
                   </span>
                 </div>
-                <div className="p-3 bg-stone-50 dark:bg-[#182234] rounded-xl">
-                  <span className="text-gray-500 dark:text-gray-400 block text-[10px]">Webhook Alert</span>
+                <div className="p-3.5 bg-[#F3F2EB]/50 dark:bg-[#1C1B16] rounded-2xl border border-[#E8E6D9] dark:border-[#2E2C26]">
+                  <span className="text-[#6F6C5B] dark:text-[#A9A593] block text-[10px]">Webhook Alert</span>
                   <span className="font-bold text-emerald-600 dark:text-emerald-400 text-sm mt-0.5 block">
                     {latestCascade.dispatched_webhook?.status || "DISPATCHED"}
                   </span>

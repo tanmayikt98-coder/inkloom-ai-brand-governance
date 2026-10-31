@@ -102,16 +102,17 @@ export const TraceabilityView: React.FC = () => {
   return (
     <div className="p-6 sm:p-8 space-y-6 max-w-7xl mx-auto">
       {/* Header */}
-      <div className="pb-4 border-b border-[#E7E2D8] dark:border-gray-800">
+      <div className="pb-4 border-b border-[#E8E6D9] dark:border-[#2E2C26]">
         <div className="flex items-center space-x-2">
-          <h1 className="text-2xl font-bold text-[#1F2421] dark:text-gray-100">
+          <h1 className="text-2xl font-extrabold text-[#26251E] dark:text-[#F5F4EE] tracking-tight">
             BrandTrace Citations, Provenance &amp; Lineage
           </h1>
-          <span className="px-2.5 py-0.5 text-[10px] font-mono font-bold bg-[#EBF2EE] dark:bg-emerald-950/60 text-[#4A6B5B] dark:text-emerald-400 border border-[#D1E0D7] dark:border-emerald-800 rounded-full">
+          <span className="px-3 py-1 text-[11px] font-mono font-medium bg-[#F3F2EB] dark:bg-[#1C1B16] text-[#26251E] dark:text-[#F5F4EE] border border-[#E8E6D9] dark:border-[#2E2C26] rounded-full inline-flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#F97316]"></span>
             5-Stage Lineage Active
           </span>
         </div>
-        <p className="text-xs text-[#5C6460] dark:text-gray-400 mt-1">
+        <p className="text-xs text-[#6F6C5B] dark:text-[#A9A593] mt-1 font-sans">
           Complete, end-to-end evidence lineage proving how every marketing claim is governed, substantiated, and reviewed.
         </p>
       </div>
@@ -119,20 +120,20 @@ export const TraceabilityView: React.FC = () => {
       {/* Loading State */}
       {loading && (
         <div className="p-16 flex flex-col items-center justify-center space-y-4">
-          <Activity className="w-8 h-8 animate-spin text-emerald-600 dark:text-emerald-400" />
-          <p className="text-sm font-semibold text-gray-900 dark:text-white">
+          <Activity className="w-8 h-8 animate-spin text-[#26251E] dark:text-[#F5F4EE]" />
+          <p className="text-sm font-semibold text-[#26251E] dark:text-[#F5F4EE]">
             Constructing 5-Stage BrandTrace Lineage Chains...
           </p>
         </div>
       )}
 
       {!loading && assets.length === 0 && (
-        <div className="p-12 bg-white dark:bg-[#131926] rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 text-center space-y-4">
-          <GitBranch className="w-10 h-10 text-emerald-500 mx-auto opacity-75" />
-          <p className="text-sm font-bold text-gray-900 dark:text-white">No Assets Available for Lineage Tracing</p>
+        <div className="p-12 bg-[#FCFDFD] dark:bg-[#181714] rounded-3xl border border-dashed border-[#E8E6D9] dark:border-[#2E2C26] text-center space-y-4 shadow-xs">
+          <GitBranch className="w-10 h-10 text-[#6F6C5B] dark:text-[#A9A593] mx-auto opacity-75" />
+          <p className="text-sm font-bold text-[#26251E] dark:text-[#F5F4EE]">No Assets Available for Lineage Tracing</p>
           <button
             onClick={loadTraceabilityData}
-            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold"
+            className="px-5 py-2.5 bg-[#26251E] hover:bg-[#38362B] dark:bg-white dark:hover:bg-gray-100 dark:text-[#26251E] text-white rounded-full text-xs font-semibold shadow-sm transition-all active:scale-95 cursor-pointer"
           >
             Reload Traceability Assets
           </button>
@@ -141,20 +142,20 @@ export const TraceabilityView: React.FC = () => {
 
       {/* Asset Switcher Strip */}
       {!loading && assets.length > 0 && (
-        <div className="flex items-center space-x-2 overflow-x-auto pb-2">
+        <div className="flex items-center space-x-2 overflow-x-auto pb-2 scrollbar-none">
           {assets.map((a) => (
             <button
               key={a.id}
               onClick={() => selectAssetAndAudit(a)}
-              className={`px-3.5 py-2 rounded-xl text-xs font-medium border shrink-0 transition-all cursor-pointer ${
+              className={`px-4 py-2 rounded-full text-xs font-medium border shrink-0 transition-all cursor-pointer ${
                 selectedAsset?.id === a.id
-                  ? "bg-[#EBF2EE] dark:bg-emerald-950/40 text-[#4A6B5B] dark:text-emerald-400 border-[#4A6B5B] dark:border-emerald-700 font-semibold shadow-xs ring-1 ring-[#4A6B5B]/30"
-                  : "bg-white dark:bg-[#131926] text-[#1F2421] dark:text-gray-300 border-[#E7E2D8] dark:border-gray-800 hover:bg-[#FAF8F5] dark:hover:bg-gray-800/60"
+                  ? "bg-[#26251E] text-white dark:bg-white dark:text-[#26251E] border-[#26251E] dark:border-white font-semibold shadow-sm"
+                  : "bg-[#FCFDFD] dark:bg-[#181714] text-[#26251E] dark:text-[#F5F4EE] border-[#E8E6D9] dark:border-[#2E2C26] hover:bg-[#F3F2EB] dark:hover:bg-[#1C1B16]"
               }`}
             >
               <div className="flex items-center space-x-1.5">
                 <span>{a.title}</span>
-                <span className="text-[10px] text-gray-500 dark:text-gray-400">({a.asset_type})</span>
+                <span className={`text-[10px] ${selectedAsset?.id === a.id ? "text-stone-300 dark:text-stone-600" : "text-[#6F6C5B] dark:text-[#A9A593]"}`}>({a.asset_type})</span>
               </div>
             </button>
           ))}
@@ -165,13 +166,13 @@ export const TraceabilityView: React.FC = () => {
       {!loading && assets.length > 0 && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left: Findings in Asset */}
-          <div className="bg-white dark:bg-[#131926] p-5 rounded-2xl border border-[#E7E2D8] dark:border-gray-800 shadow-xs space-y-3">
-            <h3 className="text-sm font-bold text-[#1F2421] dark:text-white">Audit Findings for Asset</h3>
-            <p className="text-xs text-[#5C6460] dark:text-gray-400">
+          <div className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-xs space-y-3">
+            <h3 className="text-sm font-bold text-[#26251E] dark:text-[#F5F4EE]">Audit Findings for Asset</h3>
+            <p className="text-xs text-[#6F6C5B] dark:text-[#A9A593]">
               Select a finding to inspect its full 5-stage provenance chain.
             </p>
 
-            <div className="space-y-2 mt-3 max-h-[500px] overflow-y-auto pr-1">
+            <div className="space-y-2.5 mt-3 max-h-[500px] overflow-y-auto pr-1">
               {latestAudit?.findings && latestAudit.findings.length > 0 ? (
                 latestAudit.findings.map((f) => {
                   const isSelected = selectedFindingId === f.id;
@@ -179,63 +180,64 @@ export const TraceabilityView: React.FC = () => {
                     <div
                       key={f.id}
                       onClick={() => handleSelectFinding(f.id)}
-                      className={`p-3.5 rounded-xl border text-xs cursor-pointer transition-all ${
+                      className={`p-4 rounded-2xl border text-xs cursor-pointer transition-all ${
                         isSelected
-                          ? "bg-[#FAF8F5] dark:bg-[#182234] border-[#4A6B5B] dark:border-emerald-600 shadow-xs ring-1 ring-[#4A6B5B]/30"
-                          : "bg-white dark:bg-[#131926] border-[#E7E2D8] dark:border-gray-800 hover:border-[#D1E0D7] dark:hover:border-gray-700"
+                          ? "bg-[#F3F2EB] dark:bg-[#1C1B16] border-[#26251E] dark:border-white shadow-xs"
+                          : "bg-[#FCFDFD] dark:bg-[#181714] border-[#E8E6D9] dark:border-[#2E2C26] hover:border-[#6F6C5B]"
                       }`}
                     >
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="font-bold text-[10px] text-[#5C6460] dark:text-gray-400 uppercase font-mono">
+                      <div className="flex items-center justify-between mb-1.5">
+                        <span className="font-bold text-[10px] text-[#6F6C5B] dark:text-[#A9A593] uppercase font-mono">
                           {f.category.replace(/_/g, " ")}
                         </span>
                         <span
-                          className={`text-[9px] font-bold px-1.5 py-0.5 rounded ${
+                          className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${
                             f.severity === "CRITICAL"
-                              ? "bg-red-100 dark:bg-rose-950/60 text-red-800 dark:text-rose-300"
+                              ? "bg-rose-100 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 border border-rose-200"
                               : f.severity === "HIGH"
-                              ? "bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300"
-                              : "bg-green-100 dark:bg-emerald-950/60 text-green-800 dark:text-emerald-300"
+                              ? "bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-200"
+                              : "bg-[#EBF2EE] dark:bg-emerald-950/60 text-[#4A6B5B] dark:text-emerald-300 border border-[#D1E0D7]"
                           }`}
                         >
                           {f.severity}
                         </span>
                       </div>
-                      <p className="font-semibold text-[#1F2421] dark:text-gray-100 line-clamp-2">{f.explanation}</p>
+                      <p className="font-semibold text-[#26251E] dark:text-[#F5F4EE] line-clamp-2 leading-relaxed">{f.explanation}</p>
                     </div>
                   );
                 })
               ) : (
-                <div className="p-8 text-center text-xs text-gray-500 dark:text-gray-400">
-                  <CheckCircle2 className="w-6 h-6 text-emerald-500 mx-auto mb-2" />
-                  <p>All claims compliant. No active violations.</p>
+                <div className="p-8 text-center text-xs text-[#6F6C5B] dark:text-[#A9A593]">
+                  <CheckCircle2 className="w-6 h-6 text-emerald-600 dark:text-emerald-400 mx-auto mb-2" />
+                  <p className="font-semibold text-[#26251E] dark:text-[#F5F4EE]">All claims compliant</p>
+                  <p>No active violations flagged for this collateral.</p>
                 </div>
               )}
             </div>
           </div>
 
           {/* Right: End-to-End Lineage Flow (The 5 Stages) */}
-          <div className="bg-white dark:bg-[#131926] p-6 rounded-2xl border border-[#E7E2D8] dark:border-gray-800 shadow-xs lg:col-span-2 space-y-6">
+          <div className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-xs lg:col-span-2 space-y-6">
             <div>
-              <h3 className="text-sm font-bold text-[#1F2421] dark:text-white">Full Provenance Lineage</h3>
-              <p className="text-xs text-[#5C6460] dark:text-gray-400 mt-0.5">
+              <h3 className="text-sm font-bold text-[#26251E] dark:text-[#F5F4EE]">Full Provenance Lineage</h3>
+              <p className="text-xs text-[#6F6C5B] dark:text-[#A9A593] mt-0.5">
                 Traceable chain: Claim ➔ Audit Finding ➔ Governing Rule ➔ Evidence Benchmark ➔ Review Gate
               </p>
             </div>
 
             {traceChain ? (
-              <div className="relative border-l-2 border-emerald-500/30 dark:border-emerald-500/20 ml-4 pl-6 space-y-6">
+              <div className="relative border-l-2 border-[#E8E6D9] dark:border-[#2E2C26] ml-4 pl-6 space-y-6">
                 {/* Stage 1: Marketing Claim */}
                 <div className="relative">
-                  <span className="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-emerald-600 border-2 border-white dark:border-gray-900" />
-                  <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider font-mono">
+                  <span className="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-[#26251E] dark:bg-white border-2 border-[#FCFDFD] dark:border-[#121210]" />
+                  <span className="text-[10px] font-bold text-[#26251E] dark:text-[#F5F4EE] uppercase tracking-wider font-mono">
                     Stage 1: Marketing Claim
                   </span>
-                  <div className="mt-1 p-3.5 bg-[#FAF8F5] dark:bg-[#182234] border border-[#E7E2D8] dark:border-gray-700 rounded-xl text-xs">
-                    <p className="font-bold text-[#1F2421] dark:text-white">
+                  <div className="mt-1.5 p-4 bg-[#F3F2EB]/50 dark:bg-[#1C1B16] border border-[#E8E6D9] dark:border-[#2E2C26] rounded-2xl text-xs">
+                    <p className="font-bold text-[#26251E] dark:text-[#F5F4EE]">
                       "{traceChain.claim_text || "Aurevia reduces average processing time by 50%"}"
                     </p>
-                    <span className="text-[10px] text-[#5C6460] dark:text-gray-400 mt-1 block">
+                    <span className="text-[10px] text-[#6F6C5B] dark:text-[#A9A593] mt-1 block">
                       Asserted in {traceChain.asset_title} (Revision {traceChain.revision_number})
                     </span>
                   </div>
@@ -243,12 +245,12 @@ export const TraceabilityView: React.FC = () => {
 
                 {/* Stage 2: Audit Finding */}
                 <div className="relative">
-                  <span className="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-rose-600 border-2 border-white dark:border-gray-900" />
+                  <span className="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-rose-600 border-2 border-[#FCFDFD] dark:border-[#121210]" />
                   <span className="text-[10px] font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider font-mono">
                     Stage 2: Deterministic Finding
                   </span>
-                  <div className="mt-1 p-3.5 bg-rose-50/50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900 rounded-xl text-xs space-y-1">
-                    <div className="font-bold text-[#1F2421] dark:text-white">
+                  <div className="mt-1.5 p-4 bg-rose-50/50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900 rounded-2xl text-xs space-y-1">
+                    <div className="font-bold text-[#26251E] dark:text-white">
                       {traceChain.finding_category} ({traceChain.finding_severity})
                     </div>
                     <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{traceChain.finding_explanation}</p>
@@ -257,11 +259,11 @@ export const TraceabilityView: React.FC = () => {
 
                 {/* Stage 3: Governing Brand Rule */}
                 <div className="relative">
-                  <span className="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-purple-600 border-2 border-white dark:border-gray-900" />
+                  <span className="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-purple-600 border-2 border-[#FCFDFD] dark:border-[#121210]" />
                   <span className="text-[10px] font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider font-mono">
                     Stage 3: Applicable Brand Rule
                   </span>
-                  <div className="mt-1 p-3.5 bg-purple-50/50 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-900 rounded-xl text-xs space-y-1">
+                  <div className="mt-1.5 p-4 bg-purple-50/50 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-900 rounded-2xl text-xs space-y-1">
                     <div className="font-mono font-bold text-purple-900 dark:text-purple-300">
                       {traceChain.rule_code || "RULE-DISCLAIM-01"}: {traceChain.rule_name || "Mandatory Performance Disclaimer"}
                     </div>
@@ -273,20 +275,20 @@ export const TraceabilityView: React.FC = () => {
 
                 {/* Stage 4: Supporting Evidence Source */}
                 <div className="relative">
-                  <span className="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-blue-600 border-2 border-white dark:border-gray-900" />
+                  <span className="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-blue-600 border-2 border-[#FCFDFD] dark:border-[#121210]" />
                   <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider font-mono">
                     Stage 4: Ground Truth Evidence Source
                   </span>
-                  <div className="mt-1 p-3.5 bg-blue-50/50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900 rounded-xl text-xs space-y-2">
+                  <div className="mt-1.5 p-4 bg-blue-50/50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900 rounded-2xl text-xs space-y-2">
                     <div className="flex items-center justify-between">
                       <span className="font-bold text-blue-900 dark:text-blue-300">
                         {traceChain.evidence_title || "Aurevia Core Engine Benchmark Report 2026-Q1"}
                       </span>
-                      <span className="text-[10px] font-bold px-1.5 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-300 rounded">
+                      <span className="text-[10px] font-bold px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-300 rounded-full">
                         {traceChain.evidence_status || "VERIFIED"}
                       </span>
                     </div>
-                    <p className="text-[11px] text-blue-800 dark:text-blue-300 font-mono bg-white dark:bg-[#182234] p-2.5 rounded-lg border border-blue-100 dark:border-blue-900/60 leading-relaxed">
+                    <p className="text-[11px] text-blue-800 dark:text-blue-300 font-mono bg-white dark:bg-[#182234] p-3 rounded-xl border border-blue-100 dark:border-blue-900/60 leading-relaxed">
                       "{traceChain.exact_passage || "Key Finding: Aurevia reduces average processing time by 30.0% compared to industry baseline. Confidence interval: 99.4%."}"
                     </p>
                     <div className="pt-2 flex items-center justify-between border-t border-blue-200 dark:border-blue-900">
@@ -301,9 +303,9 @@ export const TraceabilityView: React.FC = () => {
                             quote: traceChain.exact_passage,
                           })
                         }
-                        className="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-[11px] font-bold flex items-center space-x-1 shadow-2xs transition-all cursor-pointer"
+                        className="px-4 py-1.5 bg-[#26251E] hover:bg-[#38362B] dark:bg-white dark:hover:bg-gray-100 dark:text-[#26251E] text-white rounded-full text-[11px] font-bold flex items-center space-x-1 shadow-sm transition-all active:scale-95 cursor-pointer"
                       >
-                        <Sparkles className="w-3.5 h-3.5" />
+                        <Sparkles className="w-3.5 h-3.5 text-[#F97316]" />
                         <span>Inspect PDF Bounding Box</span>
                       </button>
                     </div>
@@ -312,27 +314,27 @@ export const TraceabilityView: React.FC = () => {
 
                 {/* Stage 5: Reviewer Sign-Off Decision */}
                 <div className="relative">
-                  <span className="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-emerald-600 border-2 border-white dark:border-gray-900" />
+                  <span className="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-emerald-600 border-2 border-[#FCFDFD] dark:border-[#121210]" />
                   <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider font-mono">
                     Stage 5: Reviewer Decision (Maker-Checker)
                   </span>
-                  <div className="mt-1 p-3.5 bg-emerald-50/50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-900 rounded-xl text-xs space-y-1">
+                  <div className="mt-1.5 p-4 bg-[#EBF2EE] dark:bg-emerald-950/30 border border-[#D1E0D7] dark:border-emerald-900 rounded-2xl text-xs space-y-1">
                     <div className="flex items-center justify-between">
-                      <span className="font-bold text-emerald-900 dark:text-emerald-300">
+                      <span className="font-bold text-[#26251E] dark:text-emerald-300">
                         Sign-Off: {traceChain.latest_decision || "IN_REVIEW"}
                       </span>
-                      <span className="text-[10px] text-emerald-800 dark:text-emerald-400">
+                      <span className="text-[10px] text-[#6F6C5B] dark:text-emerald-400">
                         Reviewer: {traceChain.latest_reviewer_name || "Victoria Brooks (Approver)"}
                       </span>
                     </div>
-                    <p className="text-[11px] text-emerald-800 dark:text-emerald-400 italic">
+                    <p className="text-[11px] text-[#6F6C5B] dark:text-emerald-400 italic">
                       Reason: "{traceChain.latest_decision_reason || "Pending human reviewer verification against certified benchmark."}"
                     </p>
                   </div>
                 </div>
               </div>
             ) : (
-              <div className="p-12 text-center text-xs text-[#5C6460] dark:text-gray-400">
+              <div className="p-12 text-center text-xs text-[#6F6C5B] dark:text-[#A9A593]">
                 Select a finding from the left to view its complete audit lineage.
               </div>
             )}

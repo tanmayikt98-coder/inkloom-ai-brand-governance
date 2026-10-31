@@ -113,37 +113,38 @@ export const TimeMachineView: React.FC = () => {
   return (
     <div className="p-6 sm:p-8 space-y-6 max-w-7xl mx-auto">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-[#E7E2D8] dark:border-gray-800 gap-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-[#E8E6D9] dark:border-[#2E2C26] gap-4">
         <div>
           <div className="flex items-center space-x-2">
-            <h1 className="text-2xl font-bold text-[#1F2421] dark:text-gray-100">Brand Time Machine</h1>
-            <span className="px-2.5 py-0.5 text-[10px] font-mono font-bold bg-[#EBF2EE] dark:bg-emerald-950/60 text-[#4A6B5B] dark:text-emerald-400 border border-[#D1E0D7] dark:border-emerald-800 rounded-full">
+            <h1 className="text-2xl font-extrabold text-[#26251E] dark:text-[#F5F4EE] tracking-tight">Brand Time Machine</h1>
+            <span className="px-3 py-1 text-[11px] font-mono font-medium bg-[#F3F2EB] dark:bg-[#1C1B16] text-[#26251E] dark:text-[#F5F4EE] border border-[#E8E6D9] dark:border-[#2E2C26] rounded-full inline-flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F97316]"></span>
               Revision Provenance Engine
             </span>
           </div>
-          <p className="text-xs text-[#5C6460] dark:text-gray-400 mt-1">
+          <p className="text-xs text-[#6F6C5B] dark:text-[#A9A593] mt-1 font-sans">
             Compare marketing collateral revisions, trace resolved violations, evaluate claim changes, and execute non-destructive rollbacks.
           </p>
         </div>
 
         {/* View Mode Controls */}
-        <div className="flex items-center space-x-1.5 bg-stone-100 dark:bg-[#182234] border border-stone-200 dark:border-gray-800 p-1 rounded-xl text-xs">
+        <div className="flex items-center space-x-1 bg-[#F3F2EB] dark:bg-[#1C1B16] border border-[#E8E6D9] dark:border-[#2E2C26] p-1 rounded-full text-xs">
           <button
             onClick={() => setDiffMode("inline")}
-            className={`px-3 py-1.5 rounded-lg font-semibold transition-colors cursor-pointer ${
+            className={`px-4 py-1.5 rounded-full font-semibold transition-all cursor-pointer ${
               diffMode === "inline"
-                ? "bg-white dark:bg-emerald-600 text-gray-900 dark:text-white shadow-xs"
-                : "text-stone-600 dark:text-gray-400 hover:text-stone-900 dark:hover:text-white"
+                ? "bg-[#26251E] text-white dark:bg-white dark:text-[#26251E] shadow-sm"
+                : "text-[#6F6C5B] dark:text-[#A9A593] hover:text-[#26251E] dark:hover:text-white"
             }`}
           >
             Inline Diff
           </button>
           <button
             onClick={() => setDiffMode("sideBySide")}
-            className={`px-3 py-1.5 rounded-lg font-semibold transition-colors cursor-pointer ${
+            className={`px-4 py-1.5 rounded-full font-semibold transition-all cursor-pointer ${
               diffMode === "sideBySide"
-                ? "bg-white dark:bg-emerald-600 text-gray-900 dark:text-white shadow-xs"
-                : "text-stone-600 dark:text-gray-400 hover:text-stone-900 dark:hover:text-white"
+                ? "bg-[#26251E] text-white dark:bg-white dark:text-[#26251E] shadow-sm"
+                : "text-[#6F6C5B] dark:text-[#A9A593] hover:text-[#26251E] dark:hover:text-white"
             }`}
           >
             Side-by-Side
@@ -152,7 +153,7 @@ export const TimeMachineView: React.FC = () => {
       </div>
 
       {/* Asset Picker Strip */}
-      <div className="flex items-center space-x-2 overflow-x-auto pb-2">
+      <div className="flex items-center space-x-2 overflow-x-auto pb-2 scrollbar-none">
         {assets.map((a) => (
           <button
             key={a.id}
@@ -160,10 +161,10 @@ export const TimeMachineView: React.FC = () => {
               setSelectedAsset(a);
               loadRevisions(a.id);
             }}
-            className={`px-3.5 py-2 rounded-xl text-xs font-medium border shrink-0 transition-all cursor-pointer ${
+            className={`px-4 py-2 rounded-full text-xs font-medium border shrink-0 transition-all cursor-pointer ${
               selectedAsset?.id === a.id
-                ? "bg-[#EBF2EE] dark:bg-emerald-950/40 text-[#4A6B5B] dark:text-emerald-400 border-[#4A6B5B] dark:border-emerald-700 font-semibold shadow-xs ring-1 ring-[#4A6B5B]/30"
-                : "bg-white dark:bg-[#131926] text-[#1F2421] dark:text-gray-300 border-[#E7E2D8] dark:border-gray-800 hover:bg-[#FAF8F5] dark:hover:bg-gray-800/60"
+                ? "bg-[#26251E] text-white dark:bg-white dark:text-[#26251E] border-[#26251E] dark:border-white font-semibold shadow-sm"
+                : "bg-[#FCFDFD] dark:bg-[#181714] text-[#26251E] dark:text-[#F5F4EE] border-[#E8E6D9] dark:border-[#2E2C26] hover:bg-[#F3F2EB] dark:hover:bg-[#1C1B16]"
             }`}
           >
             {a.title}
@@ -172,14 +173,14 @@ export const TimeMachineView: React.FC = () => {
       </div>
 
       {/* Comparison Selectors Bar */}
-      <div className="bg-white dark:bg-[#131926] p-4 rounded-2xl border border-[#E7E2D8] dark:border-gray-800 shadow-xs flex flex-wrap items-center justify-between gap-4">
+      <div className="bg-[#FCFDFD] dark:bg-[#181714] p-5 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-xs flex flex-wrap items-center justify-between gap-4">
         <div className="flex flex-wrap items-center gap-3 text-xs">
           <div className="flex items-center space-x-2">
-            <span className="font-bold text-[#5C6460] dark:text-gray-400">Baseline (Draft):</span>
+            <span className="font-bold text-[#6F6C5B] dark:text-[#A9A593]">Baseline (Draft):</span>
             <select
               value={baseRevId}
               onChange={(e) => setBaseRevId(e.target.value)}
-              className="p-2 border border-[#E7E2D8] dark:border-gray-700 rounded-xl bg-[#FAF8F5] dark:bg-[#182234] text-xs font-semibold text-gray-900 dark:text-white"
+              className="p-2.5 border border-[#E8E6D9] dark:border-[#2E2C26] rounded-xl bg-[#F3F2EB]/50 dark:bg-[#1C1B16] text-xs font-semibold text-[#26251E] dark:text-[#F5F4EE]"
             >
               {revisions.map((r) => (
                 <option key={r.id} value={r.id}>
@@ -189,14 +190,14 @@ export const TimeMachineView: React.FC = () => {
             </select>
           </div>
 
-          <ArrowRight className="w-4 h-4 text-[#5C6460] dark:text-gray-400" />
+          <ArrowRight className="w-4 h-4 text-[#6F6C5B] dark:text-[#A9A593]" />
 
           <div className="flex items-center space-x-2">
-            <span className="font-bold text-[#5C6460] dark:text-gray-400">Target (Current):</span>
+            <span className="font-bold text-[#6F6C5B] dark:text-[#A9A593]">Target (Current):</span>
             <select
               value={targetRevId}
               onChange={(e) => setTargetRevId(e.target.value)}
-              className="p-2 border border-[#E7E2D8] dark:border-gray-700 rounded-xl bg-[#FAF8F5] dark:bg-[#182234] text-xs font-semibold text-gray-900 dark:text-white"
+              className="p-2.5 border border-[#E8E6D9] dark:border-[#2E2C26] rounded-xl bg-[#F3F2EB]/50 dark:bg-[#1C1B16] text-xs font-semibold text-[#26251E] dark:text-[#F5F4EE]"
             >
               {revisions.map((r) => (
                 <option key={r.id} value={r.id}>
@@ -208,9 +209,9 @@ export const TimeMachineView: React.FC = () => {
 
           <button
             onClick={handleRunComparison}
-            className="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold flex items-center space-x-1.5 transition-colors cursor-pointer"
+            className="px-5 py-2.5 bg-[#26251E] hover:bg-[#38362B] dark:bg-white dark:hover:bg-gray-100 dark:text-[#26251E] text-white rounded-full font-bold flex items-center space-x-1.5 transition-all active:scale-95 shadow-sm cursor-pointer"
           >
-            <GitCompare className="w-3.5 h-3.5" />
+            <GitCompare className="w-3.5 h-3.5 text-[#F97316]" />
             <span>Compare Revisions</span>
           </button>
         </div>
@@ -218,9 +219,9 @@ export const TimeMachineView: React.FC = () => {
         {canCreateContent() && selectedAsset && (
           <button
             onClick={() => handleRestoreRevision(baseRevId)}
-            className="px-3 py-2 bg-stone-100 dark:bg-gray-800 hover:bg-stone-200 dark:hover:bg-gray-700 text-stone-800 dark:text-white rounded-xl font-semibold flex items-center space-x-1.5 border border-stone-200 dark:border-gray-700 text-xs transition-colors cursor-pointer"
+            className="px-4 py-2.5 bg-[#F3F2EB] dark:bg-[#1C1B16] hover:bg-stone-200 dark:hover:bg-stone-800 text-[#26251E] dark:text-[#F5F4EE] rounded-full font-semibold flex items-center space-x-1.5 border border-[#E8E6D9] dark:border-[#2E2C26] text-xs transition-all active:scale-95 cursor-pointer shadow-xs"
           >
-            <RotateCcw className="w-3.5 h-3.5" />
+            <RotateCcw className="w-3.5 h-3.5 text-[#6F6C5B]" />
             <span>Restore Baseline as New Revision</span>
           </button>
         )}
@@ -229,36 +230,36 @@ export const TimeMachineView: React.FC = () => {
       {/* Compliance Delta Summary Cards */}
       {comparison && (
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="bg-white dark:bg-[#131926] p-5 rounded-2xl border border-[#E7E2D8] dark:border-gray-800 shadow-xs">
-            <span className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider block">
+          <div className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-xs">
+            <span className="text-[10px] font-bold text-[#6F6C5B] dark:text-[#A9A593] uppercase tracking-wider block font-mono">
               Approval Status Delta
             </span>
-            <div className="mt-2 flex items-center space-x-2">
-              <span className="text-xs px-2 py-0.5 rounded font-bold bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300">
+            <div className="mt-2.5 flex items-center space-x-2">
+              <span className="text-xs px-2.5 py-0.5 rounded-full font-bold bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-200">
                 v{comparison.base_revision_number}: {comparison.base_audit_status || "NON_COMPLIANT"}
               </span>
-              <ArrowRight className="w-3.5 h-3.5 text-gray-400" />
-              <span className="text-xs px-2 py-0.5 rounded font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">
+              <ArrowRight className="w-3.5 h-3.5 text-[#6F6C5B]" />
+              <span className="text-xs px-2.5 py-0.5 rounded-full font-bold bg-[#EBF2EE] dark:bg-emerald-950 text-[#4A6B5B] dark:text-emerald-300 border border-[#D1E0D7]">
                 v{comparison.target_revision_number}: {comparison.target_audit_status || "COMPLIANT"}
               </span>
             </div>
           </div>
 
-          <div className="bg-white dark:bg-[#131926] p-5 rounded-2xl border border-[#E7E2D8] dark:border-gray-800 shadow-xs">
-            <span className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider block">
+          <div className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-xs">
+            <span className="text-[10px] font-bold text-[#6F6C5B] dark:text-[#A9A593] uppercase tracking-wider block font-mono">
               Resolved Violations
             </span>
-            <div className="mt-2 text-xl font-bold text-emerald-600 dark:text-emerald-400">
+            <div className="mt-2 text-2xl font-extrabold text-[#26251E] dark:text-[#F5F4EE]">
               +{comparison.findings_diff.filter((f) => f.status === "resolved").length} Violations Cleared
             </div>
           </div>
 
-          <div className="bg-white dark:bg-[#131926] p-5 rounded-2xl border border-[#E7E2D8] dark:border-gray-800 shadow-xs">
-            <span className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider block">
+          <div className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-xs">
+            <span className="text-[10px] font-bold text-[#6F6C5B] dark:text-[#A9A593] uppercase tracking-wider block font-mono">
               Maker-Checker Gate
             </span>
-            <div className="mt-2 flex items-center space-x-1.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
-              <CheckCircle2 className="w-4 h-4" />
+            <div className="mt-2.5 flex items-center space-x-1.5 text-xs font-semibold text-[#26251E] dark:text-[#F5F4EE]">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               <span>Full audit trail preserved across revisions</span>
             </div>
           </div>
@@ -267,19 +268,19 @@ export const TimeMachineView: React.FC = () => {
 
       {/* Diffs Visualizer */}
       {comparison && (
-        <div className="bg-white dark:bg-[#131926] p-6 rounded-2xl border border-[#E7E2D8] dark:border-gray-800 shadow-xs space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-[#F0ECE4] dark:border-gray-800">
-            <h3 className="text-sm font-bold text-gray-900 dark:text-white">
+        <div className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-xs space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-[#E8E6D9] dark:border-[#2E2C26]">
+            <h3 className="text-sm font-bold text-[#26251E] dark:text-[#F5F4EE]">
               Sentence-Level Diff (v{comparison.base_revision_number} ➔ v{comparison.target_revision_number})
             </h3>
-            <span className="text-xs text-gray-500 dark:text-gray-400 font-mono">
+            <span className="text-xs text-[#6F6C5B] dark:text-[#A9A593] font-mono">
               <span className="text-rose-600 dark:text-rose-400 font-bold">- Removed</span> |{" "}
               <span className="text-emerald-600 dark:text-emerald-400 font-bold">+ Added</span>
             </span>
           </div>
 
           {diffMode === "inline" ? (
-            <div className="p-4 bg-stone-50 dark:bg-[#182234] rounded-xl text-xs font-sans leading-relaxed text-gray-900 dark:text-white space-y-2">
+            <div className="p-4 bg-[#F3F2EB]/50 dark:bg-[#1C1B16] rounded-2xl border border-[#E8E6D9] dark:border-[#2E2C26] text-xs font-sans leading-relaxed text-[#26251E] dark:text-white space-y-2">
               {comparison.text_diff.map((chunk, i) => {
                 if (chunk.type === "remove") {
                   return (
@@ -290,7 +291,7 @@ export const TimeMachineView: React.FC = () => {
                 }
                 if (chunk.type === "add") {
                   return (
-                    <span key={i} className="bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 font-bold px-1 rounded mx-0.5">
+                    <span key={i} className="bg-[#EBF2EE] dark:bg-emerald-950 text-[#4A6B5B] dark:text-emerald-300 font-bold px-1 rounded mx-0.5">
                       {chunk.text}
                     </span>
                   );
@@ -300,20 +301,20 @@ export const TimeMachineView: React.FC = () => {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="p-4 bg-rose-50/40 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/40 rounded-xl space-y-2">
-                <span className="text-[10px] font-bold text-rose-700 dark:text-rose-400 uppercase tracking-wider block">
+              <div className="p-5 bg-rose-50/40 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/40 rounded-2xl space-y-2">
+                <span className="text-[10px] font-bold text-rose-700 dark:text-rose-400 uppercase tracking-wider block font-mono">
                   v{comparison.base_revision_number} Draft Content
                 </span>
-                <p className="text-xs text-gray-800 dark:text-gray-200 leading-relaxed font-sans">
+                <p className="text-xs text-[#26251E] dark:text-gray-200 leading-relaxed font-sans">
                   {revisions.find((r) => r.id === baseRevId)?.content_text}
                 </p>
               </div>
 
-              <div className="p-4 bg-emerald-50/40 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-900/40 rounded-xl space-y-2">
-                <span className="text-[10px] font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider block">
+              <div className="p-5 bg-[#EBF2EE]/50 dark:bg-emerald-950/20 border border-[#D1E0D7] dark:border-emerald-900/40 rounded-2xl space-y-2">
+                <span className="text-[10px] font-bold text-[#4A6B5B] dark:text-emerald-400 uppercase tracking-wider block font-mono">
                   v{comparison.target_revision_number} Compliant Content
                 </span>
-                <p className="text-xs text-gray-800 dark:text-gray-200 leading-relaxed font-sans">
+                <p className="text-xs text-[#26251E] dark:text-gray-200 leading-relaxed font-sans">
                   {revisions.find((r) => r.id === targetRevId)?.content_text}
                 </p>
               </div>

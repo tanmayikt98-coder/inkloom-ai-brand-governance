@@ -100,17 +100,17 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ onNavigate, onStartD
   return (
     <div className="p-6 sm:p-8 space-y-8 max-w-7xl mx-auto">
       {/* Title & Action Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-[#E7E2D8] dark:border-gray-800 gap-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-[#E8E6D9] dark:border-[#2E2C26] gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold text-[#1F2421] dark:text-gray-100 tracking-tight">
+            <h1 className="text-2xl font-bold text-[#26251E] dark:text-[#FCFDFD] tracking-tight">
               Governance Posture — {activeBrand?.name || "Aurevia"}
             </h1>
-            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
+            <span className="px-3 py-0.5 rounded-full text-[10px] font-mono font-medium bg-[#F3F2EB] dark:bg-[#1C1B16] text-[#26251E] dark:text-[#FCFDFD] border border-[#E8E6D9] dark:border-[#2E2C26]">
               TENANT: AUREVIA-001
             </span>
           </div>
-          <p className="text-xs text-[#5C6460] dark:text-gray-400 mt-1">
+          <p className="text-xs text-[#6F6C5B] dark:text-[#A9A593] mt-1">
             Real-time status of brand claims, evidence substantiation, and deterministic maker-checker gates.
           </p>
         </div>
@@ -119,9 +119,9 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ onNavigate, onStartD
           {onStartDemoTour && (
             <button
               onClick={onStartDemoTour}
-              className="px-3.5 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white text-xs font-semibold rounded-xl shadow-xs transition-all flex items-center gap-1.5 cursor-pointer"
+              className="px-4 py-2 bg-[#F3F2EB] dark:bg-[#1C1B16] hover:bg-[#E8E6D9] dark:hover:bg-[#25241E] text-[#26251E] dark:text-[#FCFDFD] text-xs font-semibold rounded-full border border-[#E8E6D9] dark:border-[#2E2C26] shadow-xs transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer"
             >
-              <Sparkles className="w-3.5 h-3.5" />
+              <Sparkles className="w-3.5 h-3.5 text-orange-500" />
               <span>Launch Guided Demo</span>
             </button>
           )}
@@ -129,18 +129,18 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ onNavigate, onStartD
           <button
             onClick={handleResetData}
             disabled={isResetting}
-            className="px-3 py-2 bg-stone-100 dark:bg-gray-800 hover:bg-stone-200 dark:hover:bg-gray-700 text-stone-700 dark:text-gray-300 text-xs font-semibold rounded-xl border border-stone-200 dark:border-gray-700 transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+            className="px-4 py-2 bg-[#F3F2EB] dark:bg-[#1C1B16] hover:bg-[#E8E6D9] dark:hover:bg-[#25241E] text-[#26251E] dark:text-[#FCFDFD] text-xs font-semibold rounded-full border border-[#E8E6D9] dark:border-[#2E2C26] transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer disabled:opacity-50"
             title="Reset to 12 facts, 8 evidence docs, 6 rules, and 9 assets"
           >
-            <RotateCcw className={`w-3.5 h-3.5 ${isResetting ? "animate-spin" : ""}`} />
+            <RotateCcw className={`w-3.5 h-3.5 text-orange-500 ${isResetting ? "animate-spin" : ""}`} />
             <span>Reset Demo Data</span>
           </button>
 
           <button
             onClick={() => onNavigate("content-audits")}
-            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"
+            className="px-4 py-2 bg-[#26251E] hover:bg-[#3B392F] text-[#FCFDFD] dark:bg-[#FCFDFD] dark:text-[#26251E] dark:hover:bg-[#E8E6D9] text-xs font-semibold rounded-full shadow-xs transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer"
           >
-            <ShieldCheck className="w-4 h-4" />
+            <ShieldCheck className="w-4 h-4 text-orange-400" />
             <span>Audit Content Now</span>
           </button>
         </div>
@@ -149,82 +149,86 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ onNavigate, onStartD
       {/* KPI Metric Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Approved Facts */}
-        <div className="bg-white dark:bg-[#131926] p-5 rounded-2xl border border-[#E7E2D8] dark:border-gray-800 shadow-xs">
+        <div className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-2xs hover:border-[#C5C1AF] transition-all">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-[#5C6460] dark:text-gray-400 uppercase tracking-wider">Brand Facts</span>
-            <span className="p-2 bg-[#EBF2EE] dark:bg-emerald-950/60 text-[#4A6B5B] dark:text-emerald-400 rounded-xl">
+            <span className="text-xs font-semibold text-[#6F6C5B] dark:text-[#A9A593] uppercase tracking-wider">Brand Facts</span>
+            <span className="p-2 rounded-full bg-[#F3F2EB] dark:bg-[#25241E] text-[#26251E] dark:text-[#FCFDFD]">
               <FileText className="w-4 h-4" />
             </span>
           </div>
-          <div className="mt-3 flex items-baseline justify-between">
-            <span className="text-2xl font-bold text-[#1F2421] dark:text-white">{data?.total_facts || 12}</span>
-            <span className="text-[11px] font-medium text-emerald-600 dark:text-emerald-400">100% Verified</span>
+          <div className="mt-4 flex items-baseline justify-between">
+            <span className="text-3xl font-extrabold text-[#26251E] dark:text-[#FCFDFD] tracking-tight">{data?.total_facts || 12}</span>
+            <span className="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-[#EBF2EE] dark:bg-emerald-950/60 text-[#3D5A4C] dark:text-emerald-300 border border-[#D1E0D7] dark:border-emerald-800">
+              100% Verified
+            </span>
           </div>
-          <p className="text-[11px] text-[#5C6460] dark:text-gray-400 mt-1">Grounded in verified benchmark reports</p>
+          <p className="text-[11px] text-[#6F6C5B] dark:text-[#A9A593] mt-2">Grounded in verified benchmark reports</p>
         </div>
 
         {/* Pending Reviews */}
-        <div className="bg-white dark:bg-[#131926] p-5 rounded-2xl border border-[#E7E2D8] dark:border-gray-800 shadow-xs">
+        <div className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-2xs hover:border-[#C5C1AF] transition-all">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-[#5C6460] dark:text-gray-400 uppercase tracking-wider">Review Queue</span>
-            <span className="p-2 bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 rounded-xl">
+            <span className="text-xs font-semibold text-[#6F6C5B] dark:text-[#A9A593] uppercase tracking-wider">Review Queue</span>
+            <span className="p-2 rounded-full bg-[#FEF7EE] dark:bg-[#25241E] text-amber-700 dark:text-amber-400">
               <Clock className="w-4 h-4" />
             </span>
           </div>
-          <div className="mt-3 flex items-baseline justify-between">
-            <span className="text-2xl font-bold text-[#1F2421] dark:text-white">{data?.pending_reviews_count || 5}</span>
+          <div className="mt-4 flex items-baseline justify-between">
+            <span className="text-3xl font-extrabold text-[#26251E] dark:text-[#FCFDFD] tracking-tight">{data?.pending_reviews_count || 5}</span>
             <button
               onClick={() => onNavigate("review-queue")}
-              className="text-[11px] font-medium text-amber-600 dark:text-amber-400 hover:underline flex items-center"
+              className="text-[11px] font-medium text-orange-600 dark:text-orange-400 hover:underline flex items-center"
             >
               Inspect Queue <ArrowRight className="w-3 h-3 ml-0.5" />
             </button>
           </div>
-          <p className="text-[11px] text-[#5C6460] dark:text-gray-400 mt-1">Awaiting maker-checker sign-off</p>
+          <p className="text-[11px] text-[#6F6C5B] dark:text-[#A9A593] mt-2">Awaiting maker-checker sign-off</p>
         </div>
 
         {/* Evidence Sources */}
-        <div className="bg-white dark:bg-[#131926] p-5 rounded-2xl border border-[#E7E2D8] dark:border-gray-800 shadow-xs">
+        <div className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-2xs hover:border-[#C5C1AF] transition-all">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-[#5C6460] dark:text-gray-400 uppercase tracking-wider">Evidence Sources</span>
-            <span className="p-2 bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-400 rounded-xl">
+            <span className="text-xs font-semibold text-[#6F6C5B] dark:text-[#A9A593] uppercase tracking-wider">Evidence Sources</span>
+            <span className="p-2 rounded-full bg-[#F3F2EB] dark:bg-[#25241E] text-[#26251E] dark:text-[#FCFDFD]">
               <ShieldCheck className="w-4 h-4" />
             </span>
           </div>
-          <div className="mt-3 flex items-baseline justify-between">
-            <span className="text-2xl font-bold text-[#1F2421] dark:text-white">{data?.total_evidence_sources || 8}</span>
-            <span className="text-[11px] font-medium text-blue-600 dark:text-blue-400">Audits &amp; SLAs</span>
+          <div className="mt-4 flex items-baseline justify-between">
+            <span className="text-3xl font-extrabold text-[#26251E] dark:text-[#FCFDFD] tracking-tight">{data?.total_evidence_sources || 8}</span>
+            <span className="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-[#F3F2EB] dark:bg-[#1C1B16] text-[#26251E] dark:text-[#FCFDFD] border border-[#E8E6D9] dark:border-[#2E2C26]">
+              Audits &amp; SLAs
+            </span>
           </div>
-          <p className="text-[11px] text-[#5C6460] dark:text-gray-400 mt-1">
+          <p className="text-[11px] text-[#6F6C5B] dark:text-[#A9A593] mt-2">
             {data?.expired_evidence_count ? `${data.expired_evidence_count} requiring renewal` : "All records active"}
           </p>
         </div>
 
         {/* Active Collateral */}
-        <div className="bg-white dark:bg-[#131926] p-5 rounded-2xl border border-[#E7E2D8] dark:border-gray-800 shadow-xs">
+        <div className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-2xs hover:border-[#C5C1AF] transition-all">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-[#5C6460] dark:text-gray-400 uppercase tracking-wider">Active Collateral</span>
-            <span className="p-2 bg-[#FDF2F4] dark:bg-rose-950/60 text-[#A36B73] dark:text-rose-400 rounded-xl">
+            <span className="text-xs font-semibold text-[#6F6C5B] dark:text-[#A9A593] uppercase tracking-wider">Active Collateral</span>
+            <span className="p-2 rounded-full bg-[#FDF2F4] dark:bg-[#25241E] text-rose-700 dark:text-rose-400">
               <TrendingUp className="w-4 h-4" />
             </span>
           </div>
-          <div className="mt-3 flex items-baseline justify-between">
-            <span className="text-2xl font-bold text-[#1F2421] dark:text-white">{data?.total_assets || 9}</span>
-            <span className="text-[11px] font-medium text-emerald-600 dark:text-emerald-400">
+          <div className="mt-4 flex items-baseline justify-between">
+            <span className="text-3xl font-extrabold text-[#26251E] dark:text-[#FCFDFD] tracking-tight">{data?.total_assets || 9}</span>
+            <span className="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-[#EBF2EE] dark:bg-emerald-950/60 text-[#3D5A4C] dark:text-emerald-300 border border-[#D1E0D7] dark:border-emerald-800">
               {data?.compliant_assets_count || 4} Approved
             </span>
           </div>
-          <p className="text-[11px] text-[#5C6460] dark:text-gray-400 mt-1">Across Landing Pages, Ads &amp; Emails</p>
+          <p className="text-[11px] text-[#6F6C5B] dark:text-[#A9A593] mt-2">Across Landing Pages, Ads &amp; Emails</p>
         </div>
       </div>
 
       {/* Enterprise Governance Capabilities Banner */}
-      <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white p-6 rounded-2xl shadow-xl border border-slate-800 space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+      <div className="bg-[#26251E] dark:bg-[#1C1B16] text-[#FCFDFD] p-6 rounded-3xl border border-[#3E3B32] dark:border-[#2E2C26] shadow-sm space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#3E3B32] dark:border-[#2E2C26] pb-3">
           <div className="flex items-center space-x-2">
-            <h2 className="text-base font-bold text-white">Enterprise Governance &amp; Verification Engines</h2>
+            <h2 className="text-base font-bold text-[#FCFDFD]">Enterprise Governance &amp; Verification Engines</h2>
           </div>
-          <span className="text-[11px] text-slate-400 font-mono">
+          <span className="text-[11px] text-[#A9A593] font-mono">
             Sub-400ms Hybrid Retrieval • &lt;2.0s Cascade Revocation • RFC 3161 WORM Ledger
           </span>
         </div>
@@ -233,21 +237,21 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ onNavigate, onStartD
           {/* Card 1 */}
           <div
             onClick={() => onNavigate("traceability")}
-            className="p-4 bg-slate-800/70 hover:bg-slate-800 border border-slate-700 hover:border-indigo-400 rounded-xl cursor-pointer transition-all space-y-2 group shadow-sm"
+            className="p-4 bg-[#34322A] dark:bg-[#25241E] hover:bg-[#3D3A31] border border-[#444035] dark:border-[#333129] rounded-2xl cursor-pointer transition-all space-y-2 group shadow-2xs active:scale-[0.99]"
           >
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-wider font-mono">
+              <span className="text-[10px] font-bold text-orange-400 uppercase tracking-wider font-mono bg-[#444035] px-2.5 py-0.5 rounded-full border border-[#524E40]">
                 Visual Grounding
               </span>
-              <Cpu className="w-4 h-4 text-indigo-400 group-hover:scale-110 transition-transform" />
+              <Cpu className="w-4 h-4 text-orange-400 group-hover:scale-110 transition-transform" />
             </div>
-            <h3 className="text-sm font-bold text-white group-hover:text-indigo-200">
+            <h3 className="text-sm font-bold text-[#FCFDFD] group-hover:text-orange-200">
               Multi-Modal Evidence Grounding &amp; Bounding Boxes
             </h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
+            <p className="text-xs text-[#A9A593] leading-relaxed">
               PyMuPDF vector mapping, sub-400ms dense + BM25 hybrid retrieval, zero hallucinated citations benchmarked.
             </p>
-            <div className="text-[11px] text-indigo-300 font-semibold flex items-center space-x-1 pt-1">
+            <div className="text-[11px] text-orange-300 font-semibold flex items-center space-x-1 pt-1">
               <span>Inspect Bounding Box Provenance</span>
               <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
             </div>
@@ -256,18 +260,18 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ onNavigate, onStartD
           {/* Card 2 */}
           <div
             onClick={() => onNavigate("impact-map")}
-            className="p-4 bg-slate-800/70 hover:bg-slate-800 border border-slate-700 hover:border-amber-400 rounded-xl cursor-pointer transition-all space-y-2 group shadow-sm"
+            className="p-4 bg-[#34322A] dark:bg-[#25241E] hover:bg-[#3D3A31] border border-[#444035] dark:border-[#333129] rounded-2xl cursor-pointer transition-all space-y-2 group shadow-2xs active:scale-[0.99]"
           >
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-bold text-amber-400 uppercase tracking-wider font-mono">
+              <span className="text-[10px] font-bold text-amber-400 uppercase tracking-wider font-mono bg-[#444035] px-2.5 py-0.5 rounded-full border border-[#524E40]">
                 Cascade Engine
               </span>
               <Zap className="w-4 h-4 text-amber-400 group-hover:scale-110 transition-transform" />
             </div>
-            <h3 className="text-sm font-bold text-white group-hover:text-amber-200">
+            <h3 className="text-sm font-bold text-[#FCFDFD] group-hover:text-amber-200">
               Automated Blast-Radius &amp; Cascade Re-Audit
             </h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
+            <p className="text-xs text-[#A9A593] leading-relaxed">
               Instant approval invalidation (&lt; 2.0s SLA), 100% automated background re-auditing with diffs, Slack webhook dispatch.
             </p>
             <div className="text-[11px] text-amber-300 font-semibold flex items-center space-x-1 pt-1">
@@ -279,18 +283,18 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ onNavigate, onStartD
           {/* Card 3 */}
           <div
             onClick={() => onNavigate("audit-history")}
-            className="p-4 bg-slate-800/70 hover:bg-slate-800 border border-slate-700 hover:border-emerald-400 rounded-xl cursor-pointer transition-all space-y-2 group shadow-sm"
+            className="p-4 bg-[#34322A] dark:bg-[#25241E] hover:bg-[#3D3A31] border border-[#444035] dark:border-[#333129] rounded-2xl cursor-pointer transition-all space-y-2 group shadow-2xs active:scale-[0.99]"
           >
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider font-mono">
+              <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider font-mono bg-[#444035] px-2.5 py-0.5 rounded-full border border-[#524E40]">
                 WORM Ledger
               </span>
               <Lock className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform" />
             </div>
-            <h3 className="text-sm font-bold text-white group-hover:text-emerald-200">
+            <h3 className="text-sm font-bold text-[#FCFDFD] group-hover:text-emerald-200">
               Cryptographic WORM Ledger &amp; Multi-Tenancy
             </h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
+            <p className="text-xs text-[#A9A593] leading-relaxed">
               SHA-256 Merkle-tree hash chaining, sub-second verification, 0% cross-tenant leakage, exportable JSON-LD proof.
             </p>
             <div className="text-[11px] text-emerald-300 font-semibold flex items-center space-x-1 pt-1">
@@ -304,10 +308,10 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ onNavigate, onStartD
       {/* Charts & Collateral Risk Breakdown */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Compliance Distribution Pie Chart */}
-        <div className="bg-white dark:bg-[#131926] p-6 rounded-2xl border border-[#E7E2D8] dark:border-gray-800 shadow-xs flex flex-col justify-between">
+        <div className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-2xs flex flex-col justify-between">
           <div>
-            <h3 className="text-sm font-bold text-[#1F2421] dark:text-white">Collateral Compliance Status</h3>
-            <p className="text-xs text-[#5C6460] dark:text-gray-400 mt-0.5">Asset health across active brand campaigns</p>
+            <h3 className="text-sm font-bold text-[#26251E] dark:text-[#FCFDFD]">Collateral Compliance Status</h3>
+            <p className="text-xs text-[#6F6C5B] dark:text-[#A9A593] mt-0.5">Asset health across active brand campaigns</p>
           </div>
           <div className="h-48 w-full my-4 flex items-center justify-center">
             <ResponsiveContainer width="100%" height="100%">
@@ -329,30 +333,30 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ onNavigate, onStartD
               </PieChart>
             </ResponsiveContainer>
           </div>
-          <div className="space-y-1.5 pt-2 border-t border-[#F0ECE4] dark:border-gray-800">
+          <div className="space-y-1.5 pt-2 border-t border-[#E8E6D9] dark:border-[#2E2C26]">
             {chartData.map((item) => (
               <div key={item.name} className="flex items-center justify-between text-xs">
                 <div className="flex items-center space-x-2">
-                  <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: item.color }} />
-                  <span className="text-[#5C6460] dark:text-gray-400">{item.name}</span>
+                  <span className="w-2 h-2 rounded-full" style={{ backgroundColor: item.color }} />
+                  <span className="text-[#6F6C5B] dark:text-[#A9A593]">{item.name}</span>
                 </div>
-                <span className="font-semibold text-[#1F2421] dark:text-white">{item.value}</span>
+                <span className="font-semibold text-[#26251E] dark:text-[#FCFDFD]">{item.value}</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* High Exposure / Assets Needing Review */}
-        <div className="bg-white dark:bg-[#131926] p-6 rounded-2xl border border-[#E7E2D8] dark:border-gray-800 shadow-xs lg:col-span-2 flex flex-col justify-between">
+        <div className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-2xs lg:col-span-2 flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-bold text-[#1F2421] dark:text-white">Priority Review &amp; Governance Alerts</h3>
-                <p className="text-xs text-[#5C6460] dark:text-gray-400 mt-0.5">Collateral requiring attention or correction</p>
+                <h3 className="text-sm font-bold text-[#26251E] dark:text-[#FCFDFD]">Priority Review &amp; Governance Alerts</h3>
+                <p className="text-xs text-[#6F6C5B] dark:text-[#A9A593] mt-0.5">Collateral requiring attention or correction</p>
               </div>
               <button
                 onClick={() => onNavigate("review-queue")}
-                className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:underline"
+                className="text-xs font-semibold text-orange-600 dark:text-orange-400 hover:underline"
               >
                 View Queue
               </button>
@@ -362,37 +366,37 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ onNavigate, onStartD
                 data?.high_risk_assets.map((asset) => (
                   <div
                     key={asset.asset_id}
-                    className="p-3 bg-[#FAF8F5] dark:bg-[#182234] border border-[#E7E2D8] dark:border-gray-800 rounded-xl flex items-start justify-between"
+                    className="p-3.5 bg-[#F3F2EB] dark:bg-[#201F1A] border border-[#E8E6D9] dark:border-[#2E2C26] rounded-2xl flex items-start justify-between"
                   >
                     <div className="space-y-1 pr-4">
                       <div className="flex items-center space-x-2">
-                        <span className="text-xs font-bold text-[#1F2421] dark:text-white">{asset.asset_title}</span>
-                        <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 rounded">
+                        <span className="text-xs font-bold text-[#26251E] dark:text-[#FCFDFD]">{asset.asset_title}</span>
+                        <span className="text-[10px] uppercase font-bold px-2 py-0.5 bg-[#E8E6D9] dark:bg-[#2A2822] text-[#26251E] dark:text-[#FCFDFD] rounded-full">
                           {asset.asset_type}
                         </span>
                       </div>
-                      <p className="text-[11px] text-[#5C6460] dark:text-gray-400">{asset.reason}</p>
+                      <p className="text-[11px] text-[#6F6C5B] dark:text-[#A9A593]">{asset.reason}</p>
                     </div>
                     <button
                       onClick={() => onNavigate("content-audits")}
-                      className="shrink-0 text-xs px-2.5 py-1 bg-white dark:bg-[#131926] border border-[#E7E2D8] dark:border-gray-700 text-[#1F2421] dark:text-white hover:bg-[#FAF8F5] dark:hover:bg-gray-800 rounded-lg font-medium cursor-pointer"
+                      className="shrink-0 text-xs px-3 py-1 bg-[#26251E] text-[#FCFDFD] dark:bg-[#FCFDFD] dark:text-[#26251E] rounded-full font-medium active:scale-95 transition-all shadow-xs cursor-pointer"
                     >
                       Audit
                     </button>
                   </div>
                 ))
               ) : (
-                <div className="p-8 text-center text-xs text-[#5C6460] dark:text-gray-400">
+                <div className="p-8 text-center text-xs text-[#6F6C5B] dark:text-[#A9A593]">
                   All marketing collateral compliant and up to date.
                 </div>
               )}
             </div>
           </div>
-          <div className="mt-4 pt-3 border-t border-[#F0ECE4] dark:border-gray-800 flex items-center justify-between text-[11px] text-[#5C6460] dark:text-gray-400">
+          <div className="mt-4 pt-3 border-t border-[#E8E6D9] dark:border-[#2E2C26] flex items-center justify-between text-[11px] text-[#6F6C5B] dark:text-[#A9A593]">
             <span>Deterministic compliance gates active</span>
             <button
               onClick={() => onNavigate("simulator")}
-              className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline flex items-center"
+              className="text-orange-600 dark:text-orange-400 font-semibold hover:underline flex items-center"
             >
               Test What-If Scenarios <ArrowRight className="w-3 h-3 ml-1" />
             </button>
@@ -401,41 +405,41 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ onNavigate, onStartD
       </div>
 
       {/* Immutable Audit Events Log (WORM append-only trail) */}
-      <div className="bg-white dark:bg-[#131926] p-6 rounded-2xl border border-[#E7E2D8] dark:border-gray-800 shadow-xs">
+      <div className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-2xs">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-2">
-            <History className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-            <h3 className="text-sm font-bold text-[#1F2421] dark:text-white">Governance Audit Trail (WORM Log)</h3>
+            <History className="w-4 h-4 text-orange-500" />
+            <h3 className="text-sm font-bold text-[#26251E] dark:text-[#FCFDFD]">Governance Audit Trail (WORM Log)</h3>
           </div>
-          <span className="text-[10px] text-[#5C6460] dark:text-gray-400 uppercase tracking-wider font-semibold">
+          <span className="text-[10px] text-[#6F6C5B] dark:text-[#A9A593] uppercase tracking-wider font-semibold">
             Immutable Cryptographic Ledger
           </span>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-[#E7E2D8] dark:border-gray-800 text-[#5C6460] dark:text-gray-400">
-                <th className="pb-2 font-semibold">Timestamp</th>
-                <th className="pb-2 font-semibold">Event</th>
-                <th className="pb-2 font-semibold">Actor / Role</th>
-                <th className="pb-2 font-semibold">Description</th>
+              <tr className="border-b border-[#E8E6D9] dark:border-[#2E2C26] text-[#6F6C5B] dark:text-[#A9A593]">
+                <th className="pb-2.5 font-semibold">Timestamp</th>
+                <th className="pb-2.5 font-semibold">Event</th>
+                <th className="pb-2.5 font-semibold">Actor / Role</th>
+                <th className="pb-2.5 font-semibold">Description</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#F0ECE4] dark:divide-gray-800">
+            <tbody className="divide-y divide-[#E8E6D9]/60 dark:divide-[#2E2C26]">
               {auditEvents.map((evt) => (
-                <tr key={evt.id} className="hover:bg-[#FAF8F5] dark:hover:bg-gray-800/40">
-                  <td className="py-2.5 text-[#5C6460] dark:text-gray-400 whitespace-nowrap">
+                <tr key={evt.id} className="hover:bg-[#F3F2EB]/50 dark:hover:bg-[#201F1A] transition-colors">
+                  <td className="py-3 text-[#6F6C5B] dark:text-[#A9A593] whitespace-nowrap">
                     {new Date(evt.created_at).toLocaleString()}
                   </td>
-                  <td className="py-2.5 font-semibold text-[#1F2421] dark:text-white whitespace-nowrap">
-                    <span className="px-2 py-0.5 bg-[#EBF2EE] dark:bg-emerald-950/60 text-[#4A6B5B] dark:text-emerald-400 rounded-full text-[10px]">
+                  <td className="py-3 font-semibold text-[#26251E] dark:text-[#FCFDFD] whitespace-nowrap">
+                    <span className="px-2.5 py-0.5 bg-[#F3F2EB] dark:bg-[#201F1A] text-[#26251E] dark:text-[#FCFDFD] border border-[#E8E6D9] dark:border-[#2E2C26] rounded-full text-[10px]">
                       {evt.event_type}
                     </span>
                   </td>
-                  <td className="py-2.5 text-[#1F2421] dark:text-white whitespace-nowrap">
-                    {evt.actor_name} <span className="text-[10px] text-[#5C6460] dark:text-gray-400">({evt.actor_role})</span>
+                  <td className="py-3 text-[#26251E] dark:text-[#FCFDFD] whitespace-nowrap">
+                    {evt.actor_name} <span className="text-[10px] text-[#6F6C5B] dark:text-[#A9A593]">({evt.actor_role})</span>
                   </td>
-                  <td className="py-2.5 text-[#5C6460] dark:text-gray-400">{evt.description}</td>
+                  <td className="py-3 text-[#6F6C5B] dark:text-[#A9A593]">{evt.description}</td>
                 </tr>
               ))}
             </tbody>

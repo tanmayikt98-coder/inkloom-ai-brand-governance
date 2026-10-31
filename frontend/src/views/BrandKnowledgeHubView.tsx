@@ -172,15 +172,15 @@ export const BrandKnowledgeHubView: React.FC = () => {
   return (
     <div className="p-6 sm:p-8 space-y-6 max-w-7xl mx-auto">
       {/* Header & Tabs */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-[#E7E2D8] dark:border-gray-800 gap-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-[#E8E6D9] dark:border-[#2E2C26] gap-4">
         <div>
           <div className="flex items-center space-x-2">
-            <h1 className="text-2xl font-bold text-[#1F2421] dark:text-gray-100">Brand Knowledge Hub</h1>
-            <span className="px-2.5 py-0.5 text-[10px] font-mono font-bold bg-[#EBF2EE] dark:bg-emerald-950/60 text-[#4A6B5B] dark:text-emerald-400 border border-[#D1E0D7] dark:border-emerald-800 rounded-full">
+            <h1 className="text-2xl font-bold text-[#26251E] dark:text-[#FCFDFD] tracking-tight">Brand Knowledge Hub</h1>
+            <span className="px-3 py-0.5 text-[10px] font-mono font-medium bg-[#F3F2EB] dark:bg-[#1C1B16] text-[#26251E] dark:text-[#FCFDFD] border border-[#E8E6D9] dark:border-[#2E2C26] rounded-full">
               {activeBrand?.name || "Aurevia"} • Single Source of Truth
             </span>
           </div>
-          <p className="text-xs text-[#5C6460] dark:text-gray-400 mt-1">
+          <p className="text-xs text-[#6F6C5B] dark:text-[#A9A593] mt-1">
             Official repository of approved brand claims, evidentiary documents, and deterministic policy rules.
           </p>
         </div>
@@ -189,7 +189,7 @@ export const BrandKnowledgeHubView: React.FC = () => {
           {canEditFacts() && (
             <button
               onClick={() => setShowAddFactModal(true)}
-              className="px-3 py-1.5 bg-[#4A6B5B] hover:bg-[#3D5A4C] text-white text-xs font-semibold rounded-xl flex items-center shadow-xs transition-colors cursor-pointer"
+              className="px-4 py-2 bg-[#26251E] hover:bg-[#3B392F] text-[#FCFDFD] dark:bg-[#FCFDFD] dark:text-[#26251E] dark:hover:bg-[#E8E6D9] text-xs font-semibold rounded-full flex items-center shadow-xs active:scale-95 transition-all cursor-pointer"
             >
               <Plus className="w-3.5 h-3.5 mr-1" />
               Add Fact
@@ -198,17 +198,17 @@ export const BrandKnowledgeHubView: React.FC = () => {
           {canUploadEvidence() && (
             <button
               onClick={() => setShowUploadEvidenceModal(true)}
-              className="px-3 py-1.5 bg-white dark:bg-[#182234] border border-[#E7E2D8] dark:border-gray-700 hover:bg-[#FAF8F5] dark:hover:bg-gray-800 text-[#1F2421] dark:text-gray-200 text-xs font-semibold rounded-xl flex items-center transition-colors shadow-xs cursor-pointer"
+              className="px-3.5 py-2 bg-[#F3F2EB] dark:bg-[#1C1B16] border border-[#E8E6D9] dark:border-[#2E2C26] hover:bg-[#E8E6D9] dark:hover:bg-[#25241E] text-[#26251E] dark:text-[#FCFDFD] text-xs font-medium rounded-full flex items-center active:scale-95 transition-all shadow-xs cursor-pointer"
             >
-              <Upload className="w-3.5 h-3.5 mr-1 text-emerald-600 dark:text-emerald-400" />
+              <Upload className="w-3.5 h-3.5 mr-1 text-orange-500" />
               Ingest Evidence
             </button>
           )}
           <button
             onClick={() => setShowConflictModal(true)}
-            className="px-3 py-1.5 bg-amber-50 dark:bg-amber-950/50 hover:bg-amber-100 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800 rounded-xl text-xs font-semibold flex items-center transition-colors shadow-xs cursor-pointer"
+            className="px-3.5 py-2 bg-[#F3F2EB] dark:bg-[#1C1B16] border border-[#E8E6D9] dark:border-[#2E2C26] hover:bg-[#E8E6D9] dark:hover:bg-[#25241E] text-[#26251E] dark:text-[#FCFDFD] rounded-full text-xs font-medium flex items-center active:scale-95 transition-all shadow-xs cursor-pointer"
           >
-            <Scale className="w-3.5 h-3.5 mr-1 text-amber-600 dark:text-amber-400" />
+            <span className="w-1.5 h-1.5 rounded-full bg-orange-500 mr-1.5" />
             Check Contradictions ({conflicts.length})
           </button>
         </div>
@@ -216,33 +216,33 @@ export const BrandKnowledgeHubView: React.FC = () => {
 
       {/* Navigation Pills & Search Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div className="flex items-center space-x-1.5 bg-stone-100 dark:bg-[#182234] p-1 rounded-xl border border-stone-200 dark:border-gray-800">
+        <div className="flex items-center space-x-1 bg-[#F3F2EB] dark:bg-[#1C1B16] p-1 rounded-full border border-[#E8E6D9] dark:border-[#2E2C26]">
           <button
             onClick={() => setActiveTab("facts")}
-            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
+            className={`px-4 py-1.5 text-xs font-medium rounded-full transition-all cursor-pointer ${
               activeTab === "facts"
-                ? "bg-white dark:bg-emerald-600 text-gray-900 dark:text-white shadow-xs"
-                : "text-stone-600 dark:text-gray-400 hover:text-stone-900 dark:hover:text-white"
+                ? "bg-[#26251E] text-[#FCFDFD] dark:bg-[#FCFDFD] dark:text-[#26251E] shadow-xs"
+                : "text-[#6F6C5B] dark:text-[#A9A593] hover:text-[#26251E] dark:hover:text-[#FCFDFD]"
             }`}
           >
             Approved Facts ({facts.length})
           </button>
           <button
             onClick={() => setActiveTab("evidence")}
-            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
+            className={`px-4 py-1.5 text-xs font-medium rounded-full transition-all cursor-pointer ${
               activeTab === "evidence"
-                ? "bg-white dark:bg-emerald-600 text-gray-900 dark:text-white shadow-xs"
-                : "text-stone-600 dark:text-gray-400 hover:text-stone-900 dark:hover:text-white"
+                ? "bg-[#26251E] text-[#FCFDFD] dark:bg-[#FCFDFD] dark:text-[#26251E] shadow-xs"
+                : "text-[#6F6C5B] dark:text-[#A9A593] hover:text-[#26251E] dark:hover:text-[#FCFDFD]"
             }`}
           >
             Evidence Documents ({evidence.length})
           </button>
           <button
             onClick={() => setActiveTab("rules")}
-            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
+            className={`px-4 py-1.5 text-xs font-medium rounded-full transition-all cursor-pointer ${
               activeTab === "rules"
-                ? "bg-white dark:bg-emerald-600 text-gray-900 dark:text-white shadow-xs"
-                : "text-stone-600 dark:text-gray-400 hover:text-stone-900 dark:hover:text-white"
+                ? "bg-[#26251E] text-[#FCFDFD] dark:bg-[#FCFDFD] dark:text-[#26251E] shadow-xs"
+                : "text-[#6F6C5B] dark:text-[#A9A593] hover:text-[#26251E] dark:hover:text-[#FCFDFD]"
             }`}
           >
             Brand Rules &amp; Disclaimers ({rules.length})
@@ -250,31 +250,31 @@ export const BrandKnowledgeHubView: React.FC = () => {
         </div>
 
         <div className="relative">
-          <Search className="w-4 h-4 text-gray-400 absolute left-3 top-2.5" />
+          <Search className="w-3.5 h-3.5 text-[#6F6C5B] dark:text-[#A9A593] absolute left-3.5 top-2.5" />
           <input
             type="text"
             placeholder="Search claims, metrics, or sources..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9 pr-4 py-1.5 text-xs bg-white dark:bg-[#182234] border border-[#E7E2D8] dark:border-gray-800 rounded-xl w-72 focus:outline-none focus:ring-1 focus:ring-emerald-500 text-gray-900 dark:text-white"
+            className="pl-9 pr-4 py-1.5 text-xs bg-[#FCFDFD] dark:bg-[#181714] border border-[#E8E6D9] dark:border-[#2E2C26] rounded-full w-72 focus:outline-none focus:ring-1 focus:ring-orange-500 text-[#26251E] dark:text-[#FCFDFD] transition-colors"
           />
         </div>
       </div>
 
       {/* Empty State Fallback with Instant 1-Click Re-Seed */}
       {!loading && facts.length === 0 && (
-        <div className="p-12 bg-white dark:bg-[#131926] rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 text-center space-y-4">
-          <BookOpen className="w-10 h-10 text-emerald-500 mx-auto opacity-75" />
+        <div className="p-12 bg-[#FCFDFD] dark:bg-[#181714] rounded-3xl border border-dashed border-[#E8E6D9] dark:border-[#2E2C26] text-center space-y-4">
+          <BookOpen className="w-10 h-10 text-orange-500 mx-auto opacity-75" />
           <div>
-            <h3 className="text-base font-bold text-gray-900 dark:text-white">Knowledge Hub Needs Initialization</h3>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 max-w-md mx-auto">
+            <h3 className="text-base font-bold text-[#26251E] dark:text-[#FCFDFD]">Knowledge Hub Needs Initialization</h3>
+            <p className="text-xs text-[#6F6C5B] dark:text-[#A9A593] mt-1 max-w-md mx-auto">
               Load the complete Aurevia brand knowledge base containing 12 substantiated facts, 8 benchmark documents, and 6 brand rules.
             </p>
           </div>
           <button
             onClick={handleSeedDataset}
             disabled={isResetting}
-            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl shadow-xs transition-colors inline-flex items-center gap-1.5"
+            className="px-4 py-2 bg-[#26251E] hover:bg-[#3B392F] text-[#FCFDFD] dark:bg-[#FCFDFD] dark:text-[#26251E] text-xs font-semibold rounded-full shadow-xs transition-colors inline-flex items-center gap-1.5 active:scale-95"
           >
             <RotateCcw className={`w-3.5 h-3.5 ${isResetting ? "animate-spin" : ""}`} />
             <span>{isResetting ? "Seeding Knowledge..." : "Load Full Aurevia Dataset"}</span>
@@ -292,32 +292,32 @@ export const BrandKnowledgeHubView: React.FC = () => {
               <div
                 key={fact.id}
                 onClick={() => setSelectedFact(fact)}
-                className="bg-white dark:bg-[#131926] p-5 rounded-2xl border border-[#E7E2D8] dark:border-gray-800 hover:border-[#4A6B5B] dark:hover:border-emerald-500 cursor-pointer shadow-xs transition-all flex flex-col justify-between group"
+                className="bg-[#FCFDFD] dark:bg-[#181714] p-6 rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] hover:border-[#C5C1AF] cursor-pointer shadow-2xs transition-all flex flex-col justify-between group active:scale-[0.99]"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-[10px] uppercase font-bold text-[#5C6460] dark:text-gray-400 tracking-wider">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-[10px] uppercase font-bold text-[#6F6C5B] dark:text-[#A9A593] tracking-wider">
                       {fact.category} • v{fact.version}
                     </span>
                     <span
-                      className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                      className={`text-[10px] font-medium px-2.5 py-0.5 rounded-full border ${
                         isApproved
-                          ? "bg-[#EBF2EE] dark:bg-emerald-950/60 text-[#4A6B5B] dark:text-emerald-400"
+                          ? "bg-[#EBF2EE] dark:bg-emerald-950/60 text-[#3D5A4C] dark:text-emerald-300 border-[#D1E0D7] dark:border-emerald-800"
                           : isExpired
-                          ? "bg-red-50 dark:bg-rose-950/60 text-red-700 dark:text-rose-400"
-                          : "bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300"
+                          ? "bg-red-50 dark:bg-rose-950/60 text-red-700 dark:text-rose-400 border-red-200 dark:border-rose-800"
+                          : "bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border-amber-200 dark:border-amber-800"
                       }`}
                     >
                       {fact.status}
                     </span>
                   </div>
-                  <h3 className="text-sm font-bold text-[#1F2421] dark:text-white mb-2 leading-snug group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                  <h3 className="text-sm font-bold text-[#26251E] dark:text-[#FCFDFD] mb-2 leading-snug group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">
                     "{fact.claim_statement}"
                   </h3>
                   {fact.metric_value !== undefined && (
-                    <div className="inline-flex items-center space-x-1.5 bg-[#FAF8F5] dark:bg-[#182234] border border-[#E7E2D8] dark:border-gray-700 px-2.5 py-1 rounded-lg text-xs text-[#1F2421] dark:text-white font-semibold my-2">
-                      <span className="text-gray-500 dark:text-gray-400 font-normal">Metric:</span>
-                      <span className="text-[#4A6B5B] dark:text-emerald-400 font-bold">
+                    <div className="inline-flex items-center space-x-1.5 bg-[#F3F2EB] dark:bg-[#1C1B16] border border-[#E8E6D9] dark:border-[#2E2C26] px-3 py-1 rounded-full text-xs text-[#26251E] dark:text-[#FCFDFD] font-semibold my-2">
+                      <span className="text-[#6F6C5B] dark:text-[#A9A593] font-normal">Metric:</span>
+                      <span className="text-[#26251E] dark:text-[#FCFDFD] font-bold">
                         {fact.metric_value}
                         {fact.metric_unit || ""}
                       </span>
@@ -325,13 +325,13 @@ export const BrandKnowledgeHubView: React.FC = () => {
                   )}
                 </div>
 
-                <div className="pt-3 border-t border-[#F0ECE4] dark:border-gray-800 text-[11px] text-[#5C6460] dark:text-gray-400 space-y-1">
+                <div className="pt-3 border-t border-[#E8E6D9] dark:border-[#2E2C26] text-[11px] text-[#6F6C5B] dark:text-[#A9A593] space-y-1">
                   <div className="flex items-center justify-between">
                     <span className="flex items-center">
-                      <FileCheck className="w-3.5 h-3.5 mr-1 text-[#4A6B5B] dark:text-emerald-400" />
+                      <FileCheck className="w-3.5 h-3.5 mr-1 text-[#3D5A4C] dark:text-emerald-400" />
                       {fact.evidence_sources.length} Linked Source(s)
                     </span>
-                    <span className="flex items-center font-medium text-amber-600 dark:text-amber-400">
+                    <span className="flex items-center font-medium text-orange-600 dark:text-orange-400">
                       <Zap className="w-3.5 h-3.5 mr-1" />
                       {fact.dependent_asset_count || 3} Dependent Assets
                     </span>
@@ -346,57 +346,57 @@ export const BrandKnowledgeHubView: React.FC = () => {
       {/* TAB 2: EVIDENCE DOCUMENTS */}
       {activeTab === "evidence" && evidence.length > 0 && (
         <div className="space-y-4">
-          <div className="bg-white dark:bg-[#131926] rounded-2xl border border-[#E7E2D8] dark:border-gray-800 shadow-xs overflow-hidden">
+          <div className="bg-[#FCFDFD] dark:bg-[#181714] rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-2xs overflow-hidden">
             <table className="w-full text-left text-xs">
-              <thead className="bg-[#FAF8F5] dark:bg-[#182234] border-b border-[#E7E2D8] dark:border-gray-800 text-[#5C6460] dark:text-gray-400">
+              <thead className="bg-[#F3F2EB] dark:bg-[#1C1B16] border-b border-[#E8E6D9] dark:border-[#2E2C26] text-[#6F6C5B] dark:text-[#A9A593]">
                 <tr>
-                  <th className="py-3 px-4 font-semibold">Evidence Title</th>
-                  <th className="py-3 px-4 font-semibold">Type</th>
-                  <th className="py-3 px-4 font-semibold">Status</th>
-                  <th className="py-3 px-4 font-semibold">Owner / Auditor</th>
-                  <th className="py-3 px-4 font-semibold">Validity</th>
-                  <th className="py-3 px-4 font-semibold">Extracted Passage</th>
-                  <th className="py-3 px-4 font-semibold text-right">Visual Grounding</th>
+                  <th className="py-3.5 px-4 font-semibold">Evidence Title</th>
+                  <th className="py-3.5 px-4 font-semibold">Type</th>
+                  <th className="py-3.5 px-4 font-semibold">Status</th>
+                  <th className="py-3.5 px-4 font-semibold">Owner / Auditor</th>
+                  <th className="py-3.5 px-4 font-semibold">Validity</th>
+                  <th className="py-3.5 px-4 font-semibold">Extracted Passage</th>
+                  <th className="py-3.5 px-4 font-semibold text-right">Visual Grounding</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#F0ECE4] dark:divide-gray-800">
+              <tbody className="divide-y divide-[#E8E6D9]/60 dark:divide-[#2E2C26]">
                 {filteredEvidence.map((ev) => (
-                  <tr key={ev.id} className="hover:bg-[#FAF8F5] dark:hover:bg-gray-800/40">
-                    <td className="py-3 px-4 font-bold text-[#1F2421] dark:text-white">
+                  <tr key={ev.id} className="hover:bg-[#F3F2EB]/50 dark:hover:bg-[#201F1A] transition-colors">
+                    <td className="py-3.5 px-4 font-bold text-[#26251E] dark:text-[#FCFDFD]">
                       <div className="flex items-center space-x-2">
-                        <FileText className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                        <FileText className="w-4 h-4 text-orange-500 shrink-0" />
                         <span>{ev.title}</span>
                       </div>
                     </td>
-                    <td className="py-3 px-4 text-[#5C6460] dark:text-gray-400 uppercase text-[10px] font-semibold">
+                    <td className="py-3.5 px-4 text-[#6F6C5B] dark:text-[#A9A593] uppercase text-[10px] font-semibold">
                       {ev.source_type.replace(/_/g, " ")}
                     </td>
-                    <td className="py-3 px-4">
+                    <td className="py-3.5 px-4">
                       <span
-                        className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                        className={`px-2.5 py-0.5 rounded-full text-[10px] font-medium border ${
                           ev.verification_status === "VERIFIED"
-                            ? "bg-[#EBF2EE] dark:bg-emerald-950/60 text-[#4A6B5B] dark:text-emerald-400"
-                            : "bg-red-50 dark:bg-rose-950/60 text-red-700 dark:text-rose-400"
+                            ? "bg-[#EBF2EE] dark:bg-emerald-950/60 text-[#3D5A4C] dark:text-emerald-300 border-[#D1E0D7] dark:border-emerald-800"
+                            : "bg-red-50 dark:bg-rose-950/60 text-red-700 dark:text-rose-400 border-red-200 dark:border-rose-800"
                         }`}
                       >
                         {ev.verification_status}
                       </span>
                     </td>
-                    <td className="py-3 px-4 text-[#1F2421] dark:text-gray-200">{ev.responsible_owner || "Apex Analytics Lab"}</td>
-                    <td className="py-3 px-4 text-[#5C6460] dark:text-gray-400">
+                    <td className="py-3.5 px-4 text-[#26251E] dark:text-[#FCFDFD]">{ev.responsible_owner || "Apex Analytics Lab"}</td>
+                    <td className="py-3.5 px-4 text-[#6F6C5B] dark:text-[#A9A593]">
                       {ev.expiration_date
                         ? `Expires: ${new Date(ev.expiration_date).toLocaleDateString()}`
                         : "Active 2026-Q4"}
                     </td>
-                    <td className="py-3 px-4 text-[#5C6460] dark:text-gray-400 max-w-xs truncate font-mono text-[11px]">
+                    <td className="py-3.5 px-4 text-[#6F6C5B] dark:text-[#A9A593] max-w-xs truncate font-mono text-[11px]">
                       {ev.document_text}
                     </td>
-                    <td className="py-3 px-4 text-right">
+                    <td className="py-3.5 px-4 text-right">
                       <button
                         onClick={() => setSelectedEvidenceForModal({ id: ev.id, title: ev.title })}
-                        className="px-2.5 py-1 bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 rounded-lg text-[11px] font-bold inline-flex items-center space-x-1 shadow-2xs transition-all whitespace-nowrap cursor-pointer"
+                        className="px-3 py-1 bg-[#26251E] hover:bg-[#3B392F] text-[#FCFDFD] dark:bg-[#FCFDFD] dark:text-[#26251E] rounded-full text-[11px] font-semibold inline-flex items-center space-x-1 shadow-2xs active:scale-95 transition-all whitespace-nowrap cursor-pointer"
                       >
-                        <Sparkles className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
+                        <Sparkles className="w-3 h-3 text-orange-400" />
                         <span>Inspect Bounding Box</span>
                       </button>
                     </td>
@@ -411,44 +411,44 @@ export const BrandKnowledgeHubView: React.FC = () => {
       {/* TAB 3: BRAND RULES */}
       {activeTab === "rules" && rules.length > 0 && (
         <div className="space-y-4">
-          <div className="bg-white dark:bg-[#131926] rounded-2xl border border-[#E7E2D8] dark:border-gray-800 shadow-xs overflow-hidden">
+          <div className="bg-[#FCFDFD] dark:bg-[#181714] rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] shadow-2xs overflow-hidden">
             <table className="w-full text-left text-xs">
-              <thead className="bg-[#FAF8F5] dark:bg-[#182234] border-b border-[#E7E2D8] dark:border-gray-800 text-[#5C6460] dark:text-gray-400">
+              <thead className="bg-[#F3F2EB] dark:bg-[#1C1B16] border-b border-[#E8E6D9] dark:border-[#2E2C26] text-[#6F6C5B] dark:text-[#A9A593]">
                 <tr>
-                  <th className="py-3 px-4 font-semibold">Rule Code</th>
-                  <th className="py-3 px-4 font-semibold">Rule Name</th>
-                  <th className="py-3 px-4 font-semibold">Type</th>
-                  <th className="py-3 px-4 font-semibold">Severity</th>
-                  <th className="py-3 px-4 font-semibold">Check Pattern</th>
-                  <th className="py-3 px-4 font-semibold">Status</th>
+                  <th className="py-3.5 px-4 font-semibold">Rule Code</th>
+                  <th className="py-3.5 px-4 font-semibold">Rule Name</th>
+                  <th className="py-3.5 px-4 font-semibold">Type</th>
+                  <th className="py-3.5 px-4 font-semibold">Severity</th>
+                  <th className="py-3.5 px-4 font-semibold">Check Pattern</th>
+                  <th className="py-3.5 px-4 font-semibold">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#F0ECE4] dark:divide-gray-800">
+              <tbody className="divide-y divide-[#E8E6D9]/60 dark:divide-[#2E2C26]">
                 {filteredRules.map((r) => (
-                  <tr key={r.id} className="hover:bg-[#FAF8F5] dark:hover:bg-gray-800/40">
-                    <td className="py-3 px-4 font-mono font-bold text-emerald-600 dark:text-emerald-400">{r.rule_code}</td>
-                    <td className="py-3 px-4 font-semibold text-[#1F2421] dark:text-white">{r.name}</td>
-                    <td className="py-3 px-4 text-[10px] uppercase font-bold text-[#5C6460] dark:text-gray-400">
+                  <tr key={r.id} className="hover:bg-[#F3F2EB]/50 dark:hover:bg-[#201F1A] transition-colors">
+                    <td className="py-3.5 px-4 font-mono font-bold text-orange-600 dark:text-orange-400">{r.rule_code}</td>
+                    <td className="py-3.5 px-4 font-semibold text-[#26251E] dark:text-[#FCFDFD]">{r.name}</td>
+                    <td className="py-3.5 px-4 text-[10px] uppercase font-bold text-[#6F6C5B] dark:text-[#A9A593]">
                       {r.rule_type.replace(/_/g, " ")}
                     </td>
-                    <td className="py-3 px-4">
+                    <td className="py-3.5 px-4">
                       <span
-                        className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                        className={`px-2.5 py-0.5 rounded-full text-[10px] font-medium border ${
                           r.severity === "CRITICAL"
-                            ? "bg-red-100 dark:bg-rose-950/60 text-red-800 dark:text-rose-400"
+                            ? "bg-red-50 dark:bg-rose-950/60 text-red-700 dark:text-rose-400 border-red-200 dark:border-rose-800"
                             : r.severity === "HIGH"
-                            ? "bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300"
-                            : "bg-blue-100 dark:bg-blue-950/60 text-blue-800 dark:text-blue-300"
+                            ? "bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border-amber-200 dark:border-amber-800"
+                            : "bg-blue-50 dark:bg-blue-950/60 text-blue-800 dark:text-blue-300 border-blue-200 dark:border-blue-800"
                         }`}
                       >
                         {r.severity}
                       </span>
                     </td>
-                    <td className="py-3 px-4 text-[#5C6460] dark:text-gray-400 font-mono text-[11px] max-w-xs truncate">
+                    <td className="py-3.5 px-4 text-[#6F6C5B] dark:text-[#A9A593] font-mono text-[11px] max-w-xs truncate">
                       "{r.check_pattern}"
                     </td>
-                    <td className="py-3 px-4">
-                      <span className="px-2 py-0.5 bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 rounded-full text-[10px] font-semibold border border-emerald-300 dark:border-emerald-800">
+                    <td className="py-3.5 px-4">
+                      <span className="px-2.5 py-0.5 bg-[#EBF2EE] dark:bg-emerald-950/60 text-[#3D5A4C] dark:text-emerald-300 rounded-full text-[10px] font-semibold border border-[#D1E0D7] dark:border-emerald-800">
                         Active Policy
                       </span>
                     </td>
@@ -462,74 +462,74 @@ export const BrandKnowledgeHubView: React.FC = () => {
 
       {/* Rich Fact Detail Drawer Modal */}
       {selectedFact && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-fadeIn">
-          <div className="bg-white dark:bg-[#131926] rounded-2xl border border-emerald-500/40 max-w-xl w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between pb-3 border-b border-[#F0ECE4] dark:border-gray-800">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-fadeIn">
+          <div className="bg-[#FCFDFD] dark:bg-[#181714] rounded-3xl border border-[#E8E6D9] dark:border-[#2E2C26] max-w-xl w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E8E6D9] dark:border-[#2E2C26]">
               <div className="flex items-center space-x-2">
-                <ShieldCheck className="w-5 h-5 text-emerald-500" />
-                <h3 className="text-base font-bold text-[#1F2421] dark:text-white">
+                <span className="w-2 h-2 rounded-full bg-orange-500" />
+                <h3 className="text-base font-bold text-[#26251E] dark:text-[#FCFDFD]">
                   Brand Fact v{selectedFact.version} — Provenance Detail
                 </h3>
               </div>
               <button
                 onClick={() => setSelectedFact(null)}
-                className="text-stone-400 hover:text-stone-700 dark:hover:text-white text-lg p-1"
+                className="text-[#6F6C5B] hover:text-[#26251E] dark:hover:text-white p-1 rounded-full text-base"
               >
                 ✕
               </button>
             </div>
 
             <div>
-              <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              <div className="text-[10px] font-bold text-[#6F6C5B] dark:text-[#A9A593] uppercase tracking-wider">
                 Official Approved Claim Statement
               </div>
-              <p className="text-sm font-bold text-[#1F2421] dark:text-white mt-1 leading-snug">
+              <p className="text-sm font-bold text-[#26251E] dark:text-[#FCFDFD] mt-1 leading-snug">
                 "{selectedFact.claim_statement}"
               </p>
             </div>
 
             <div className="grid grid-cols-3 gap-2.5 text-xs">
-              <div className="p-3 bg-[#FAF8F5] dark:bg-[#182234] rounded-xl border border-[#E7E2D8] dark:border-gray-700">
-                <span className="text-gray-500 dark:text-gray-400 block text-[10px] font-semibold uppercase">Metric Value</span>
-                <span className="font-bold text-emerald-600 dark:text-emerald-400 text-sm mt-0.5 block">
+              <div className="p-3.5 bg-[#F3F2EB] dark:bg-[#201F1A] rounded-2xl border border-[#E8E6D9] dark:border-[#2E2C26]">
+                <span className="text-[#6F6C5B] dark:text-[#A9A593] block text-[10px] font-semibold uppercase">Metric Value</span>
+                <span className="font-bold text-[#26251E] dark:text-[#FCFDFD] text-sm mt-0.5 block">
                   {selectedFact.metric_value ? `${selectedFact.metric_value}${selectedFact.metric_unit || ""}` : "Qualitative"}
                 </span>
               </div>
-              <div className="p-3 bg-[#FAF8F5] dark:bg-[#182234] rounded-xl border border-[#E7E2D8] dark:border-gray-700">
-                <span className="text-gray-500 dark:text-gray-400 block text-[10px] font-semibold uppercase">Category</span>
-                <span className="font-bold text-gray-900 dark:text-white text-xs mt-0.5 block capitalize">
+              <div className="p-3.5 bg-[#F3F2EB] dark:bg-[#201F1A] rounded-2xl border border-[#E8E6D9] dark:border-[#2E2C26]">
+                <span className="text-[#6F6C5B] dark:text-[#A9A593] block text-[10px] font-semibold uppercase">Category</span>
+                <span className="font-bold text-[#26251E] dark:text-[#FCFDFD] text-xs mt-0.5 block capitalize">
                   {selectedFact.category}
                 </span>
               </div>
-              <div className="p-3 bg-[#FAF8F5] dark:bg-[#182234] rounded-xl border border-[#E7E2D8] dark:border-gray-700">
-                <span className="text-gray-500 dark:text-gray-400 block text-[10px] font-semibold uppercase">Blast Radius</span>
-                <span className="font-bold text-amber-600 dark:text-amber-400 text-xs mt-0.5 block">
+              <div className="p-3.5 bg-[#F3F2EB] dark:bg-[#201F1A] rounded-2xl border border-[#E8E6D9] dark:border-[#2E2C26]">
+                <span className="text-[#6F6C5B] dark:text-[#A9A593] block text-[10px] font-semibold uppercase">Blast Radius</span>
+                <span className="font-bold text-orange-600 dark:text-orange-400 text-xs mt-0.5 block">
                   {selectedFact.dependent_asset_count || 3} Assets at Risk
                 </span>
               </div>
             </div>
 
             <div>
-              <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
+              <div className="text-[10px] font-bold text-[#6F6C5B] dark:text-[#A9A593] uppercase tracking-wider mb-2">
                 Substantiating Evidence Sources ({selectedFact.evidence_sources.length})
               </div>
               {selectedFact.evidence_sources.length > 0 ? (
                 selectedFact.evidence_sources.map((ev) => (
                   <div
                     key={ev.id}
-                    className="p-3.5 bg-emerald-50/60 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 rounded-xl text-xs space-y-1.5"
+                    className="p-4 bg-[#F3F2EB] dark:bg-[#201F1A] border border-[#E8E6D9] dark:border-[#2E2C26] rounded-2xl text-xs space-y-2"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="font-bold text-emerald-800 dark:text-emerald-300">{ev.title}</span>
-                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-300">
+                      <span className="font-bold text-[#26251E] dark:text-[#FCFDFD]">{ev.title}</span>
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#E8E6D9] dark:bg-[#2A2822] text-[#26251E] dark:text-[#FCFDFD]">
                         {ev.verification_status}
                       </span>
                     </div>
-                    <p className="text-[11px] text-gray-700 dark:text-gray-300 font-mono leading-relaxed bg-white/70 dark:bg-black/30 p-2 rounded">
+                    <p className="text-[11px] text-[#26251E] dark:text-[#FCFDFD] font-mono leading-relaxed bg-[#FCFDFD] dark:bg-[#181714] p-3 rounded-xl border border-[#E8E6D9] dark:border-[#2E2C26]">
                       {ev.document_text}
                     </p>
                     <div className="flex items-center justify-between pt-1">
-                      <span className="text-[10px] text-gray-500 dark:text-gray-400">
+                      <span className="text-[10px] text-[#6F6C5B] dark:text-[#A9A593]">
                         Owner: {ev.responsible_owner || "Apex Analytics Lab"}
                       </span>
                       <button
@@ -537,15 +537,15 @@ export const BrandKnowledgeHubView: React.FC = () => {
                           setSelectedFact(null);
                           setSelectedEvidenceForModal({ id: ev.id, title: ev.title });
                         }}
-                        className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1"
+                        className="px-3 py-1 bg-[#26251E] hover:bg-[#3B392F] text-[#FCFDFD] dark:bg-[#FCFDFD] dark:text-[#26251E] rounded-full text-[10px] font-semibold active:scale-95 transition-all shadow-xs flex items-center gap-1"
                       >
-                        <Sparkles className="w-3 h-3" /> View Visual Bounding Box
+                        <Sparkles className="w-3 h-3 text-orange-400" /> View Bounding Box
                       </button>
                     </div>
                   </div>
                 ))
               ) : (
-                <div className="p-3 bg-stone-50 dark:bg-gray-800 rounded-xl text-xs text-stone-500">
+                <div className="p-3 bg-[#F3F2EB] dark:bg-[#201F1A] rounded-2xl text-xs text-[#6F6C5B]">
                   Direct benchmark evidence link configured.
                 </div>
               )}
@@ -554,7 +554,7 @@ export const BrandKnowledgeHubView: React.FC = () => {
             <div className="pt-2 flex justify-end">
               <button
                 onClick={() => setSelectedFact(null)}
-                className="px-4 py-2 bg-stone-100 dark:bg-gray-800 hover:bg-stone-200 dark:hover:bg-gray-700 text-stone-800 dark:text-white rounded-xl text-xs font-semibold cursor-pointer"
+                className="px-4 py-2 bg-[#F3F2EB] dark:bg-[#201F1A] hover:bg-[#E8E6D9] text-[#26251E] dark:text-[#FCFDFD] rounded-full text-xs font-semibold active:scale-95 transition-all cursor-pointer"
               >
                 Close Drawer
               </button>
