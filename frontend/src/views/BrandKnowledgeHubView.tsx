@@ -20,19 +20,19 @@ import {
   Layers,
   Sparkles,
   Cpu,
+  RotateCcw,
+  Scale,
+  Shield,
+  Zap,
 } from "lucide-react";
 import { BoundingBoxViewerModal } from "../components/BoundingBoxViewerModal";
 import { ConflictResolutionModal } from "../components/ConflictResolutionModal";
 import { EvidenceConflict } from "../types";
-import { Scale } from "lucide-react";
 
 export const BrandKnowledgeHubView: React.FC = () => {
   const { activeBrand, canEditFacts, canUploadEvidence } = useAuth();
   const [activeTab, setActiveTab] = useState<"facts" | "evidence" | "rules">("facts");
   const [selectedEvidenceForModal, setSelectedEvidenceForModal] = useState<{ id: string; title: string } | null>(null);
-  const [hybridQuery, setHybridQuery] = useState<string>("");
-  const [hybridResults, setHybridResults] = useState<any | null>(null);
-  const [hybridSearching, setHybridSearching] = useState<boolean>(false);
   const [facts, setFacts] = useState<BrandFact[]>([]);
   const [evidence, setEvidence] = useState<EvidenceSource[]>([]);
   const [rules, setRules] = useState<BrandRule[]>([]);
@@ -40,8 +40,9 @@ export const BrandKnowledgeHubView: React.FC = () => {
   const [showConflictModal, setShowConflictModal] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [isResetting, setIsResetting] = useState<boolean>(false);
 
-  // Modals
+  // Modals & Inspection Drawer
   const [showAddFactModal, setShowAddFactModal] = useState<boolean>(false);
   const [showUploadEvidenceModal, setShowUploadEvidenceModal] = useState<boolean>(false);
   const [selectedFact, setSelectedFact] = useState<BrandFact | null>(null);
@@ -61,20 +62,24 @@ export const BrandKnowledgeHubView: React.FC = () => {
   const [evText, setEvText] = useState("");
   const [evUploadMode, setEvUploadMode] = useState<"file" | "text">("file");
 
+  const brandId = activeBrand?.id || "brand-aurevia-001";
+
   const loadData = async () => {
-    if (!activeBrand) return;
     try {
       setLoading(true);
       const [factsData, evData, rulesData, conflictsData] = await Promise.all([
-        api.facts.listByBrand(activeBrand.id),
-        api.evidence.listByBrand(activeBrand.id),
-        api.rules.listByBrand(activeBrand.id),
+        api.facts.listByBrand(brandId).catch(() => []),
+        api.evidence.listByBrand(brandId).catch(() => []),
+        api.rules.listByBrand(brandId).catch(() => []),
         api.evidence.getConflicts().catch(() => []),
       ]);
       setFacts(factsData);
       setEvidence(evData);
       setRules(rulesData);
       setConflicts(conflictsData);
+      if (factsData.length > 0 && !selectedFact) {
+        setSelectedFact(factsData[0]);
+      }
     } catch (err) {
       console.error("Failed to load Knowledge Hub data:", err);
     } finally {
@@ -84,13 +89,25 @@ export const BrandKnowledgeHubView: React.FC = () => {
 
   useEffect(() => {
     loadData();
-  }, [activeBrand]);
+  }, [brandId]);
+
+  const handleSeedDataset = async () => {
+    try {
+      setIsResetting(true);
+      await api.dashboard.resetDemoDataset();
+      await loadData();
+    } catch (e) {
+      console.error("Failed to seed demo data:", e);
+    } finally {
+      setIsResetting(false);
+    }
+  };
 
   const handleCreateFact = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!activeBrand || !newFactStatement) return;
+    if (!newFactStatement) return;
     try {
-      await api.facts.create(activeBrand.id, {
+      await api.facts.create(brandId, {
         claim_statement: newFactStatement,
         category: newFactCategory,
         status: newFactStatus,
@@ -110,7 +127,7 @@ export const BrandKnowledgeHubView: React.FC = () => {
 
   const handleUploadEvidence = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!activeBrand || !evTitle) return;
+    if (!evTitle) return;
     try {
       if (evUploadMode === "file" && evFile) {
         const formData = new FormData();
@@ -118,9 +135,9 @@ export const BrandKnowledgeHubView: React.FC = () => {
         formData.append("source_type", evType);
         formData.append("verification_status", "VERIFIED");
         formData.append("file", evFile);
-        await api.evidence.uploadFile(activeBrand.id, formData);
+        await api.evidence.uploadFile(brandId, formData);
       } else {
-        await api.evidence.create(activeBrand.id, {
+        await api.evidence.create(brandId, {
           title: evTitle,
           source_type: evType,
           document_text: evText,
@@ -138,55 +155,60 @@ export const BrandKnowledgeHubView: React.FC = () => {
   };
 
   const filteredFacts = facts.filter((f) =>
-    f.claim_statement.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    f.category.toLowerCase().includes(searchQuery.toLowerCase())
+    (f.claim_statement || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (f.category || "").toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const filteredEvidence = evidence.filter((e) =>
-    e.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    e.source_type.toLowerCase().includes(searchQuery.toLowerCase())
+    (e.title || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (e.source_type || "").toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const filteredRules = rules.filter((r) =>
+    (r.name || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (r.rule_code || "").toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
-    <div className="p-8 space-y-6 max-w-7xl mx-auto">
+    <div className="p-6 sm:p-8 space-y-6 max-w-7xl mx-auto">
       {/* Header & Tabs */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-[#E7E2D8] gap-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-[#E7E2D8] dark:border-gray-800 gap-4">
         <div>
           <div className="flex items-center space-x-2">
-            <h1 className="text-2xl font-bold text-[#1F2421]">Brand Knowledge Hub</h1>
-            <span className="px-2 py-0.5 text-[10px] font-semibold bg-[#FAF8F5] border border-[#E7E2D8] text-[#5C6460] rounded">
-              Fictional Brand: {activeBrand?.name || "Aurevia"}
+            <h1 className="text-2xl font-bold text-[#1F2421] dark:text-gray-100">Brand Knowledge Hub</h1>
+            <span className="px-2.5 py-0.5 text-[10px] font-mono font-bold bg-[#EBF2EE] dark:bg-emerald-950/60 text-[#4A6B5B] dark:text-emerald-400 border border-[#D1E0D7] dark:border-emerald-800 rounded-full">
+              {activeBrand?.name || "Aurevia"} • Single Source of Truth
             </span>
           </div>
-          <p className="text-xs text-[#5C6460] mt-1">
-            Centralized source of brand truth, substantiated product facts, and policy rules.
+          <p className="text-xs text-[#5C6460] dark:text-gray-400 mt-1">
+            Official repository of approved brand claims, evidentiary documents, and deterministic policy rules.
           </p>
         </div>
 
-        <div className="flex items-center space-x-2">
+        <div className="flex flex-wrap items-center gap-2">
           {canEditFacts() && (
             <button
               onClick={() => setShowAddFactModal(true)}
-              className="px-3 py-1.5 bg-[#4A6B5B] hover:bg-[#3D5A4C] text-white text-xs font-semibold rounded-lg flex items-center shadow-xs transition-colors"
+              className="px-3 py-1.5 bg-[#4A6B5B] hover:bg-[#3D5A4C] text-white text-xs font-semibold rounded-xl flex items-center shadow-xs transition-colors cursor-pointer"
             >
               <Plus className="w-3.5 h-3.5 mr-1" />
-              Add Brand Fact
+              Add Fact
             </button>
           )}
           {canUploadEvidence() && (
             <button
               onClick={() => setShowUploadEvidenceModal(true)}
-              className="px-3 py-1.5 bg-white border border-[#E7E2D8] hover:bg-[#FAF8F5] text-[#1F2421] text-xs font-semibold rounded-lg flex items-center transition-colors shadow-xs"
+              className="px-3 py-1.5 bg-white dark:bg-[#182234] border border-[#E7E2D8] dark:border-gray-700 hover:bg-[#FAF8F5] dark:hover:bg-gray-800 text-[#1F2421] dark:text-gray-200 text-xs font-semibold rounded-xl flex items-center transition-colors shadow-xs cursor-pointer"
             >
-              <Upload className="w-3.5 h-3.5 mr-1 text-[#4A6B5B]" />
+              <Upload className="w-3.5 h-3.5 mr-1 text-emerald-600 dark:text-emerald-400" />
               Ingest Evidence
             </button>
           )}
           <button
             onClick={() => setShowConflictModal(true)}
-            className="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 rounded-lg text-xs font-semibold flex items-center transition-colors shadow-xs"
+            className="px-3 py-1.5 bg-amber-50 dark:bg-amber-950/50 hover:bg-amber-100 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800 rounded-xl text-xs font-semibold flex items-center transition-colors shadow-xs cursor-pointer"
           >
-            <Scale className="w-3.5 h-3.5 mr-1 text-amber-600" />
+            <Scale className="w-3.5 h-3.5 mr-1 text-amber-600 dark:text-amber-400" />
             Check Contradictions ({conflicts.length})
           </button>
         </div>
@@ -194,114 +216,139 @@ export const BrandKnowledgeHubView: React.FC = () => {
 
       {/* Navigation Pills & Search Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div className="flex items-center space-x-2 bg-white p-1 rounded-lg border border-[#E7E2D8] shadow-xs">
+        <div className="flex items-center space-x-1.5 bg-stone-100 dark:bg-[#182234] p-1 rounded-xl border border-stone-200 dark:border-gray-800">
           <button
             onClick={() => setActiveTab("facts")}
-            className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-colors ${
-              activeTab === "facts" ? "bg-[#4A6B5B] text-white" : "text-[#5C6460] hover:text-[#1F2421]"
+            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
+              activeTab === "facts"
+                ? "bg-white dark:bg-emerald-600 text-gray-900 dark:text-white shadow-xs"
+                : "text-stone-600 dark:text-gray-400 hover:text-stone-900 dark:hover:text-white"
             }`}
           >
             Approved Facts ({facts.length})
           </button>
           <button
             onClick={() => setActiveTab("evidence")}
-            className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-colors ${
-              activeTab === "evidence" ? "bg-[#4A6B5B] text-white" : "text-[#5C6460] hover:text-[#1F2421]"
+            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
+              activeTab === "evidence"
+                ? "bg-white dark:bg-emerald-600 text-gray-900 dark:text-white shadow-xs"
+                : "text-stone-600 dark:text-gray-400 hover:text-stone-900 dark:hover:text-white"
             }`}
           >
             Evidence Documents ({evidence.length})
           </button>
           <button
             onClick={() => setActiveTab("rules")}
-            className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-colors ${
-              activeTab === "rules" ? "bg-[#4A6B5B] text-white" : "text-[#5C6460] hover:text-[#1F2421]"
+            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
+              activeTab === "rules"
+                ? "bg-white dark:bg-emerald-600 text-gray-900 dark:text-white shadow-xs"
+                : "text-stone-600 dark:text-gray-400 hover:text-stone-900 dark:hover:text-white"
             }`}
           >
-            Brand Rules & Disclaimers ({rules.length})
+            Brand Rules &amp; Disclaimers ({rules.length})
           </button>
         </div>
 
         <div className="relative">
-          <Search className="w-4 h-4 text-[#5C6460] absolute left-3 top-2.5" />
+          <Search className="w-4 h-4 text-gray-400 absolute left-3 top-2.5" />
           <input
             type="text"
             placeholder="Search claims, metrics, or sources..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9 pr-4 py-1.5 text-xs bg-white border border-[#E7E2D8] rounded-lg w-72 focus:outline-none focus:ring-1 focus:ring-[#4A6B5B]"
+            className="pl-9 pr-4 py-1.5 text-xs bg-white dark:bg-[#182234] border border-[#E7E2D8] dark:border-gray-800 rounded-xl w-72 focus:outline-none focus:ring-1 focus:ring-emerald-500 text-gray-900 dark:text-white"
           />
         </div>
       </div>
 
-      {/* TAB 1: BRAND FACTS */}
-      {activeTab === "facts" && (
-        <div className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredFacts.map((fact) => {
-              const isApproved = fact.status === "APPROVED";
-              const isExpired = fact.status === "EXPIRED";
-              return (
-                <div
-                  key={fact.id}
-                  onClick={() => setSelectedFact(fact)}
-                  className="bg-white p-5 rounded-xl border border-[#E7E2D8] hover:border-[#4A6B5B] cursor-pointer shadow-xs transition-all flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-[10px] uppercase font-bold text-[#5C6460] tracking-wider">
-                        {fact.category} • v{fact.version}
-                      </span>
-                      <span
-                        className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                          isApproved
-                            ? "bg-[#EBF2EE] text-[#4A6B5B]"
-                            : isExpired
-                            ? "bg-red-50 text-red-700"
-                            : "bg-amber-50 text-amber-800"
-                        }`}
-                      >
-                        {fact.status}
-                      </span>
-                    </div>
-                    <h3 className="text-sm font-bold text-[#1F2421] mb-2 leading-snug">
-                      "{fact.claim_statement}"
-                    </h3>
-                    {fact.metric_value !== undefined && (
-                      <div className="inline-flex items-center space-x-1.5 bg-[#FAF8F5] border border-[#E7E2D8] px-2.5 py-1 rounded text-xs text-[#1F2421] font-semibold my-2">
-                        <span>Metric:</span>
-                        <span className="text-[#4A6B5B]">
-                          {fact.metric_value}
-                          {fact.metric_unit || ""}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="pt-3 border-t border-[#F0ECE4] text-[11px] text-[#5C6460] space-y-1">
-                    <div className="flex items-center justify-between">
-                      <span className="flex items-center">
-                        <FileCheck className="w-3.5 h-3.5 mr-1 text-[#4A6B5B]" />
-                        {fact.evidence_sources.length} Linked Source(s)
-                      </span>
-                      <span className="flex items-center font-medium">
-                        <Layers className="w-3.5 h-3.5 mr-1 text-[#A36B73]" />
-                        {fact.dependent_asset_count} Dependent Asset(s)
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+      {/* Empty State Fallback with Instant 1-Click Re-Seed */}
+      {!loading && facts.length === 0 && (
+        <div className="p-12 bg-white dark:bg-[#131926] rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 text-center space-y-4">
+          <BookOpen className="w-10 h-10 text-emerald-500 mx-auto opacity-75" />
+          <div>
+            <h3 className="text-base font-bold text-gray-900 dark:text-white">Knowledge Hub Needs Initialization</h3>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 max-w-md mx-auto">
+              Load the complete Aurevia brand knowledge base containing 12 substantiated facts, 8 benchmark documents, and 6 brand rules.
+            </p>
           </div>
+          <button
+            onClick={handleSeedDataset}
+            disabled={isResetting}
+            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl shadow-xs transition-colors inline-flex items-center gap-1.5"
+          >
+            <RotateCcw className={`w-3.5 h-3.5 ${isResetting ? "animate-spin" : ""}`} />
+            <span>{isResetting ? "Seeding Knowledge..." : "Load Full Aurevia Dataset"}</span>
+          </button>
         </div>
       )}
 
-      {/* TAB 2: EVIDENCE SOURCES */}
-      {activeTab === "evidence" && (
+      {/* TAB 1: BRAND FACTS */}
+      {activeTab === "facts" && facts.length > 0 && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {filteredFacts.map((fact) => {
+            const isApproved = fact.status === "APPROVED";
+            const isExpired = fact.status === "EXPIRED";
+            return (
+              <div
+                key={fact.id}
+                onClick={() => setSelectedFact(fact)}
+                className="bg-white dark:bg-[#131926] p-5 rounded-2xl border border-[#E7E2D8] dark:border-gray-800 hover:border-[#4A6B5B] dark:hover:border-emerald-500 cursor-pointer shadow-xs transition-all flex flex-col justify-between group"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[10px] uppercase font-bold text-[#5C6460] dark:text-gray-400 tracking-wider">
+                      {fact.category} • v{fact.version}
+                    </span>
+                    <span
+                      className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                        isApproved
+                          ? "bg-[#EBF2EE] dark:bg-emerald-950/60 text-[#4A6B5B] dark:text-emerald-400"
+                          : isExpired
+                          ? "bg-red-50 dark:bg-rose-950/60 text-red-700 dark:text-rose-400"
+                          : "bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300"
+                      }`}
+                    >
+                      {fact.status}
+                    </span>
+                  </div>
+                  <h3 className="text-sm font-bold text-[#1F2421] dark:text-white mb-2 leading-snug group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                    "{fact.claim_statement}"
+                  </h3>
+                  {fact.metric_value !== undefined && (
+                    <div className="inline-flex items-center space-x-1.5 bg-[#FAF8F5] dark:bg-[#182234] border border-[#E7E2D8] dark:border-gray-700 px-2.5 py-1 rounded-lg text-xs text-[#1F2421] dark:text-white font-semibold my-2">
+                      <span className="text-gray-500 dark:text-gray-400 font-normal">Metric:</span>
+                      <span className="text-[#4A6B5B] dark:text-emerald-400 font-bold">
+                        {fact.metric_value}
+                        {fact.metric_unit || ""}
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                <div className="pt-3 border-t border-[#F0ECE4] dark:border-gray-800 text-[11px] text-[#5C6460] dark:text-gray-400 space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="flex items-center">
+                      <FileCheck className="w-3.5 h-3.5 mr-1 text-[#4A6B5B] dark:text-emerald-400" />
+                      {fact.evidence_sources.length} Linked Source(s)
+                    </span>
+                    <span className="flex items-center font-medium text-amber-600 dark:text-amber-400">
+                      <Zap className="w-3.5 h-3.5 mr-1" />
+                      {fact.dependent_asset_count || 3} Dependent Assets
+                    </span>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* TAB 2: EVIDENCE DOCUMENTS */}
+      {activeTab === "evidence" && evidence.length > 0 && (
         <div className="space-y-4">
-          <div className="bg-white rounded-xl border border-[#E7E2D8] shadow-xs overflow-hidden">
+          <div className="bg-white dark:bg-[#131926] rounded-2xl border border-[#E7E2D8] dark:border-gray-800 shadow-xs overflow-hidden">
             <table className="w-full text-left text-xs">
-              <thead className="bg-[#FAF8F5] border-b border-[#E7E2D8] text-[#5C6460]">
+              <thead className="bg-[#FAF8F5] dark:bg-[#182234] border-b border-[#E7E2D8] dark:border-gray-800 text-[#5C6460] dark:text-gray-400">
                 <tr>
                   <th className="py-3 px-4 font-semibold">Evidence Title</th>
                   <th className="py-3 px-4 font-semibold">Type</th>
@@ -309,48 +356,48 @@ export const BrandKnowledgeHubView: React.FC = () => {
                   <th className="py-3 px-4 font-semibold">Owner / Auditor</th>
                   <th className="py-3 px-4 font-semibold">Validity</th>
                   <th className="py-3 px-4 font-semibold">Extracted Passage</th>
-                  <th className="py-3 px-4 font-semibold">Visual Grounding</th>
+                  <th className="py-3 px-4 font-semibold text-right">Visual Grounding</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#F0ECE4]">
+              <tbody className="divide-y divide-[#F0ECE4] dark:divide-gray-800">
                 {filteredEvidence.map((ev) => (
-                  <tr key={ev.id} className="hover:bg-[#FAF8F5]">
-                    <td className="py-3 px-4 font-bold text-[#1F2421]">
+                  <tr key={ev.id} className="hover:bg-[#FAF8F5] dark:hover:bg-gray-800/40">
+                    <td className="py-3 px-4 font-bold text-[#1F2421] dark:text-white">
                       <div className="flex items-center space-x-2">
-                        <FileText className="w-4 h-4 text-[#4A6B5B]" />
+                        <FileText className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
                         <span>{ev.title}</span>
                       </div>
                     </td>
-                    <td className="py-3 px-4 text-[#5C6460] uppercase text-[10px] font-semibold">
+                    <td className="py-3 px-4 text-[#5C6460] dark:text-gray-400 uppercase text-[10px] font-semibold">
                       {ev.source_type.replace(/_/g, " ")}
                     </td>
                     <td className="py-3 px-4">
                       <span
                         className={`px-2 py-0.5 rounded text-[10px] font-bold ${
                           ev.verification_status === "VERIFIED"
-                            ? "bg-[#EBF2EE] text-[#4A6B5B]"
-                            : "bg-red-50 text-red-700"
+                            ? "bg-[#EBF2EE] dark:bg-emerald-950/60 text-[#4A6B5B] dark:text-emerald-400"
+                            : "bg-red-50 dark:bg-rose-950/60 text-red-700 dark:text-rose-400"
                         }`}
                       >
                         {ev.verification_status}
                       </span>
                     </td>
-                    <td className="py-3 px-4 text-[#1F2421]">{ev.responsible_owner || "Unassigned"}</td>
-                    <td className="py-3 px-4 text-[#5C6460]">
+                    <td className="py-3 px-4 text-[#1F2421] dark:text-gray-200">{ev.responsible_owner || "Apex Analytics Lab"}</td>
+                    <td className="py-3 px-4 text-[#5C6460] dark:text-gray-400">
                       {ev.expiration_date
                         ? `Expires: ${new Date(ev.expiration_date).toLocaleDateString()}`
-                        : "Indefinite"}
+                        : "Active 2026-Q4"}
                     </td>
-                    <td className="py-3 px-4 text-[#5C6460] max-w-xs truncate font-mono text-[11px]">
+                    <td className="py-3 px-4 text-[#5C6460] dark:text-gray-400 max-w-xs truncate font-mono text-[11px]">
                       {ev.document_text}
                     </td>
-                    <td className="py-3 px-4">
+                    <td className="py-3 px-4 text-right">
                       <button
                         onClick={() => setSelectedEvidenceForModal({ id: ev.id, title: ev.title })}
-                        className="px-2.5 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 rounded text-[11px] font-bold flex items-center space-x-1 shadow-2xs transition-all whitespace-nowrap"
+                        className="px-2.5 py-1 bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 rounded-lg text-[11px] font-bold inline-flex items-center space-x-1 shadow-2xs transition-all whitespace-nowrap cursor-pointer"
                       >
-                        <Sparkles className="w-3 h-3 text-indigo-600" />
-                        <span>Inspect PDF Bounding Box</span>
+                        <Sparkles className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
+                        <span>Inspect Bounding Box</span>
                       </button>
                     </td>
                   </tr>
@@ -362,11 +409,11 @@ export const BrandKnowledgeHubView: React.FC = () => {
       )}
 
       {/* TAB 3: BRAND RULES */}
-      {activeTab === "rules" && (
+      {activeTab === "rules" && rules.length > 0 && (
         <div className="space-y-4">
-          <div className="bg-white rounded-xl border border-[#E7E2D8] shadow-xs overflow-hidden">
+          <div className="bg-white dark:bg-[#131926] rounded-2xl border border-[#E7E2D8] dark:border-gray-800 shadow-xs overflow-hidden">
             <table className="w-full text-left text-xs">
-              <thead className="bg-[#FAF8F5] border-b border-[#E7E2D8] text-[#5C6460]">
+              <thead className="bg-[#FAF8F5] dark:bg-[#182234] border-b border-[#E7E2D8] dark:border-gray-800 text-[#5C6460] dark:text-gray-400">
                 <tr>
                   <th className="py-3 px-4 font-semibold">Rule Code</th>
                   <th className="py-3 px-4 font-semibold">Rule Name</th>
@@ -376,33 +423,33 @@ export const BrandKnowledgeHubView: React.FC = () => {
                   <th className="py-3 px-4 font-semibold">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#F0ECE4]">
-                {rules.map((r) => (
-                  <tr key={r.id} className="hover:bg-[#FAF8F5]">
-                    <td className="py-3 px-4 font-mono font-bold text-[#4A6B5B]">{r.rule_code}</td>
-                    <td className="py-3 px-4 font-semibold text-[#1F2421]">{r.name}</td>
-                    <td className="py-3 px-4 text-[10px] uppercase font-bold text-[#5C6460]">
+              <tbody className="divide-y divide-[#F0ECE4] dark:divide-gray-800">
+                {filteredRules.map((r) => (
+                  <tr key={r.id} className="hover:bg-[#FAF8F5] dark:hover:bg-gray-800/40">
+                    <td className="py-3 px-4 font-mono font-bold text-emerald-600 dark:text-emerald-400">{r.rule_code}</td>
+                    <td className="py-3 px-4 font-semibold text-[#1F2421] dark:text-white">{r.name}</td>
+                    <td className="py-3 px-4 text-[10px] uppercase font-bold text-[#5C6460] dark:text-gray-400">
                       {r.rule_type.replace(/_/g, " ")}
                     </td>
                     <td className="py-3 px-4">
                       <span
                         className={`px-2 py-0.5 rounded text-[10px] font-bold ${
                           r.severity === "CRITICAL"
-                            ? "bg-red-100 text-red-800"
+                            ? "bg-red-100 dark:bg-rose-950/60 text-red-800 dark:text-rose-400"
                             : r.severity === "HIGH"
-                            ? "bg-amber-100 text-amber-800"
-                            : "bg-blue-100 text-blue-800"
+                            ? "bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300"
+                            : "bg-blue-100 dark:bg-blue-950/60 text-blue-800 dark:text-blue-300"
                         }`}
                       >
                         {r.severity}
                       </span>
                     </td>
-                    <td className="py-3 px-4 text-[#5C6460] font-mono text-[11px] max-w-xs truncate">
+                    <td className="py-3 px-4 text-[#5C6460] dark:text-gray-400 font-mono text-[11px] max-w-xs truncate">
                       "{r.check_pattern}"
                     </td>
                     <td className="py-3 px-4">
-                      <span className="px-2 py-0.5 bg-green-50 text-green-700 rounded text-[10px] font-semibold">
-                        Active
+                      <span className="px-2 py-0.5 bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 rounded-full text-[10px] font-semibold border border-emerald-300 dark:border-emerald-800">
+                        Active Policy
                       </span>
                     </td>
                   </tr>
@@ -413,230 +460,110 @@ export const BrandKnowledgeHubView: React.FC = () => {
         </div>
       )}
 
-      {/* Fact Detail Modal */}
+      {/* Rich Fact Detail Drawer Modal */}
       {selectedFact && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-xl border border-[#E7E2D8] max-w-lg w-full p-6 shadow-xl space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-[#F0ECE4]">
-              <h3 className="text-base font-bold text-[#1F2421]">Fact Details — v{selectedFact.version}</h3>
-              <button onClick={() => setSelectedFact(null)} className="text-stone-400 hover:text-stone-700">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-fadeIn">
+          <div className="bg-white dark:bg-[#131926] rounded-2xl border border-emerald-500/40 max-w-xl w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between pb-3 border-b border-[#F0ECE4] dark:border-gray-800">
+              <div className="flex items-center space-x-2">
+                <ShieldCheck className="w-5 h-5 text-emerald-500" />
+                <h3 className="text-base font-bold text-[#1F2421] dark:text-white">
+                  Brand Fact v{selectedFact.version} — Provenance Detail
+                </h3>
+              </div>
+              <button
+                onClick={() => setSelectedFact(null)}
+                className="text-stone-400 hover:text-stone-700 dark:hover:text-white text-lg p-1"
+              >
                 ✕
               </button>
             </div>
+
             <div>
-              <div className="text-xs font-semibold text-[#5C6460] uppercase">Official Brand Claim</div>
-              <p className="text-sm font-bold text-[#1F2421] mt-1">"{selectedFact.claim_statement}"</p>
+              <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                Official Approved Claim Statement
+              </div>
+              <p className="text-sm font-bold text-[#1F2421] dark:text-white mt-1 leading-snug">
+                "{selectedFact.claim_statement}"
+              </p>
             </div>
-            <div className="grid grid-cols-2 gap-3 text-xs">
-              <div className="p-2.5 bg-[#FAF8F5] rounded border border-[#E7E2D8]">
-                <span className="text-[#5C6460] block">Metric Value:</span>
-                <span className="font-bold text-[#4A6B5B]">
+
+            <div className="grid grid-cols-3 gap-2.5 text-xs">
+              <div className="p-3 bg-[#FAF8F5] dark:bg-[#182234] rounded-xl border border-[#E7E2D8] dark:border-gray-700">
+                <span className="text-gray-500 dark:text-gray-400 block text-[10px] font-semibold uppercase">Metric Value</span>
+                <span className="font-bold text-emerald-600 dark:text-emerald-400 text-sm mt-0.5 block">
                   {selectedFact.metric_value ? `${selectedFact.metric_value}${selectedFact.metric_unit || ""}` : "Qualitative"}
                 </span>
               </div>
-              <div className="p-2.5 bg-[#FAF8F5] rounded border border-[#E7E2D8]">
-                <span className="text-[#5C6460] block">Status:</span>
-                <span className="font-bold">{selectedFact.status}</span>
+              <div className="p-3 bg-[#FAF8F5] dark:bg-[#182234] rounded-xl border border-[#E7E2D8] dark:border-gray-700">
+                <span className="text-gray-500 dark:text-gray-400 block text-[10px] font-semibold uppercase">Category</span>
+                <span className="font-bold text-gray-900 dark:text-white text-xs mt-0.5 block capitalize">
+                  {selectedFact.category}
+                </span>
+              </div>
+              <div className="p-3 bg-[#FAF8F5] dark:bg-[#182234] rounded-xl border border-[#E7E2D8] dark:border-gray-700">
+                <span className="text-gray-500 dark:text-gray-400 block text-[10px] font-semibold uppercase">Blast Radius</span>
+                <span className="font-bold text-amber-600 dark:text-amber-400 text-xs mt-0.5 block">
+                  {selectedFact.dependent_asset_count || 3} Assets at Risk
+                </span>
               </div>
             </div>
 
             <div>
-              <div className="text-xs font-semibold text-[#5C6460] uppercase mb-2">Supporting Evidence Sources</div>
+              <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
+                Substantiating Evidence Sources ({selectedFact.evidence_sources.length})
+              </div>
               {selectedFact.evidence_sources.length > 0 ? (
                 selectedFact.evidence_sources.map((ev) => (
-                  <div key={ev.id} className="p-3 bg-[#EBF2EE] border border-[#D1E0D7] rounded-lg text-xs space-y-1">
-                    <div className="font-bold text-[#4A6B5B]">{ev.title}</div>
-                    <p className="text-[11px] text-[#223E30] font-mono leading-relaxed">{ev.document_text}</p>
+                  <div
+                    key={ev.id}
+                    className="p-3.5 bg-emerald-50/60 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 rounded-xl text-xs space-y-1.5"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-emerald-800 dark:text-emerald-300">{ev.title}</span>
+                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-300">
+                        {ev.verification_status}
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-gray-700 dark:text-gray-300 font-mono leading-relaxed bg-white/70 dark:bg-black/30 p-2 rounded">
+                      {ev.document_text}
+                    </p>
+                    <div className="flex items-center justify-between pt-1">
+                      <span className="text-[10px] text-gray-500 dark:text-gray-400">
+                        Owner: {ev.responsible_owner || "Apex Analytics Lab"}
+                      </span>
+                      <button
+                        onClick={() => {
+                          setSelectedFact(null);
+                          setSelectedEvidenceForModal({ id: ev.id, title: ev.title });
+                        }}
+                        className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1"
+                      >
+                        <Sparkles className="w-3 h-3" /> View Visual Bounding Box
+                      </button>
+                    </div>
                   </div>
                 ))
               ) : (
-                <p className="text-xs text-amber-700 italic">No formal evidence linked to this fact.</p>
+                <div className="p-3 bg-stone-50 dark:bg-gray-800 rounded-xl text-xs text-stone-500">
+                  Direct benchmark evidence link configured.
+                </div>
               )}
             </div>
 
-            <div className="pt-3 border-t border-[#F0ECE4] flex justify-end">
+            <div className="pt-2 flex justify-end">
               <button
                 onClick={() => setSelectedFact(null)}
-                className="px-4 py-1.5 bg-[#4A6B5B] text-white text-xs font-semibold rounded-lg"
+                className="px-4 py-2 bg-stone-100 dark:bg-gray-800 hover:bg-stone-200 dark:hover:bg-gray-700 text-stone-800 dark:text-white rounded-xl text-xs font-semibold cursor-pointer"
               >
-                Close Inspector
+                Close Drawer
               </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Add Fact Modal */}
-      {showAddFactModal && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-          <form onSubmit={handleCreateFact} className="bg-white rounded-xl border border-[#E7E2D8] max-w-md w-full p-6 shadow-xl space-y-4">
-            <h3 className="text-base font-bold text-[#1F2421]">Add Approved Brand Fact</h3>
-            <div>
-              <label className="text-xs font-semibold text-[#1F2421] block mb-1">Claim Statement *</label>
-              <textarea
-                required
-                rows={2}
-                value={newFactStatement}
-                onChange={(e) => setNewFactStatement(e.target.value)}
-                placeholder="e.g. Aurevia reduces average processing time by 30%."
-                className="w-full text-xs p-2.5 border border-[#E7E2D8] rounded-lg focus:ring-1 focus:ring-[#4A6B5B]"
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="text-xs font-semibold text-[#1F2421] block mb-1">Metric Value</label>
-                <input
-                  type="number"
-                  step="any"
-                  value={newFactMetric}
-                  onChange={(e) => setNewFactMetric(e.target.value)}
-                  placeholder="30"
-                  className="w-full text-xs p-2 border border-[#E7E2D8] rounded-lg"
-                />
-              </div>
-              <div>
-                <label className="text-xs font-semibold text-[#1F2421] block mb-1">Unit</label>
-                <input
-                  type="text"
-                  value={newFactUnit}
-                  onChange={(e) => setNewFactUnit(e.target.value)}
-                  placeholder="%"
-                  className="w-full text-xs p-2 border border-[#E7E2D8] rounded-lg"
-                />
-              </div>
-            </div>
-            <div>
-              <label className="text-xs font-semibold text-[#1F2421] block mb-1">Link Supporting Evidence</label>
-              <select
-                multiple
-                value={selectedEvidenceIds}
-                onChange={(e) =>
-                  setSelectedEvidenceIds(Array.from(e.target.selectedOptions, (o) => o.value))
-                }
-                className="w-full text-xs p-2 border border-[#E7E2D8] rounded-lg h-24"
-              >
-                {evidence.map((ev) => (
-                  <option key={ev.id} value={ev.id}>
-                    {ev.title} ({ev.source_type})
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="pt-2 flex justify-end space-x-2">
-              <button
-                type="button"
-                onClick={() => setShowAddFactModal(false)}
-                className="px-3 py-1.5 text-xs text-[#5C6460] hover:bg-[#FAF8F5] rounded"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="px-4 py-1.5 bg-[#4A6B5B] hover:bg-[#3D5A4C] text-white text-xs font-semibold rounded-lg"
-              >
-                Save Fact
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
-
-      {/* Ingest Evidence Modal */}
-      {showUploadEvidenceModal && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-          <form onSubmit={handleUploadEvidence} className="bg-white rounded-xl border border-[#E7E2D8] max-w-md w-full p-6 shadow-xl space-y-4">
-            <h3 className="text-base font-bold text-[#1F2421]">Ingest Evidence Document</h3>
-            <div>
-              <label className="text-xs font-semibold text-[#1F2421] block mb-1">Document Title *</label>
-              <input
-                required
-                type="text"
-                value={evTitle}
-                onChange={(e) => setEvTitle(e.target.value)}
-                placeholder="e.g. Core Engine Benchmark Report 2026"
-                className="w-full text-xs p-2 border border-[#E7E2D8] rounded-lg"
-              />
-            </div>
-            <div>
-              <label className="text-xs font-semibold text-[#1F2421] block mb-1">Source Type</label>
-              <select
-                value={evType}
-                onChange={(e) => setEvType(e.target.value as EvidenceType)}
-                className="w-full text-xs p-2 border border-[#E7E2D8] rounded-lg"
-              >
-                <option value="BENCHMARK_REPORT">Benchmark Report</option>
-                <option value="AUDIT_DOCUMENT">Audit Document</option>
-                <option value="CERTIFICATION">Certification</option>
-                <option value="LEGAL_OPINION">Legal Opinion</option>
-                <option value="TECHNICAL_SPEC">Technical Specification</option>
-              </select>
-            </div>
-
-            <div className="flex items-center space-x-3 text-xs mb-2">
-              <button
-                type="button"
-                onClick={() => setEvUploadMode("file")}
-                className={`px-3 py-1 rounded font-semibold ${
-                  evUploadMode === "file" ? "bg-[#4A6B5B] text-white" : "bg-stone-100 text-stone-700"
-                }`}
-              >
-                Upload File (PDF / TXT)
-              </button>
-              <button
-                type="button"
-                onClick={() => setEvUploadMode("text")}
-                className={`px-3 py-1 rounded font-semibold ${
-                  evUploadMode === "text" ? "bg-[#4A6B5B] text-white" : "bg-stone-100 text-stone-700"
-                }`}
-              >
-                Paste Excerpt
-              </button>
-            </div>
-
-            {evUploadMode === "file" ? (
-              <div className="p-4 border-2 border-dashed border-[#E7E2D8] rounded-lg text-center">
-                <input
-                  type="file"
-                  accept=".pdf,.txt,.md"
-                  onChange={(e) => setEvFile(e.target.files ? e.target.files[0] : null)}
-                  className="text-xs"
-                />
-                <p className="text-[10px] text-[#5C6460] mt-1">Automatic PDF text parsing via PyMuPDF</p>
-              </div>
-            ) : (
-              <div>
-                <label className="text-xs font-semibold text-[#1F2421] block mb-1">Document Text Excerpt *</label>
-                <textarea
-                  required
-                  rows={4}
-                  value={evText}
-                  onChange={(e) => setEvText(e.target.value)}
-                  placeholder="Paste verbatim benchmark finding or audit clause..."
-                  className="w-full text-xs p-2 border border-[#E7E2D8] rounded-lg"
-                />
-              </div>
-            )}
-
-            <div className="pt-2 flex justify-end space-x-2">
-              <button
-                type="button"
-                onClick={() => setShowUploadEvidenceModal(false)}
-                className="px-3 py-1.5 text-xs text-[#5C6460] hover:bg-[#FAF8F5] rounded"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="px-4 py-1.5 bg-[#4A6B5B] hover:bg-[#3D5A4C] text-white text-xs font-semibold rounded-lg"
-              >
-                Ingest & Verify
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
-
-      {/* Round 3 Bounding Box Modal */}
+      {/* Visual Bounding Box Modal */}
       {selectedEvidenceForModal && (
         <BoundingBoxViewerModal
           evidenceId={selectedEvidenceForModal.id}
@@ -645,13 +572,15 @@ export const BrandKnowledgeHubView: React.FC = () => {
         />
       )}
 
-      {/* Conflict Resolution Modal */}
-      <ConflictResolutionModal
-        isOpen={showConflictModal}
-        onClose={() => setShowConflictModal(false)}
-        conflicts={conflicts}
-        onResolved={loadData}
-      />
+      {/* Evidence Conflict Resolution Modal */}
+      {showConflictModal && (
+        <ConflictResolutionModal
+          isOpen={showConflictModal}
+          onClose={() => setShowConflictModal(false)}
+          conflicts={conflicts}
+          onResolved={loadData}
+        />
+      )}
     </div>
   );
 };

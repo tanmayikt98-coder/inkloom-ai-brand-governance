@@ -174,3 +174,4 @@ export const ClearanceCertificateModal: React.FC<Props> = ({ isOpen, onClose, ce
     </div>
   );
 };
+

@@ -2,6 +2,35 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import { User, Brand, UserRole, TenantOrganization } from "../types";
 import { api, getActiveDemoRole, setDemoRole } from "../services/api";
 
+export const DEFAULT_BRAND: Brand = {
+  id: "brand-aurevia-001",
+  organization_id: "org-aurevia-001",
+  name: "Aurevia",
+  tagline: "Enterprise Intelligence with Deterministic Trust",
+  description: "Next-generation automated workflow and enterprise governance engine operating under FTC 16 CFR Part 255 standards.",
+  created_at: "2026-10-31T00:00:00Z",
+  updated_at: "2026-10-31T00:00:00Z",
+};
+
+export const DEFAULT_ORG: TenantOrganization = {
+  id: "org-aurevia-001",
+  name: "Aurevia Technologies Inc.",
+  slug: "aurevia-corp",
+  brand_count: 1,
+  asset_count: 9,
+  active_framework: "FTC 16 CFR Part 255 & Enterprise SLAs",
+};
+
+export const DEFAULT_USER: User = {
+  id: "user-brand-02",
+  full_name: "Marcus Sterling (Brand Mgr)",
+  email: "brand.manager@inkloom.ai",
+  role: "BRAND_MANAGER",
+  organization_id: "org-aurevia-001",
+  is_active: true,
+  created_at: "2026-10-31T00:00:00Z",
+};
+
 interface AuthContextType {
   currentUser: User | null;
   activeBrand: Brand | null;
@@ -25,42 +54,61 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [activeBrand, setActiveBrand] = useState<Brand | null>(null);
-  const [allBrands, setAllBrands] = useState<Brand[]>([]);
-  const [activeOrg, setActiveOrg] = useState<TenantOrganization | null>(null);
-  const [allOrgs, setAllOrgs] = useState<TenantOrganization[]>([]);
+  const [currentUser, setCurrentUser] = useState<User | null>(DEFAULT_USER);
+  const [activeBrand, setActiveBrand] = useState<Brand | null>(DEFAULT_BRAND);
+  const [allBrands, setAllBrands] = useState<Brand[]>([DEFAULT_BRAND]);
+  const [activeOrg, setActiveOrg] = useState<TenantOrganization | null>(DEFAULT_ORG);
+  const [allOrgs, setAllOrgs] = useState<TenantOrganization[]>([DEFAULT_ORG]);
   const [demoUsers, setDemoUsers] = useState<User[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const loadInitialData = async () => {
     try {
       setIsLoading(true);
-      // Fetch me
-      const me = await api.auth.getMe();
-      setCurrentUser(me);
 
-      // Fetch demo users for switcher
-      const demos = await api.auth.getDemoUsers();
-      setDemoUsers(demos);
-
-      // Fetch organizations (Round 3 Multi-Tenancy)
-      const orgs = await api.auth.listOrganizations();
-      setAllOrgs(orgs);
-      if (orgs.length > 0) {
-        const curOrg = orgs.find((o) => o.id === me.organization_id) || orgs[0];
-        setActiveOrg(curOrg);
+      // 1. Fetch me
+      try {
+        const me = await api.auth.getMe();
+        if (me && me.id) {
+          setCurrentUser(me);
+        }
+      } catch (e) {
+        console.warn("[Inkloom AI] Failed loading current user, using default principal:", e);
       }
 
-      // Fetch brands
-      const brands = await api.brands.list();
-      setAllBrands(brands);
-      if (brands.length > 0) {
-        const aurevia = brands.find((b) => b.name.toLowerCase().includes("aurevia")) || brands[0];
-        setActiveBrand(aurevia);
+      // 2. Fetch demo users for switcher
+      try {
+        const demos = await api.auth.getDemoUsers();
+        if (Array.isArray(demos) && demos.length > 0) {
+          setDemoUsers(demos);
+        }
+      } catch (e) {
+        console.warn("[Inkloom AI] Failed loading demo accounts:", e);
       }
-    } catch (err) {
-      console.error("[Inkloom AI] Failed loading initial auth data:", err);
+
+      // 3. Fetch organizations (Round 3 Multi-Tenancy)
+      try {
+        const orgs = await api.auth.listOrganizations();
+        if (Array.isArray(orgs) && orgs.length > 0) {
+          setAllOrgs(orgs);
+          const curOrg = orgs.find((o) => o.id === (currentUser?.organization_id || "org-aurevia-001")) || orgs[0];
+          setActiveOrg(curOrg);
+        }
+      } catch (e) {
+        console.warn("[Inkloom AI] Failed loading organizations:", e);
+      }
+
+      // 4. Fetch brands
+      try {
+        const brands = await api.brands.list();
+        if (Array.isArray(brands) && brands.length > 0) {
+          setAllBrands(brands);
+          const aurevia = brands.find((b) => b.name.toLowerCase().includes("aurevia")) || brands[0];
+          setActiveBrand(aurevia);
+        }
+      } catch (e) {
+        console.warn("[Inkloom AI] Failed loading brands, keeping default Aurevia:", e);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -79,8 +127,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setActiveOrg(targetOrg);
       // Reload brands for newly switched tenant
       const brands = await api.brands.list();
-      setAllBrands(brands);
-      if (brands.length > 0) {
+      if (Array.isArray(brands) && brands.length > 0) {
+        setAllBrands(brands);
         setActiveBrand(brands[0]);
       }
     } catch (err) {

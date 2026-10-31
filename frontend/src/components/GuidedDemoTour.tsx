@@ -204,3 +204,4 @@ export const GuidedDemoTour: React.FC<Props> = ({ isOpen, onClose, onNavigate })
     </div>
   );
 };
+

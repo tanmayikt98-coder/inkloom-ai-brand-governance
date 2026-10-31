@@ -259,3 +259,4 @@ export const VisualInspectionStudio: React.FC = () => {
     </div>
   );
 };
+

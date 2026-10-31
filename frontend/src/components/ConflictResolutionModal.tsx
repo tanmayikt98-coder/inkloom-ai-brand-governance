@@ -172,3 +172,4 @@ export const ConflictResolutionModal: React.FC<Props> = ({ isOpen, onClose, conf
     </div>
   );
 };
+
