@@ -466,6 +466,7 @@ async def simulate_integration_event(
         platform=payload.platform.upper(),
         event_type=payload.event_type or f"{platform}.webhook.test",
         timestamp=datetime.utcnow().isoformat(),
+        status="SUCCESS",
         governance_decision=decision,
         summary_message=summary,
         raw_payload=raw,

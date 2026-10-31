@@ -611,7 +611,7 @@ class IntegrationSimulationResponse(BaseModel):
     platform: str
     event_type: str
     timestamp: str
-    status: str
+    status: str = "SUCCESS"
     governance_decision: str  # "BLOCKED" or "APPROVED"
     summary_message: str
     raw_payload: Dict[str, Any]
